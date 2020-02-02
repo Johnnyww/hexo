@@ -12,5 +12,4 @@ before_install:
   -in id_rsa.enc -out ~\/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 after_success:
-- ssh -P 11111 chenjunxin@39.108.171.28 -o StrictHostKeyChecking=no "cd /home/chenjunxin/hexoBlogFiles/hexo/;
-git pull origin master;hexo clean;hexo g;exit"
+- ssh -P 11111 chenjunxin@39.108.171.28 -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && npm install && hexo clean && hexo g && exit'
