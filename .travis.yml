@@ -11,5 +11,6 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_311a3ff6a6ef_key -iv $encrypted_311a3ff6a6ef_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
+- echo -e "Host 39.108.171.28\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 after_success:
-- ssh chenjunxin@39.108.171.28 -p 11111 -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && npm install && hexo clean && hexo g && exit'
+- ssh chenjunxin@39.108.171.28 -p 11111 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && npm install && hexo clean && hexo g && exit'
