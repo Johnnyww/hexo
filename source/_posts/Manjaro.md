@@ -680,6 +680,10 @@ source ~/.zshrc
 #### V2Ray客户端
 运行官方一键安装脚本:
 ```bash
+bash <(curl -L -s https://install.direct/go.sh)
+```
+或者使用Manjaro自带的包管理器安装
+```bash
 sudo pacman -S v2ray
 ```
 编辑/etc/v2ray/config.json文件，可以用[配置生成器](https://intmainreturn0.com/v2ray-config-gen/)
