@@ -14,4 +14,4 @@ before_install:
 - echo -e "Host "$SERVER_IP"\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - echo $Server
 after_success:
-- ssh chenjunxin@"$SERVER_IP" -p 11111 -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && npm install && hexo clean && hexo g && exit'
+- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && npm install && hexo clean && hexo g && exit'
