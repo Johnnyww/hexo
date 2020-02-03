@@ -46,26 +46,59 @@ driver  因为是n卡就选择no free，其他情况选free或网上查bios选�
 
 更换中国源
 ```bash
-sudo pacman-mirrors -i -c China -m
+sudo pacman-mirrors -i -c China -m rank
 ```
 在第命令结束的时候会弹出一个窗口让你选择想要使用的源，选最快的那个就行了。(例如:https://mirrors.ustc.edu.cn/manjaro/ 中科大的)
-或者直接编辑文件添加源地址，nano  /etc/pacman.d/mirrors 地址从这[获取](https://github.com/archlinuxcn/mirrorlist-repo)
-**保存设置方法：用nanoc编辑好文本后按crl + x 然后按y再按回车即可。另外manjaro中的pacman相当于centos（或redhat）中的yum命令** 
-更换增加archlinuxcn软件仓库源：
-编辑nano  /etc/pacman.conf，在最下方添加：
+或者直接编辑文件添加源地址:
+
 ```bash
+sudo nano /etc/pacman.d/mirrorlist
+```
+地址从这[获取](https://github.com/archlinuxcn/mirrorlist-repo),添加到文件末尾,例如:
+```bash
+## SJTUG 软件源镜像服务
+Server = https://mirrors.sjtug.sjtu.edu.cn/manjaro/stable/$repo/$arch
+
+## 清华大学镜像源
+Server = https://mirrors.tuna.tsinghua.edu.cn/manjaro/stable/$repo/$arch
+```
+**保存设置方法：用nanoc编辑好文本后按crl + x 然后按y再按回车即可。另外manjaro中的pacman相当于centos（或redhat）中的yum命令** 
+然后更新一下数据源
+```bash
+## 更新源列表
+sudo pacman-mirrors -g
+```
+接着更换增加archlinuxcn软件仓库源:
+```bash
+sudo nano /etc/pacman.conf
+```
+在最下方添加：
+```bash
+#添加archlinuxcn软件源：
 [archlinuxcn]
 SigLevel = Optional TrustedOnly
-Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+#SJTUG 软件源
+Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux-cn/$arch
+#清华源
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+
+[antergos]
+SigLevel = TrustAll
+Server = https://mirrors.tuna.tsinghua.edu.cn/antergos/$repo/$arch
+
+[arch4edu]
+SigLevel = TrustAll
+Server = https://mirrors.tuna.tsinghua.edu.cn/arch4edu/$arch
 ```
 然后运行两条命令:
 ```bash
 sduo pacman -Syy # -Syy表示将本地的软件与软件仓库进行同步
 sudo pacman -S archlinuxcn-keyring #-S表示安装某一软件 安装archlinuxcn签名钥匙
+sudo pacman -S antergos-keyring
 ```
 之后更新一下系统:
 ```bash
-sudo pacman -Syyu #可以更新系统的一切软件包
+sudo pacman -Syu #可以更新系统的一切软件包
 ```
 更新完后安装下系统缺少的字体解决中文乱码问题:
 ```bash
