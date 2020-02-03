@@ -149,6 +149,7 @@ systemctl enable minidlna # MiniDLNA随机启动
 
 # 参考链接
 [Manjaro搭建无密访问samba服务器](https://www.cnblogs.com/misfit/p/10603277.html)
+[MiniDLNA 1.2.1 中文配置](https://ramble.3vshej.cn/minidlna-1-2-1-cn-config/)
 [在 Linux 上設定 DLNA 分享服務](https://electronic.blue/blog/2013/01/12-sharing-digital-media-by-dlna-on-linux/)
 [MiniDLNA文件共享](https://jiangxiaoqiang.github.io/2017/03/01/minidlna-file-share/)
 [DLNA分享服务设置(Linux minidlna版)](http://www.mikewootc.com/wiki/sw_develop/multimedia/dlna_server_linux_minidlna.html)
