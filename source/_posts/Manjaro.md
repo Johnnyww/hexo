@@ -3,9 +3,7 @@ title: Manjaro安装调教
 date: 2020-01-31 21:19:52
 tags: 
 - Manjaro安装和配置
-categories:
-- 技术
-- Manjaro
+
 ---
 
 # 一.在Windows系统上进行分区
