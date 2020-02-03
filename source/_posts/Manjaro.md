@@ -45,7 +45,7 @@ driver  因为是n卡就选择no free，其他情况选free或网上查bios选�
 `系统设置->桌面行为->工作空间->双击打开文件和文件夹`
 
 更换中国源
-```shell
+```bash
 sudo pacman-mirrors -i -c China -m
 ```
 在第命令结束的时候会弹出一个窗口让你选择想要使用的源，选最快的那个就行了。(例如:https://mirrors.ustc.edu.cn/manjaro/ 中科大的)
@@ -53,29 +53,29 @@ sudo pacman-mirrors -i -c China -m
 **保存设置方法：用nanoc编辑好文本后按crl + x 然后按y再按回车即可。另外manjaro中的pacman相当于centos（或redhat）中的yum命令** 
 更换增加archlinuxcn软件仓库源：
 编辑nano  /etc/pacman.conf，在最下方添加：
-```shell
+```bash
 [archlinuxcn]
 SigLevel = Optional TrustedOnly
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ```
 然后运行两条命令:
-```shell
+```bash
 sduo pacman -Syy # -Syy表示将本地的软件与软件仓库进行同步
 sudo pacman -S archlinuxcn-keyring #-S表示安装某一软件 安装archlinuxcn签名钥匙
 ```
 之后更新一下系统:
-```shell
+```bash
 sudo pacman -Syyu #可以更新系统的一切软件包
 ```
 更新完后安装下系统缺少的字体解决中文乱码问题:
-```shell
+```bash
 sudo pacman -S wqy-microhei
 ```
 
 ## 软件安装
 ### 1.安装AUR管理工具:
 想要使用AUR中的软件，一种方式是在图形的软件安装界面的设置中把AUR打开，然后搜索进行安装，另外是使用命令行工具进行安装。由于Yaourt已经不再维护，这里选择了Yay来管理AUR仓库中的软件。
-```shell
+```bash
 sudo pacman -S yay
 ```
 Yay默认使用法国的aur.archlinux.org作为AUR源，可以更改为国内清华大学提供的镜像。
@@ -84,11 +84,11 @@ yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 修改的配置文件位于 ~/.config/yay/config.json  去掉 # AURURL 的注释，修改为
 AURURL="https://aur.tuna.tsinghua.edu.cn"
 **yay 安装命令不需要加 sudo**,yay的命令参数跟pacman参数基本一致,还可通过以下命令查看修改过的配置:
-```shell
+```bash
 yay -P -g
 ```
 yay 的常用命令：
-```shell
+```bash
 yay -S package # 从 AUR 安装软件包
 yay -Rns package # 删除包
 yay -Syu # 升级所有已安装的包
@@ -97,7 +97,7 @@ yay -Qi package # 检查安装的版本
 ```
 
 ### 2.安装中文字体:
-```shell
+```bash
 sudo pacman -S wqy-zenhei
 sudo pacman -S wqy-bitmapfont
 sudo pacman -S wqy-microhei
@@ -108,7 +108,7 @@ sudo pacman -S adobe-source-han-serif-cn-fonts
 ```
 
 ### 3.安装中文输入法ibus:
-```shell
+```bash
 sudo pacman -S ibus #安装ibus软件包
 sudo pacman -Ss ^ibus-* #查看所有可用的输入法
 sudo pacman -S ibus-pinyin #选择一个可用的输入法引擎并安装
@@ -116,13 +116,13 @@ ibus-setup #运行ibus
 ```
 出现提示:![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/ibus.png)
 在`$HOME/.bashrc`中加入下面这段就好了
-```shell
+```bash
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 ```
 这样就可以使用该输入法了，但是每次开机都要在命令行中输入ibus-setup才能启动ibus，太麻烦了点。所以把原来的$HOME/.bashrc的内容转移到`$HOME/.xprofile`中，并且在最后一行添加一条新的内容:
-```shell
+```bash
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
@@ -132,11 +132,11 @@ ibus-daemon -x -d
 
 ### 4.更改项目文件英文名
 修改目录映射文件名:
-```shell
+```bash
 sudo nano .config/user-dirs.dirs
 ```
 修改为以下内容:
-```shell
+```bash
 XDG_DESKTOP_DIR="$HOME/Desktop"
 XDG_DOWNLOAD_DIR="$HOME/Download"
 XDG_TEMPLATES_DIR="$HOME/Templates"
@@ -147,7 +147,7 @@ XDG_PICTURES_DIR="$HOME/Pictures"
 XDG_VIDEOS_DIR="$HOME/Videos"
 ```
 将Home目录下的中文目录名改为对应的英文名:
-```shell
+```bash
 mv 桌面 to Desktop
 mv 下载 to Downloads
 mv 模板 to Templates
@@ -161,68 +161,68 @@ mv 视频 to Videos
 
 ### 5.常用软件安装
 #### 解压工具安装
-```shell
+```bash
 sudo pacman -S unrar unzip p7zi
 ```
 
 #### 为知笔记
-```shell
+```bash
 sudo pacman -S wiznote
 ```
 
 #### 思维导图
-```shell
+```bash
 yay -S xmind-zen
 ```
 
 #### WPS及WPS需要的中文字体
-```shell
+```bash
 sudo pacman -S wps-office
 yay -S wps-office-fonts wps-office-mime ttf-wps-fonts
 ```
 
 #### 福昕PDF阅读器
-```shell
+```bash
 sudo pacman -S foxitreader
 ```
 
 #### 媒体播放器
-```shell
+```bash
 sudo pacman -S vlc
 sudo pacman -S ffmpeg
 ```
 
 #### 截图软件
-```shell
+```bash
 sudo pacman -S deepin-screenshot
 ```
 
 #### 系统状态监控
-```shell
+```bash
 sudo pacman -S deepin-system-monitor
 ```
 
 #### 硬件温度监测
-```shell
+```bash
 sudo pacman -S psensor
 ```
 
 #### 录屏软件
-```shell
+```bash
 sudo pacman -S deepin-screen-recorder #录屏软件，可以录制 Gif 或者 MP4 格式
 sudo pacman -Ss SimpleScreenRecorder #另外一个更强大的录屏软件
 ```
 
 #### deepin系列软件必备条件
 首先对于非 GNOME 桌面(KDE, XFCE等)需要安装
-```shell
+```bash
 sudo pacman -S gnome-settings-daemon
 ```
 运行/usr/lib/gsd-xsettings
 系统设置->开机或关机->自动启动->添加脚本->输入/usr/lib/gsd-xsettings
 
 #### 深度QQ
-```shell
+```bash
 sudo pacman -S deepin.com.qq.im
 ```
 
@@ -232,23 +232,23 @@ https://github.com/countstarlight/deepin-wine-wechat-arch
 ![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/deepin-wine-wechat.png)
 安装完后手动切换deepin-wine环境
 1. 安装 deepin-wine
-```shell
+```bash
 yay -S deepin-wine
 ```
 2. 修改 deepin-wine-wechat 的启动文件
 修改如下两个文件中的 WINE_CMD 的值：
 /opt/deepinwine/apps/Deepin-WeChat/run.sh
 /opt/deepinwine/tools/run.sh
-```shell
+```bash
 -WINE_CMD="wine"
 +WINE_CMD="deepin-wine"
 ```
 3. 对于非 GNOME 桌面(KDE, XFCE等)需要安装 
-```shell
+```bash
 sudo pacman Sy gnome-settings-daemon
 ```
 并在 /opt/deepinwine/apps/Deepin-WeChat/run.sh 中加入如下几行：
-```shell
+```bash
  RunApp()
     {
 +    if [[ -z "$(ps -e | grep -o gsd-xsettings)" ]]
@@ -261,22 +261,22 @@ sudo pacman Sy gnome-settings-daemon
 ```
 注意：对 /opt/deepinwine/apps/Deepin-WeChat/run.sh 的修改会在 deepin-wine-wechat 更新或重装时被覆盖，可以单独拷贝一份作为启动脚本
 4. 删除原先的微信目录
-```shell
+```bash
 rm -rf ~/.deepinwine/Deepin-WeChat
 ```
 5. 修复 deepin-wine 字体渲染发虚
-```shell
+```bash
 yay -S lib32-freetype2-infinality-ultimate
 ```
 注意：切换到 deepin-wine 后，对 wine 的修改，如更改dpi，都改为对 deepin-wine 的修改
 
 #### 百度网盘
-```shell
+```bash
 yay -S deepin-wine-baidupan
 ```
 
 #### 迅雷
-```shell
+```bash
 yay -S deepin.com.thunderspeed
 ```
 
@@ -284,34 +284,34 @@ yay -S deepin.com.thunderspeed
 #### jdk
 手动安装oracle-jdk，可选择低版本,下载tar包
 解压
-```shell
+```bash
 tar -zxvf xxx.tar.gz
 ```
 移动到 `/usr/src`目录下
-```shell
+```bash
 sudo mv xxx /usr/src/
 ```
 先试一下前面这个，不行再加上后面那个
-```shell
+```bash
 vim ~/.bashrc
 ```
 在后面加上， 地址根据jdk修改
-```shell
+```bash
 export JAVA_HOME=/home/johnnychan/Public/programs/java/jdk8/jdk1.8.0_241
 export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
 ```
 启用配置
-```shell
+```bash
 source .bashrc
 ```
 查看是否配置成功
-```shell
+```bash
 java -version
 ```
 显示
-```shell
+```bash
 java version "1.8.0_241"
 Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
 Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
@@ -319,14 +319,14 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
 前面那个不行在加上底下这个配置jdk环境变量
 修改配置文件`/etc/profile`
 setting for jdk-oracle
-```shell
+```bash
 JAVA_HOME=/home/johnnychan/Public/programs/java/jdk8/jdk1.8.0_241
 CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
 PATH=$JAVA_HOME/bin:$PATH
 export JAVA_HOME CLASSPATH PATH
 ```
 启用配置
-```shell
+```bash
 source /etc/profile
 ```
 
@@ -334,7 +334,7 @@ source /etc/profile
 在/usr/local/lib 目录下新建一个文件夹maven：
 sudo mkdir /usr/local/lib/maven
 将文件解压到这个目录下：
-```shell
+```bash
 tar -zxvf apache-maven-3.6.3-bin.tar.gz -C  /usr/local/lib/maven
 ```
 也可以放到别的路径下，可以看一下linux目录一般存放规则：http://blog.csdn.net/fuzhongyu2/article/details/52437161
@@ -345,27 +345,27 @@ tar -zxvf apache-maven-3.6.3-bin.tar.gz -C  /usr/local/lib/maven
 用户变量和系统变量的配置方法一样，本文以配置用户变量为例。
 编译配置文件.bashrc:
 在终端输入:
-```shell
+```bash
 sudo nano ~/.bashrc
 ```
 在打开的文档末输入：
-```shell
+```bash
 export MAVEN_HOME=/usr/local/lib/maven/apache-maven-3.6.3
 export PATH=${MAVEN_HOME}/bin:${PATH}
 ```
 点击保存，这样maven环境变量就配置好了。 
 执行命令:
-```shell
+```bash
 source  ~/.bashrc
 source  /etc/profile
 ```
 测试是否安装成功
 输入：
-```shell
+```bash
 mvn -v
 ```
 如果出现下列字样，则安装成功：
-```shell
+```bash
   Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
   Maven home: /usr/local/lib/maven/apache-maven-3.6.3
   Java version: 1.8.0_241, vendor: Oracle Corporation,runtime:/home/johnnychan/Public/programs/java/jdk8/jdk1.8.0_241/jre
@@ -374,53 +374,53 @@ mvn -v
 ```
 
 #### Git
-```shell
+```bash
 sudo pacman -S git
 ```
 
 #### Vim
-```shell
+```bash
 sudo pacman -S vim
 ```
 
 #### Markdown编辑器
-```shell
+```bash
 sudo pacman -S typora
 ```
 
 #### VSCode
-```shell
+```bash
 sudo pacman -S visual-studio-code-bin
 ```
 
 #### REST工具
-```shell
+```bash
 sudo pacman -S postman-bin
 ```
 
 #### GIT管理工具
-```shell
+```bash
 sudo pacman -S gitkraken
 ```
 
 #### idea(JAVA IDE)
-```shell
+```bash
 sudo pacman -S intellij-idea-ultimate-edition
 ```
 
 #### 数据库管理工具
-```shell
+```bash
 sudo pacman -S datagrip
 sudo pacman -S dbeaver
 ```
 
 #### 离线API文档管理
-```shell
+```bash
 sudo pacman -S zeal
 ```
 
 #### NodeJS与NPM
-```shell
+```bash
 cd /usr/local/
 sudo mkdir node
 cd node
@@ -435,7 +435,7 @@ sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
 sudo ln -s /usr/local/node/node-v12.14.1-linux-x64/bin/cnpm 
 ```
 然后查看版本信息
-```shell
+```bash
 $ node -v
 v12.14.1
 $ npm -v
@@ -453,7 +453,7 @@ registry=https://r.npm.taobao.org
 ##### npm全局模块路径的设置
 设置全局模块的存放路径和cache路径。例如我希望将以上两个文件夹放在nodejs内（不要问我为什么，因为我希望以后在别的电脑上配置起来简单，不用每次都去获取各个模块），便在nodejs目录下新建"node_global"和"node_cache"两个文件夹。
 在终端输入下面两行命令:
-```shell
+```bash
 npm config set prefix "/usr/local/node/node-v12.14.1-linux-x64/node_global"
 npm config set cache "/usr/local/node/node-v12.14.1-linux-x64/node_cache"
 ```
@@ -463,25 +463,25 @@ npm config set cache "/usr/local/node/node-v12.14.1-linux-x64/node_cache"
 阿里云[OSS客户端](https://github.com//oss-browser): 点击下载：[oss-browser-linux_64_1.9.5](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/files/oss-browser-linux_64_1.9.5.zip),解压到目录，运行`oss-browser`即可。
 若出现：`./oss-browser: error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory`,
 解决：
-```shell
+```bash
 sudo pacman -S gconf
 ```
 
 #### Docker与Docker-Compose
-```shell
+```bash
 sudo pacman -S docker docker-compose
 ```
 设置普通用户使用 Docker 不需要使用 sudo
-```shell
+```bash
 sudo groupadd docker
 ```
 启动docker服务
-```shell
+```bash
 sudo systemctl start docker
 ```
 
 查看docker服务的状态
-```shell
+```bash
 sudo systemctl status docker
 ```
 
@@ -491,33 +491,33 @@ sudo systemctl enable docker
 ```
 
 干掉讨厌的 sudo,如果还没有 docker group 就添加一个
-```shell
+```bash
 sudo groupadd docker
 ```
 将自己的登录名(${USER} )加入该 group 内，然后退出并重新登录就生效了。
-```shell
+```bash
 sudo gpasswd -a ${USER} docker 
 ```
 或者
-```shell
+```bash
 sudo usermod -aG docker $USER
 ```
 重启 docker 服务
-```shell
+```bash
 sudo systemctl restart docker
 ```
 切换当前会话到新 group 或者重启 X 会话
 注意，这一步是必须的，否则因为 groups 命令获取到的是缓存的组信息，刚添加的组信息未能生效，所以 docker images 执行时同样有错。
-```shell
+```bash
 newgrp - docker
 ```
 或者
-```shell
+```bash
 pkill X
 ```
 使用中国官方镜像加速:
 为了永久性保留更改，我们可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。
-```shell
+```bash
  {
   "registry-mirrors": ["https://registry.docker-cn.com"]
  }
@@ -525,7 +525,7 @@ pkill X
 修改保存后重启 Docker 以使配置生效。
 
 ### 7.终端软件
-```shell
+```bash
 sudo pacman -S neofetch # 终端打印出你的系统信息
 sudo pacman -S htop #命令行显示进程信息
 sudo pacman -S yakuake # 堪称 KDE 下的终端神器，KDE 已经自带，F12 可以唤醒
@@ -534,61 +534,61 @@ yay -S tree
 ```
 
 #### ZSH和Oh-my-zsh
-```shell
+```bash
 sudo pacman -S zsh
 ```
 接着配置oh-my-zsh：
-```shell
+```bash
 sh -c“$（curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh）”
 ```
 查看本地有哪些shell
-```shell
+```bash
 cat /etc/shells
 ```
 最后更换默认的shell为zsh：
-```shell
+```bash
 chsh -s /bin/zsh
 ```
 
 #### 更改zsh主题
-```shell
+```bash
 vim ~/.zshrc
 ```
 修改配置文件中的 " ZSH_THEME ",例如设置为随机主题
-```shell
+```bash
 ZSH_THEME  = "random"
 ```
 
 #### zsh必备插件安装
 ##### 参数补全插件 zsh-completions
-```shell
+```bash
 git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 ```
 
 ##### 语法高亮插件 zsh-syntax-highlighting
-```shell
+```bash
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 ```
 
 ##### 命令自动补全插件 zsh-autosuggestions
-```shell
+```bash
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 ```
 
 ##### thefuck插件
-```shell
+```bash
 pip install thefuck
 ```
 
 ##### fzf，模糊搜索神器
-```shell
+```bash
 sudo pacman -S fzf
 ```
 
 ##### 自动跳转插件 autojump
 在终端输入d，可以显示刚刚走过的路径，然后按数字选择进入哪一个目录。（这个插件需要自己下)
 ![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/autojump.png)
-```shell
+```bash
 # clone 到本地
 git clone git://github.com/joelthelion/autojump.git
 # 进入clone目录，接着执行安装文件
@@ -601,7 +601,7 @@ vim ~/.bashrc
 autojump 工作原理：它会在你每次启动命令时记录你当前位置，并把它添加进它自身的数据库中。这样，某些目录比其它一些目录添加的次数多，这些目录一般就代表你最重要的目录，而它们的“权重”也会增大。
 
 ##### 安装完后启用插件
-```shell
+```bash
 # 编辑~/.zshrc   
 vim ~/.zshrc    
 # 在plugins后括号里添加安装的插件名字
@@ -629,17 +629,17 @@ source ~/.zshrc
 - .bashrc
 zzzzzzzzzzzzz原有配置
 下面一行为新加配置
-```shell
+```bash
 source ~/.profile
 ```
 - .zshrc
 zzzzzzzzzzzzz原有配置
 下面一行为新加配置
-```shell
+```bash
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ```
 - .profile
-```shell
+```bash
 export EDITOR=/usr/bin/nano
 # oh-my-zsh autojump配置
 [[ -s /home/misfit/.autojump/etc/profile.d/autojump.sh ]] && source /home/misfit/.autojump/etc/profile.d/autojump.sh
@@ -647,15 +647,15 @@ export EDITOR=/usr/bin/nano
 # 配置Maven环境变量
 ```
 然后执行:
-```shell
+```bash
 source ~/.profile
 ```
 在bash终端执行:
-```shell
+```bash
 source ~/.bashrc
 ```
 在zsh终端执行:
-```shell
+```bash
 source ~/.zshrc
 ```
 这样把算定义配置放在.profile里，即可在bash和zsh中使用同样的自定义环境了。
@@ -679,20 +679,20 @@ source ~/.zshrc
 
 #### V2Ray客户端
 运行官方一键安装脚本:
-```shell
+```bash
 sudo pacman -S v2ray
 ```
 编辑/etc/v2ray/config.json文件，可以用[配置生成器](https://intmainreturn0.com/v2ray-config-gen/)
 ArchLinux下的v2ray/config.json
 使用v2ray自带了一个检查工具v2ray -test检查json文件
-```shell
+```bash
 v2ray -test -config /etc/v2ray/config.json` #检查json
 V2Ray 4.22.1 (V2Fly, a community-driven edition of V2Ray.) Custom (go1.13.5 linux/amd64)
 A unified platform for anti-censorship.
 Configuration OK.
 ```
 显示OK就表示没问题了，可以开启本机的开机自启服务
-```shell
+```bash
 systemctl enable v2ray  #开机自启v2ray
 systemctl start v2ray   #启动v2ray
 ```
@@ -706,7 +706,7 @@ action 文件可以手动编辑，也可以从 gfwlist 生成。
 下面将先介绍 privoxy 的安装配置，再介绍 action 文件的生成。
 ###### 安装配置
 安装 privoxy：
-```shell
+```bash
 yay -S privoxy
 ```
 进入目录 `/etc/privoxy`，可以看到目录结构大致为：
@@ -719,14 +719,14 @@ yay -S privoxy
 
 开始修改配置文件。
 privoxy 有 filter （过滤）的功能，可以用来实现广告拦截。不过这里只希望实现自动代理，在配置文件中把 filter 部分注释掉：
-```shell
+```bash
 # 大约在435行
 # filterfile default.filter
 # filterfile user.filter      # User customizations
 ```
 
 我们将使用自定义的 action 文件，所以把默认的 action 文件注释掉，并添加自定义文件：
-```shell
+```bash
 # 386行左右
 # 默认的 action 文件
 # actionsfile match-all.action # Actions that are applied to all sites and maybe overruled later on.
@@ -736,18 +736,18 @@ privoxy 有 filter （过滤）的功能，可以用来实现广告拦截。不�
 actionsfile my.action
 ```
 可以指定转换后的 HTTP 代理地址，这里直接使用默认端口 8118：
-```shell
+```bash
 # 785行左右
 listen-address  127.0.0.1:8118
 listen-address  [::1]:8118
 ```
 如果代理规则直接写在配置文件 config 中，那么代理规则和本地 SS 代理地址是写在一起的：
-```shell
+```bash
 # / 代表匹配全部 URL，即全局代理
 forward-socks5 / 127.0.0.1:1081 .
 ```
 或
-```shell
+```bash
 # 根据规则自动代理
 forward-socks5 .google.com 127.0.0.1:1081 .
 ```
@@ -756,7 +756,7 @@ forward-socks5 .google.com 127.0.0.1:1081 .
 但是如果要自动代理，第二种直接写在配置文件里的做法其实不太合适，更合适的做法是写成 action 文件，配置文件中只管引用。
 把上面的注释掉。
 新建 action 文件 my.action，内容如下：
-```shell
+```bash
 # 这一行表示本 action 文件中所有条目都使用代理
 {+forward-override{forward-socks5 127.0.0.1:1081 .}}
 # 添加一条规则
@@ -764,7 +764,7 @@ forward-socks5 .google.com 127.0.0.1:1081 .
 ```
 把 privoxy 转换后的地址 http://127.0.0.1:8118 添加到环境变量，可以参照 polipo 部分。
 启动 privoxy，这时应该可以正常访问 Google 了：
-```shell
+```bash
 service privoxy start
 curl www.google.com
 ```
@@ -774,7 +774,7 @@ curl www.google.com
 配置文件 config 或 action 文件修改后不需要重启 privoxy。
 使用的工具是 [gfwlist2privoxy](https://github.com/snachx/gfwlist2privoxy)。这个工具很简单，文档就几行，写得也很清楚。
 安装：
-```shell
+```bash
 pip install gfwlist2privoxy
 ```
 gfwlist2privoxy 不支持 python3.x，安装时注意使用的是 pip2 还是 pip3。
@@ -786,7 +786,7 @@ gfwlist2privoxy 不支持 python3.x，安装时注意使用的是 pip2 还是 pi
 - `--user-rule` 用户自定义规则文件，这个文件中的规则会被追加到 gfwlist 生成的规则后面
 
 示例：
-```shell
+```bash
 gfwlist2privoxy -i https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt -f /etc/privoxy/gfwlist.action -p 127.0.0.1:1081 -t socks5
 ```
 得到文件 `/etc/privoxy/gfwlist.action`,[下载地址](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/files/gfwlist.action)。
@@ -794,14 +794,14 @@ gfwlist2privoxy -i https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwl
 最后，把` /etc/privoxy/config` 中的`actionsfile my.action` 改为 `actionsfile gfwlist.action`就完成了。
 
 启动 privoxy.service 服务
-```shell
+```bash
 systemctl start privoxy.service
 systemctl -l status privoxy.service
 ```
 
 配置环境变量
 在~/.bashrc或者~/.zshrc中输入
-```shell
+```bash
 export https_proxy=127.0.0.1:8118
 export http_proxy=127.0.0.1:8118
 ```
@@ -812,11 +812,11 @@ export http_proxy=127.0.0.1:8118
 ## 常用pacman命令
 ### 更新系统
 在 Archlinux系 中，使用一条命令即可对整个系统进行更新:
-```shell
+```bash
 pacman -Syu
 ```
 如果你已经使用pacman -Sy将本地的包数据库与远程的仓库进行了同步，也可以只执行:
-```shell
+```bash
 pacman -Su
 ```
 
@@ -842,35 +842,35 @@ pacman -Su
 `pacman -Sc`：清理未安装的包文件，包文件位于/var/cache/pacman/pkg/目录 
 `pacman -Scc`：清理所有的缓存文件
 ### pacman替代命令yay
-```shell
+```bash
 sudo pacman -S yay
 ```
 yay 的命令参数跟pacman参数基本一致。
 
 ## 常用命令
 ### 查看网卡信息
-```shell
+```bash
 lspci|grep -i net
 ```
 
 ### 查看已经启用的服务
-```shell
+```bash
 systemctl list-unit-files --state=enabled
 ```
 
 ### 查看关联性服务启动耗费时间
-```shell
+```bash
 systemd-analyze critical-chain xxx.service
 ```
 
 ### 按时间排序，查看服务启动耗费时间
-```shell
+```bash
 systemd-analyze blame
 ```
 
 ### GIT代理设置
 推荐放到 .zshrc 中作为常用命令
-```shell
+```bash
 git-proxy(){
   git config --global http.proxy socks5://127.0.0.1:1080
   git config --global https.proxy socks5://127.0.0.1:1080
@@ -889,7 +889,7 @@ Ctrl+F8：切出多桌面窗口
 ### 鼠标操作
 在左上角撮几下，平铺所有窗口。
 鼠标滚轮好慢,
-```shell
+```bash
 sudo pacman -S imwheel #配置文件自己上网查
 ```
 
