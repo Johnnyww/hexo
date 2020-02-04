@@ -463,7 +463,7 @@ sudo ln -s /usr/local/node/node-v12.14.1-linux-x64/bin/npm /usr/local/bin/npm
 #安装cnpm
 sudo npm install -g cnpm --registry=https://registry.npm.taobao.org  
 #设置全局
-sudo ln -s /usr/local/node/node-v12.14.1-linux-x64/bin/cnpm 
+sudo ln -s /usr/local/node/node-v12.14.1-linux-x64/bin/cnpm /usr/local/bin/cnpm
 ```
 然后查看版本信息
 ```bash
