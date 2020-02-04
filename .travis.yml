@@ -14,4 +14,4 @@ before_install:
 - echo -e "Host "$SERVER_IP"\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - echo $Server
 after_success:
-- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no './deploy.sh $"FUCK"'
+- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no './home/chenjunxin/deploy/deployhexo.sh $"FUCK"'
