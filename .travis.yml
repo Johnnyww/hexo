@@ -14,8 +14,4 @@ before_install:
 - echo -e "Host "$SERVER_IP"\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - echo $Server
 after_success:
-- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/
-  && git pull origin master && hexo clean && hexo g && exit'
-env:
-  global:
-  - secure: 3OEiNO6V7WxlZ17AkdHFew6jUUHNwLiR18J+pxEIzfbfelgnpICfwEIAgtFRznh5QPRsILqw3hmx/0wfPy6x0V97QdJfNYP2SK+eI+zHHvyRblYtwmqqfVVxXES1PsbS0cUA2NJbSUrEGzIByiZvdC9wSt8LUibxhIVf5A4PaOXeT8pKQSQ4WjS8gnXEX6F0lxlXx+IFODMkI+tykJMeix8ZAC2k5J68dtLX8yy818yoTQPJiyizgbCkzOFdrdOwSvo9v2jxRcAFZ3+f2D5Lrw3hYCzyywmRiqM5IX9utQEgVqh17ljou2nUyV3gy2rV7sLCEuivcdKBOQZ6nVXVetWi+S3lDmYNj9l4j93eDlSs04OIX1ZLrsgbbEo6BqU8+xC5OlstHTFx/yF4oKh7VLcJoUVaAaWPCKsw+9hqVtiT+rjOYCGGb/thDJ4M1pSld3LFSHxnFG2KjQ9aLIpVirT3B0OPA24IUcnWZ9tBo/JSsauq3Kfjv+kECKV0ve24uBaDoZ3uvfc3L9Jk/IRlWMn9BkEuUroj/7C7NNEXYQQqj9fU8PPJOncOyACG6TGUoLmRpNXJSuq8skUwIfovaipfAt6SRQZwmFWaCegg6pz4d3TiaXgwHYMICQumiyEde5O3LzTUkgCOSr6JeD7mPyf67EjainF36FaZKkLD5Do=
+- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no './deploy.sh $"FUCK"'
