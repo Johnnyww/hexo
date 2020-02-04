@@ -6,7 +6,7 @@ branchs:
   - master
 addons:
   ssh_known_hosts:
-  - "$SERVER_IP"
+  - $SERVER_IP
 before_install:
 - openssl aes-256-cbc -K $encrypted_311a3ff6a6ef_key -iv $encrypted_311a3ff6a6ef_iv
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
@@ -14,4 +14,8 @@ before_install:
 - echo -e "Host "$SERVER_IP"\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - echo $Server
 after_success:
-- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/ && git pull origin master && hexo clean && hexo g && exit'
+- ssh chenjunxin@"$SERVER_IP" -p "$SERVER_PORT" -o StrictHostKeyChecking=no 'cd /home/chenjunxin/hexoBlogFiles/hexo/
+  && git pull origin master && hexo clean && hexo g && exit'
+env:
+  global:
+    secure: pIZgQ3lqB4L2UAHGOX3RDoAyYLWMkwfqyygdjBuWBWCDEirdE865w03xnUFz9H4xDa2S2faPOulTET+jetDwN4OYL8PrOgJmCH7ZPrD2W0rhYfQaeClmoiDRiObti8xomQqsBKV15wa25/CbXKGhSwgQpmUozFAxjrK27b4cI3mGAtb9w7rXO9DMsUycDNh/b6UwYp4ZWIbevQXMAk1DuWIEbued7Zhx7z+HIbp7WFVEDkmboYrFt5ov0//NVNaoYdd18wExXIiC2dRO4UX83Rrfo13nv1PeZKBIOP3/DWCkNABE3YWHCu1pFq4hpSmSrVyUrvp4PIRZh/A9xLvJ7xx6GFZ1GsQ7CD6nF7Z9fYhjiV60hbfTzZNp63GrLuaEFRnhKQRhHvZwinnSDF43QxAOzgF3v5B8EvxYWLldLkZiksgNb/fKrl/XKwezS14WM9K7OYow5aPdTLgs4P91U+nB+P3z4nXoMzcVaUrgkYhQMiyv98csT60kludHADzkRdoQXmfArV88upBSfhI/P2tLfj00cR1O2s5gykYyAhRoLZZQHWHhAdEJP7jJbsvDUSLUuD7kmhXmwQL3n9GxBTuAAJMr7HdKw/f7cLqM8pOl0Jk4F57tBcdJNJKDkTQTSDA/Bqt+j/Lfy6anLHOEPJXCFs8OBwT0i9tTG4Bvgwo=
