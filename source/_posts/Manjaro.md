@@ -104,6 +104,7 @@ sudo pacman -S wqy-microhei
 ```
 
 ## 软件安装
+
 ### 1.安装AUR管理工具:
 想要使用AUR中的软件，一种方式是在图形的软件安装界面的设置中把AUR打开，然后搜索进行安装，另外是使用命令行工具进行安装。由于Yaourt已经不再维护，这里选择了Yay来管理AUR仓库中的软件。
 ```bash
@@ -138,11 +139,63 @@ sudo pacman -S adobe-source-han-sans-cn-fonts
 sudo pacman -S adobe-source-han-serif-cn-fonts
 ```
 
-### 3.安装中文输入法ibus:
+### 3.中文输入法安装:
+fcitx和ibus都可以配置中文输入法
+fcitx 或 ibus 两个选其一 推荐fcitx(一开始装了ibus，后面转了fcitx)
+
+#### fcitx安装
+1.安装安装输入法模块:
+```bash
+sudo pacman -S fcitx-im #安装全部输入法模块
+
+#终端出现以下提示:
+$ yay -S fcitx-im
+:: There are 4 members in group fcitx-im:
+:: Repository community
+   1) fcitx  2) fcitx-gtk2  3) fcitx-gtk3  4) fcitx-qt5
+
+Enter a selection (default=all):
+#直接按回车，默认4个都安装，不然后面在有些应用或者终端调不出输入法
+```
+2.安装输入法配置工具
+```bash
+sudo pacman -S fcitx-configtool
+```
+3.安装中文输入法选其一（我选的sunpinyin，rime和goolepinyin据说不支持模糊音）
+```bash
+sudo pacman -S fcitx-sunpinyin
+sudo pacman -S fcitx-rime
+sudo pacman -S fcitx-libpinyin
+sudo pacman -S fcitx-googlepinyin
+```
+4.安装云拼音（可选）
+```bash
+sudo pacman -S fcitx-cloudyinpin
+```
+安装fcitx-cloudpinyin后，googlepinyin，fcitx自带的pinyin，sunpinyin的候选次列表都会具有云辅助，更加智能。（rime不支持）
+5.修改配置文件`$HOME/.xprofile`，右键粘贴如下代码并保存:
+```bash
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+```
+6.**注销重新登录或者重启系统。**
+
+#### ibus安装
+
 ```bash
 sudo pacman -S ibus #安装ibus软件包
+sudo pacman -S ibus-qt
 sudo pacman -Ss ^ibus-* #查看所有可用的输入法
-sudo pacman -S ibus-pinyin #选择一个可用的输入法引擎并安装
+```
+选择一个可用的输入法引擎并安装：
+```bash
+sudo pacman -S ibus-rime
+sudo pacman -S ibus--pinyin
+sudo pacman -S ibus-googlepinyin
+sudo pacman -S libpinyin
+```
+```bash
 ibus-setup #运行ibus
 ```
 出现提示:![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/ibus.png)
@@ -193,7 +246,8 @@ mv 视频 to Videos
 ### 5.常用软件安装
 #### 解压工具安装
 ```bash
-sudo pacman -S unrar unzip p7zi
+sudo pacman -S unrar unzip p7zip
+sudo pacman -S file-roller #图形化的解压软件
 ```
 
 #### 为知笔记
@@ -221,6 +275,12 @@ sudo pacman -S foxitreader
 ```bash
 sudo pacman -S vlc
 sudo pacman -S ffmpeg
+```
+
+#### ClamAV安装
+```bash
+sudo pacman -S clamav #Clam 防病毒软件（命令行）
+sudo pacman -S clamtk #Clam 防病毒软件（客户端）
 ```
 
 #### 截图软件
@@ -842,6 +902,44 @@ export http_proxy=127.0.0.1:8118
 ```
 这样就完成代理的设置了。
 
+## KDE
+### KDE插件
+- Resource Monitor（系统资源监控）：
+```bash
+yay -S plasma5-applets-resources-monitor
+```
+- Netspeed Widget（网络监控）：
+```bash
+yay -S plasma5-applets-netspeed
+```
+- Latte Dock：
+```
+sudo pacman -S latte-dock
+```
+- Global Menu
+可以访问https://store.kde.org/ 找插件，或者在AUR包的网站上根据插件名找是否有相应的包安装。
+### KDE设置
+一些桌面设置：
+显示：
+屏幕 120% 放大： 系统设置 > 显示 > 全局缩放> 1.2 
+
+全局菜单：
+因为有了 Latte Dock，不再需要任务栏了，取而代之的是全局菜单。需要添加全局菜单的桌面部件
+```
+sudo pacman -S appmenu-gtk-module
+sudo pacman -S libdbusmenu-glib  # For electron apps menu
+```
+
+锁屏：
+系统设置 > 工作空间行为 > 锁屏 > 键盘快捷键 设为 Meta + L 。
+
+KDE 桌面动画：
+系统设置 > 工作空间行为 > 桌面特效 设置你喜欢的桌面效果。
+
+打开文件：
+KDE 默认是单击打开文件，需要修改成跟Window一样的话：
+系统设置 > 工作空间行为 > 常规行为 > 点击行为
+
 # 四.一些命令与技巧
 
 ## 常用pacman命令
@@ -929,6 +1027,7 @@ sudo pacman -S imwheel #配置文件自己上网查
 ```
 
 # 参考链接
+
 - [Manjaro 安装体验小结](https://michael728.github.io/2019/08/03/linux-manjaro-install/)
 - [Manjaro的尝试](https://zzycreate.github.io/2018/11/03/Manjaro%E7%9A%84%E5%B0%9D%E8%AF%95/)
 - [Manjaro安装，配置，美化指南](https://www.cnblogs.com/zryabc/p/11408297.html)
@@ -939,4 +1038,7 @@ sudo pacman -S imwheel #配置文件自己上网查
 - [学习利器V2ray了解一下](https://www.teaper.dev/2019/06/02/v2ray/)
 - [Linux bash终端设置代理(proxy)访问](https://aiezu.com/article/linux_bash_set_proxy.html)
 - [Linux-zsh与bash共用](https://xueyp.github.io/linux/2019/01/15/linux-%E5%88%87%E6%8D%A2%E5%88%B0zsh.html)
-
+- [Manjaro中文输入法安装](https://studytous886237090.wordpress.com/2018/07/04/manjaro%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95%E5%AE%89%E8%A3%85/)
+- [比较几种中文输入法后，我最终选择了sunpinyin + cloudpinyin组合](https://forum.manjaro.org/t/sunpinyin-cloudpinyin/114282)
+- [manjaro xfce 18.0 踩坑记录](https://www.codetd.com/article/4515916)
+- [将干净的 Manjaro 快速配置为工作环境](https://blog.triplez.cn/manjaro-quick-start/)
