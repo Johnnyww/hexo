@@ -3,7 +3,9 @@ title: Manjaro安装调教
 date: 2020-01-31 21:19:52
 tags: 
 - Manjaro安装和配置
-
+categories:
+- 技术
+- Manjaro
 ---
 
 # 一.在Windows系统上进行分区
@@ -294,6 +296,7 @@ sudo pacman -S deepin-system-monitor
 ```
 
 #### 硬件温度监测
+
 ```bash
 sudo pacman -S psensor
 ```
@@ -322,6 +325,7 @@ sudo pacman -S deepin.com.qq.im
 https://github.com/countstarlight/deepin-wine-wechat-arch
 ![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/deepin-wine-wechat.png)
 安装完后手动切换deepin-wine环境
+
 1. 安装 deepin-wine
 ```bash
 yay -S deepin-wine
@@ -371,7 +375,56 @@ yay -S deepin-wine-baidupan
 yay -S deepin.com.thunderspeed
 ```
 
+#### 蓝牙使用
+
+安装软件包
+```bash
+sudo pacman -S bluez bluez-utils pulseaudio-bluetooth pulseaudio-alsa #安装蓝牙模块需要的软件
+```
+确保未禁用蓝牙
+```bash
+rfkill #查看TYPE类型是bluetooth的是否是unblocked
+rfkill unblock 0 #取消阻止
+```
+启动蓝牙服务
+```bash
+sudo systemctl enable bluetooth
+sudo systemctl start bluetooth
+```
+打开`系统设置->蓝牙>适配器`看是否能识别适配器,如果不能识别则需要更换蓝牙适配器。能识别的话再继续下一步，可以直接系统设置中点击连接，也可以终端启动bluetoothctl交互命令。
+使用bluetoothctl连接到蓝牙设备：
+```bash
+bluetoothctl
+[bluetooth]#power on #打开控制器电源，默认是关闭的。
+[bluetooth]#devices #获取要配对设备的 MAC 地址
+[bluetooth]#scan on #进行扫描以检测你的蓝牙设备
+[bluetooth]#pair $MAC #开始配对,MAC地址(支持 tab 键补全)
+[bluetooth]#trust $MAC #再次连接可能需要手工认，所以需要这句命令
+[bluetooth]#connect $MAC #连接到设备
+[JBL Reflect Mini2]# info #以下是输出信息
+Device F8:DF:15:40:E3:C3 (public)
+        Name: JBL Reflect Mini2
+        Alias: JBL Reflect Mini2
+        Class: 0x00240404
+        Icon: audio-card
+        Paired: yes
+        Trusted: yes
+        Blocked: no
+        Connected: yes
+        LegacyPairing: no
+        UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+        UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+        UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+        UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
+        RSSI: -55
+```
+#### 系统信息查看软件(类似AIDA64)  
+```bash
+yay -S hardinfo
+```
+
 ### 6.开发软件
+
 #### jdk
 手动安装oracle-jdk，可选择低版本,下载tar包
 解压
