@@ -193,3 +193,15 @@ $ travis encrypt  "SERVER_IP=$IP" --add
 # 一点补充
 
 服务器上的travis客户端的配置文件在用户目录下的`$HOME/.travis/`中。其中的config。yml里可以 endpoint可以配置数据库构建的地址，可以是https://api.travis-ci.com/ 或者 https://api.travis-ci.com/
+
+# 参考链接
+- [使用Travis CI自动部署Hexo博客](https://www.itfanr.cc/2017/08/09/using-travis-ci-automatic-deploy-hexo-blogs/)
+- [travis自动化部署github项目到server](https://www.dazhuanlan.com/2019/10/15/5da588149783f/)
+- [Hexo + GitHub + Travis CI + VPS 自动部署](https://changkun.us/archives/2017/06/232/)
+- [Travis CI 系列自动化部署测试教程（VPS服务器）](https://www.jonhuu.com/sample-post/1108.html)
+- [travis自动化部署续篇](https://andyliwr.github.io/2018/04/28/travis_node_publish2/)
+- [Travis-CI自动化测试并部署至自己的CentOS服务器](https://juejin.im/post/5a9e1a5751882555712bd8e1)
+- [利用travis-ci持续部署nodejs应用](https://cnodejs.org/topic/5885f19c171f3bc843f6017e)
+- [禁用SSH远程主机的公钥检查](http://www.worldhello.net/2010/04/08/1026.html)
+- [解决linux中ssh登录Warning:Permanently added (RSA) to the list of known hosts](https://blog.csdn.net/bingguang1993/article/details/82415543)
+- [TrueChain持续集成项目打包（Travis-CI）](http://www.cocoachina.com/articles/24904)
