@@ -334,7 +334,7 @@ yay -S deepin-wine
 修改如下两个文件中的 WINE_CMD 的值：
 /opt/deepinwine/apps/Deepin-WeChat/run.sh
 /opt/deepinwine/tools/run.sh
-```bash
+```diff
 -WINE_CMD="wine"
 +WINE_CMD="deepin-wine"
 ```
@@ -343,7 +343,7 @@ yay -S deepin-wine
 sudo pacman Sy gnome-settings-daemon
 ```
 并在 /opt/deepinwine/apps/Deepin-WeChat/run.sh 中加入如下几行：
-```bash
+```diff
  RunApp()
     {
 +    if [[ -z "$(ps -e | grep -o gsd-xsettings)" ]]
@@ -422,9 +422,36 @@ Device F8:DF:15:40:E3:C3 (public)
 ```bash
 yay -S hardinfo
 ```
+#### SSD优化配置
+##### 开启Trim功能
+SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知NAND闪存固态硬盘(SSD)哪些数据块可以删除，因为它们已经不再使用了。使用TRIM可以提高向SSD写入数据的性能，延长SSD的使用寿命。可以参考[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM)
+在使用Trim功能之前需要查看固态硬盘是否支持，否则可能造成数据丢失:
+```bash
+lsblk --discard
+```
+![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/Manjaro_SSD_IO_Check.png)
+`DISC-GRAN`和`DISC-MAX`关于使用的Trim方式，Nvme 协议固态是不推荐使用的`ContinuousTRIM`方式的。(详见[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive/NVMe#Discards))
+所以使用的定期执行fstrim的方式，即添加一个定时任务或服务让其自动执行，如每周执行一次trim操作。 参考[PeriodicTRIM](https://wiki.archlinux.org/index.php/Solid_state_drive#Periodic_TRIM)
+```bash
+sudo systemctl enable fstrim.timer
+sudo systemctl start fstrim.timer #开启fstrim
+```
+启用fstrim.timer服务则会自动每周运行一次fstrim.service去进行trim,不用手动调用。
+##### IO调度器选择
+一般来说，IO调度算法是为低速硬盘准备的，对于固态，最好是不使用任何IO调度器，或使用对硬盘干预程度最低的调度算法。这里可以照搬官方的[配置](https://wiki.archlinux.org/index.php/Improving_performance#Storage_devices)
+```bash :/etc/udev/rules.d/60-schedulers.rules
+# set scheduler for NVMe
+ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
+# set scheduler for SSD and eMMC
+ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
+# set scheduler for rotating disks
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
+```
+然后重启电脑永久生效，再查看当前固态的IO调度器:
+![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Manjaro/Manajro_SSD_IO_1.png)
+可以看到我当前NVME盘没有使用任何调度器，SATA固态使用的是deadline，而机械硬盘使用的是bfq。
 
 ### 6.开发软件
-
 #### jdk
 手动安装oracle-jdk，可选择低版本,下载tar包
 解压
@@ -526,6 +553,28 @@ sudo pacman -S git
 ```bash
 sudo pacman -S vim
 ```
+##### Vim右键不能粘贴的解决办法
+修改/usr/share/vim/vim81/defaults.vim文件，不同发行版位置可能位置不一样，
+```bash
+find /usr/ -type f -name 'defaults.vim'
+```
+发现我的是/usr/share/vim/vim81/defaults.vim这个文件
+```bash
+sudo vim /usr/share/vim/vim81/defaults.vim
+```
+大概在第70多行的地方:
+```bash
+if has('mouse')
+  set mouse=a
+endif
+```
+把set mouse=a修改为set mouse-=a
+```bash
+if has('mouse')
+  set mouse-=a
+endif
+```
+:wq保存退出即可。
 
 #### Markdown编辑器
 ```bash
@@ -667,8 +716,35 @@ pkill X
  }
 ```
 修改保存后重启 Docker 以使配置生效。
+#### Nginx
+```bash
+sudo pacman -S nginx
+systemctl start nginx #启动Nginx服务
+systemctl enable nginx #Nginx服务开机时启动
+```
+http://127.0.0.1 的默认页面是:/usr/share/nginx/html/index.html,你可以修改在 /etc/nginx/ 目录中的文件来更改配置 ./etc/nginx/nginx.conf 是主配置文件。
+##### Nginx配置下载目录
+在原有nginx配置中增加location模块，对127.0.0.1访问路径设置为下载目录根目录/home/johnnychan/Downloads/ThunderDownloads,并且对该location块开启目录文件列表，详细配置如下：
+```json
+location / {
+root            /home/johnnychan/Downloads/ThunderDownloads;
+autoindex on;  # 开启目录文件列表
+autoindex_exact_size on;  # 显示出文件的确切大小，单位是bytes
+autoindex_localtime on;  # 显示的文件时间为文件的服务器时间
+charset utf-8,gbk;  # 避免中文乱码
+}
+```
+##### Nginx的403 Forbidden解决的办法(权限文件和文件不存在)
+要修改nginx运行用户为拥有配置的root路径拥有权限的用户，或者修改目录的权限。在/etc/nginx/nginx.conf 前面加上一句：
+```json
+user xxx;
+```
+就可以了，其中，xxx就是运行nginx的用户。
+完成了上面的，访问还出现错误，很有可能是你的目录里没有文件，然后又没有列出目录的权限。 
+检查你的/home/xxx/website/nginxweb文件夹里面是否有配置的默认文件，默认文件在nginx.conf里面的index，或者使用上面的方法生成文件索引。
 
 ### 7.终端软件
+
 ```bash
 sudo pacman -S neofetch # 终端打印出你的系统信息
 sudo pacman -S htop #命令行显示进程信息
@@ -1095,3 +1171,5 @@ sudo pacman -S imwheel #配置文件自己上网查
 - [比较几种中文输入法后，我最终选择了sunpinyin + cloudpinyin组合](https://forum.manjaro.org/t/sunpinyin-cloudpinyin/114282)
 - [manjaro xfce 18.0 踩坑记录](https://www.codetd.com/article/4515916)
 - [将干净的 Manjaro 快速配置为工作环境](https://blog.triplez.cn/manjaro-quick-start/)
+- [记录一次linux系统迁移过程](https://rovo98.coding.me/posts/3babee60/)
+- [manjaro踩坑记](https://mrswolf.github.io/zh-cn/2019/05/24/manjaro%E8%B8%A9%E5%9D%91%E8%AE%B0/#SSD%E9%85%8D%E7%BD%AE)
