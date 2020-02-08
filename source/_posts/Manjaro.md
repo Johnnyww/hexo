@@ -375,8 +375,181 @@ yay -S deepin-wine-baidupan
 yay -S deepin.com.thunderspeed
 ```
 
-#### 蓝牙使用
+#### Aria2
+下载器，支持 HTTP(S)，FTP，SFTP，BitTorrent和Metalink 协议
+##### 安装
+```bash
+sudo pacman -S aria2
+```
+##### 配置
+配置文件
+```bash
+cd ~
+mkdir aria2
+cd aria2
+touch aria2.conf
+touch aria2.session
+touch aria2.log
+```
+aria2.conf配置文件内容，aria2.session是用来存地址的。
+```bash
+## 文件保存相关 ##
+# 文件的保存路径(可使用绝对路径或相对路径), 默认: 当前启动位置
+dir=/home/johnnychan/Downloads
+# 日志文件
+log=/home/johnnychan/aria2/aria2.log
+# 日志级别
+log-level=warn
+# 检查完整性，默认true
+check-integrity=true
+# 启用磁盘缓存
+disk-cache=32M
+# 断点续传
+continue=true
+# 文件预分配方式, 能有效降低磁盘碎片, 默认:prealloc
+# 预分配所需时间: none < falloc ? trunc < prealloc
+# falloc和trunc则需要文件系统和内核支持
+# NTFS建议使用falloc, EXT3/4建议trunc, MAC 下需要注释此项
+file-allocation=trunc
 
+## 进度保存相关 ##
+# 从会话文件中读取下载任务
+input-file=/home/johnnychan/aria2/aria2.session
+# 在Aria2退出时保存`错误/未完成`的下载任务到会话文件
+save-session=/home/johnnychan/aria2/aria2.session
+# 定时保存会话, 0为退出时才保存, 需1.16.1以上版本, 默认:0
+save-session-interval=60
+
+
+# 下载设置
+# 最大同时下载任务数, 运行时可修改, 默认:5
+max-concurrent-downloads=10
+# 同一服务器连接数, 添加时可指定, 默认:1
+max-connection-per-server=10
+# 单个任务最大线程数, 添加时可指定, 默认:5
+split=5
+# 整体下载速度限制, 运行时可修改, 默认:0
+max-overall-download-limit=0
+# 单个任务下载速度限制, 默认:0
+max-download-limit=0
+# 整体上传速度限制, 运行时可修改, 默认:0
+#max-overall-upload-limit=500KB
+# 单个任务上传速度限制, 默认:0
+max-upload-limit=0
+# 禁用IPv6, 默认:false
+disable-ipv6=true
+# 最大重试次数, 设置为0表示不限制重试次数, 默认:5
+max-tries=5
+# 设置重试等待的秒数, 默认:0
+retry-wait=0
+# 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
+min-split-size=10M
+
+
+# BitTorrent/Metalink 设置
+# BitTorrent/Metalink 设置
+# 当下载的是一个种子(以.torrent结尾)时, 自动开始BT任务, 默认:true
+follow-torrent=true
+# 打开DHT功能, PT需要禁用, 默认:true
+enable-dht=true
+# 本地节点查找, PT需要禁用, 默认:true
+bt-enable-lpd=true
+# 种子交换, PT需要禁用, 默认:true
+enable-peer-exchange=true
+# 种子最大打开文件数
+bt-max-open-files=16
+# 单个种子最大连接数, 默认:55
+bt-max-peers=55
+# DHT文件路径
+dht-file-path=/home/johnnychan/aria2/dht.dat
+dht-file-path6=/home/johnnychan/aria2/dht6.dat
+# DHT文件监听端口，默认:6881-6999
+dht-listen-port=6881-6999
+# 打开IPv6 DHT功能, PT需要禁用，默认false
+#enable-dht6=false
+# BT监听端口，当端口被屏蔽时使用, 默认:6881-6999
+listen-port=51413
+# 种子分享率，默认1.0
+seed-ratio=1.0
+# 种子分享时间，默认60分
+seed-time=60
+# 额外Tracker服务器
+bt-tracker=udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.open-internet.nl:6969/announce,udp://tracker.skyts.net:6969/announce,udp://tracker.piratepublic.com:1337/announce,udp://tracker.opentrackr.org:1337/announce,udp://9.rarbg.to:2710/announce,udp://retracker.coltel.ru:2710/announce,udp://pubt.in:2710/announce,udp://public.popcorn-tracker.org:6969/announce,udp://wambo.club:1337/announce,udp://tracker4.itzmx.com:2710/announce,udp://tracker1.wasabii.com.tw:6969/announce,udp://tracker.zer0day.to:1337/announce,udp://tracker.xku.tv:6969/announce,udp://tracker.vanitycore.co:6969/announce,udp://ipv4.tracker.harry.lu:80/announce,udp://inferno.demonoid.pw:3418/announce,udp://open.facedatabg.net:6969/announce,udp://mgtracker.org:6969/announce,udp://tracker.mg64.net:6969/announce,udp://tracker.tiny-vps.com:6969/announce,udp://tracker.internetwarriors.net:1337/announce,udp://tracker.grepler.com:6969/announce,udp://tracker.files.fm:6969/announce,udp://tracker.dler.org:6969/announce,udp://tracker.desu.sh:6969/announce,udp://tracker.cypherpunks.ru:6969/announce,udp://p4p.arenabg.com:1337/announce,udp://open.stealth.si:80/announce,udp://explodie.org:6969/announce,udp://bt.xxx-tracker.com:2710/announce,http://tracker.city9x.com:2710/announce,udp://tracker.tvunderground.org.ru:3218/announce,udp://tracker.torrent.eu.org:451/announce,udp://t.agx.co:61655/announce,udp://sd-95.allfon.net:2710/announce,udp://santost12.xyz:6969/announce,udp://sandrotracker.biz:1337/announce,udp://retracker.nts.su:2710/announce,udp://retracker.lanta-net.ru:2710/announce,http://retracker.mgts.by:80/announce,udp://tracker.uw0.xyz:6969/announce,http://tracker.skyts.net:6969/announce,udp://torr.ws:2710/announce,udp://thetracker.org:80/announce,http://retracker.telecom.by:80/announce,http://0d.kebhana.mx:443/announce,wss://tracker.openwebtorrent.com:443/announce,wss://tracker.fastcast.nz:443/announce,wss://tracker.btorrent.xyz:443/announce,ws://tracker.btsync.cf:2710/announce,udp://zephir.monocul.us:6969/announce,udp://tracker.martlet.tk:6969/announce,udp://tracker.kamigami.org:2710/announce,udp://tracker.cyberia.is:6969/announce,udp://tracker.bluefrog.pw:2710/announce,udp://tracker.acg.gg:2710/announce,udp://peerfect.org:6969/announce,https://evening-badlands-6215.herokuapp.com:443/announce,udp://z.crazyhd.com:2710/announce,udp://tracker.swateam.org.uk:2710/announce,udp://tracker.justseed.it:1337/announce,udp://packages.crunchbangplusplus.org:6969/announce,udp://104.238.198.186:8000/announce,https://open.kickasstracker.com:443/announce,http://tracker2.itzmx.com:6961/announce,http://tracker.vanitycore.co:6969/announce,http://tracker.torrentyorg.pl:80/announce,http://tracker.tfile.me:80/announce,http://tracker.mg64.net:6881/announce,http://tracker.electro-torrent.pl:80/announce,http://t.nyaatracker.com:80/announce,http://share.camoe.cn:8080/announce,http://servandroidkino.ru:80/announce,http://open.kickasstracker.com:80/announce,http://open.acgtracker.com:1096/announce,http://open.acgnxtracker.com:80/announce,http://mgtracker.org:6969/announce,http://fxtt.ru:80/announce,http://bt.dl1234.com:80/announce,http://agusiq-torrents.pl:6969/announce,http://104.238.198.186:8000/announce
+# 客户端伪装
+peer-agent=uTorrent/2210(25130)
+peer-id-prefix=-UT2210-
+# BT校验相关, 默认:true
+#bt-hash-check-seed=true
+# 继续之前的BT任务时, 无需再次校验, 默认:false
+bt-seed-unverified=true
+# 保存磁力链接元数据为种子文件(.torrent文件), 默认:false
+bt-save-metadata=true
+#下载完成后删除.ara2的同名文件
+on-download-complete=/home/johnnychan/aria2/delete_aria2
+
+# RPC 设置
+# 启用RPC, 默认:false
+enable-rpc=true
+# 允许所有来源, 默认:false
+rpc-allow-origin-all=true
+# RPC证书
+#rpc-certificate=/opt/var/aria2/aria2.pfx
+# 允许非外部访问, 默认:false
+rpc-listen-all=true
+# RPC监听端口, 端口被占用时可以修改, 默认:6800
+rpc-listen-port=6800
+# 设置的RPC授权令牌, v1.18.4新增功能, 取代 --rpc-user 和 --rpc-passwd 选项
+rpc-secret=faketoken
+# 启用加密后 RPC 服务需要使用 https 或者 wss 协议连接
+#rpc-secure=true
+
+# 高级设置
+# 进程守护
+daemon=true
+#enable-mmap=true
+# 强制保存会话, 即使任务已经完成, 默认:false
+# 较新的版本开启后会在任务完成后依然保留.aria2文件
+force-save=true
+# 整体下载速度限制, 运行时可修改, 默认:0
+max-overall-download-limit=0
+```
+
+##### 配置后台守护运行：
+```bash
+sudo vim /etc/systemd/user/aria2.service
+```
+```bash
+[Unit]
+Description=Aria2c download manager
+After=network.target
+
+[Service]
+User=<你的用户名>
+Type=forking
+ExecStart=/usr/bin/aria2c --conf-path=/home/johnnychan/aria2/aria2.conf -D
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl enable aria2
+sudo systemctl start aria2
+```
+
+#### uGet
+
+强大的下载软件，比迅雷更强，推荐搭配 aria2 使用
+uGet 使用 aria2：编辑 > 设置 > 插件 > 插件匹配顺序：aria2; URI:http://localhost:6800/jsonrpc
+参数：–enable-rpc=true -D –disable-ipv6 –check-certificate=false
+chrome,firefox启用 uget 下载
+```bash
+sudo pacman -S uget-intedrator
+sudo pacman -S uget-intedrator-chrome
+sudo pacman -S uget-intedrator-firefox
+```
+
+#### 蓝牙使用
 安装软件包
 ```bash
 sudo pacman -S bluez bluez-utils pulseaudio-bluetooth pulseaudio-alsa #安装蓝牙模块需要的软件
