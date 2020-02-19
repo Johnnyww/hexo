@@ -200,7 +200,7 @@ sudo pacman -S libpinyin
 ```bash
 ibus-setup #运行ibus
 ```
-出现提示:![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/ibus.png)
+出现提示:![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/ibus.png)
 在`$HOME/.bashrc`中加入下面这段就好了
 ```bash
 export GTK_IM_MODULE=ibus
@@ -323,7 +323,7 @@ sudo pacman -S deepin.com.qq.im
 #### 深度微信
 微信是自己从github上下的旧版的包2.7.188版本,并根据文档修改对应的安装配置    
 https://github.com/countstarlight/deepin-wine-wechat-arch
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/deepin-wine-wechat.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/deepin-wine-wechat.png)
 安装完后手动切换deepin-wine环境
 
 1. 安装 deepin-wine
@@ -602,7 +602,7 @@ SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知N
 ```bash
 lsblk --discard
 ```
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manjaro_SSD_IO_Check.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manjaro_SSD_IO_Check.png)
 `DISC-GRAN`和`DISC-MAX`关于使用的Trim方式，Nvme 协议固态是不推荐使用的`ContinuousTRIM`方式的。(详见[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive/NVMe#Discards))
 所以使用的定期执行fstrim的方式，即添加一个定时任务或服务让其自动执行，如每周执行一次trim操作。 参考[PeriodicTRIM](https://wiki.archlinux.org/index.php/Solid_state_drive#Periodic_TRIM)
 ```bash
@@ -621,7 +621,7 @@ ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 ```
 然后重启电脑永久生效，再查看当前固态的IO调度器:
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manajro_SSD_IO_1.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manajro_SSD_IO_1.png)
 可以看到我当前NVME盘没有使用任何调度器，SATA固态使用的是deadline，而机械硬盘使用的是bfq。
 
 ### 6.开发软件
@@ -826,7 +826,7 @@ npm config set cache "/usr/local/node/node-v12.14.1-linux-x64/node_cache"
 接下来，安装一个模块试试，例如vue，这里直接在终端输入npm install vue -g（-g就是全局安装模块的意思，就是将vue模块安装到你修改后的模块存放路径/usr/local/node/node-v12.14.1-linux-x64/node_global），等待下载安装。
 
 #### 阿里云OSS
-阿里云[OSS客户端](https://github.com//oss-browser): 点击下载：[oss-browser-linux_64_1.9.5](http://oss.chenjunxin.com/files/oss-browser-linux_64_1.9.5.zip),解压到目录，运行`oss-browser`即可。
+阿里云[OSS客户端](https://github.com//oss-browser): 点击下载：[oss-browser-linux_64_1.9.5](https://oss.chenjunxin.com/files/oss-browser-linux_64_1.9.5.zip),解压到目录，运行`oss-browser`即可。
 若出现：`./oss-browser: error while loading shared libraries: libgconf-2.so.4: cannot open shared object file: No such file or directory`,
 解决：
 ```bash
@@ -980,7 +980,7 @@ sudo pacman -S fzf
 
 ##### 自动跳转插件 autojump
 在终端输入d，可以显示刚刚走过的路径，然后按数字选择进入哪一个目录。（这个插件需要自己下)
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/autojump.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/autojump.png)
 ```bash
 # clone 到本地
 git clone git://github.com/joelthelion/autojump.git
@@ -1056,18 +1056,18 @@ source ~/.zshrc
 ### 8.科学上网
 #### Shadowsocks客户端
 先用manjaro自带的octopi搜索shadowsocks-qt5，然后安装
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.webp)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.webp)
 安装成功并配置好你自己的ss后，如下:
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.png)
 此时进入系统设置-代理下配置已经连接上的代理端口，如下图:
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/global%20proxy.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/global%20proxy.png)
 此时，Chrome浏览器就可以科学上网了，但这是全局的设置，而且没有规则绕过一些国内的网址，因此还要继续设置。
 打开Chrome网上应用商店-搜索安装Proxy SwitchyOmega扩展
 
 然后设置一个proxy
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting.png)
 再新建设置一个auto switch,规则列表填写地址https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，点击立即更新情景模式，按照如下配置:
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting_AutoSwitch.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting_AutoSwitch.png)
 把这个auto switch情景模式设置为插件默认的就可以了，实现按照规则科学上网，这里是符合规则内的才翻墙，规则之外的直连访问。**记得改回系统刚才设置的全局代理**。
 
 #### V2Ray客户端
@@ -1186,7 +1186,7 @@ gfwlist2privoxy 不支持 python3.x，安装时注意使用的是 pip2 还是 pi
 ```bash
 gfwlist2privoxy -i https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt -f /etc/privoxy/gfwlist.action -p 127.0.0.1:1081 -t socks5
 ```
-得到文件 `/etc/privoxy/gfwlist.action`,[下载地址](http://oss.chenjunxin.com/files/gfwlist.action)。
+得到文件 `/etc/privoxy/gfwlist.action`,[下载地址](https://oss.chenjunxin.com/files/gfwlist.action)。
 
 最后，把` /etc/privoxy/config` 中的`actionsfile my.action` 改为 `actionsfile gfwlist.action`就完成了。
 

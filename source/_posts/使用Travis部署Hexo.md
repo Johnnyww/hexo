@@ -182,7 +182,7 @@ ssh命令需要加上StrictHostKeyChecking=no选项，具体的可以查看禁�
 可以直接在ssh连接后面写要运行的命令，也可以写在服务器上的shell文件里，然后远程登录执行。
 after_success是在Travis执行完 install 和 script 之后执行的钩子,其他的Travis配置可以参考官方文档。
 "$SERVER_IP":这个值是Travis加密的值，可以设置在Job log中是否显示。可以在Travis控制台中的Setting中设置。
-![](http://oss.chenjunxin.com/picture/blogPicture/2020/Travis/travis_dashboard_hexo_setting.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/2020/Travis/travis_dashboard_hexo_setting.png)
 也可以在服务器上运行以下命令（$IP填具体IP的值）
 ```bash
 $ travis encrypt  "SERVER_IP=$IP" --add
