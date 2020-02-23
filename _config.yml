@@ -13,9 +13,11 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://chenjunxin.com
+url: https://www.chenjunxin.com
 root: /
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+#permalink: post/:abbrlink.html
+permalink: :title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -113,3 +115,8 @@ symbols_count_time:
   time: true # 阅读时长
   total_symbols: false # 所有文章总字数
   total_time: false # 所有文章阅读中时长
+
+baidusitemap:
+  path: baidusitemap.xml # 百度专用的 sitemap 文件
+sitemap:
+  path: sitemap.xml # 搜索引擎通用的文件
