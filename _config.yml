@@ -106,3 +106,10 @@ search:
   field: post
   format: html
   limit: 10000
+
+# 新增文章字数统计
+symbols_count_time:
+  symbols: true # 文章字数
+  time: true # 阅读时长
+  total_symbols: false # 所有文章总字数
+  total_time: false # 所有文章阅读中时长
