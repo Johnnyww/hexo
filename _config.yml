@@ -99,3 +99,10 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
+
+# 本地搜素插件设置
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
