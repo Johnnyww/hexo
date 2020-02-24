@@ -100,7 +100,7 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: ''
+  type: baidu_url_submitter
 
 # 本地搜素插件设置
 search:
@@ -120,3 +120,10 @@ baidusitemap:
   path: baidusitemap.xml # 百度专用的 sitemap 文件
 sitemap:
   path: sitemap.xml # 搜索引擎通用的文件
+
+# 百度主动提交sitemap设置
+baidu_url_submit:
+  count: 100 # 提交最新的100个链接
+  host: https://www.chenjunxin.com # 在百度站长平台中注册的域名
+  token: 1M9IqcMuZGMXmgtr # 秘钥，百度站长平台 > 推送接口 > 接口调用地址中token字段
+  path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里
