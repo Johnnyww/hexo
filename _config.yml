@@ -6,7 +6,7 @@
 title: JohnnyChan's Blog
 subtitle: ''
 description: 该秃的迟早会秃的
-keywords:
+keywords: JAVA,Linux,Manjaro,Hexo,Travis
 author: JohnnyChan
 language: zh-CN
 timezone: ''
@@ -123,7 +123,7 @@ sitemap:
 
 # 百度主动提交sitemap设置
 baidu_url_submit:
-  count: 100 # 提交最新的100个链接
+  count: 10 # 提交最新的10个链接
   host: https://www.chenjunxin.com # 在百度站长平台中注册的域名
   token: 1M9IqcMuZGMXmgtr # 秘钥，百度站长平台 > 推送接口 > 接口调用地址中token字段
   path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里

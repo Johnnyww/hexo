@@ -6,6 +6,8 @@ tags:
 categories:
 - 技术
 - Manjaro
+keywords:
+- Manjaro
 ---
 
 # 一.在Windows系统上进行分区

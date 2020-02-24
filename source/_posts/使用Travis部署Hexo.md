@@ -6,6 +6,9 @@ tags:
 categories:
 - 工具
 - Travis
+keywords:
+- Travis
+- Hexo
 ---
 使用Travis平台的可持续集成服务来部署自己的Hexo博客。
 
