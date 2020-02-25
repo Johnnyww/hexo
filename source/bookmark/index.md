@@ -17,3 +17,7 @@ comments: false
 
 # 工具
 - [Send Anywhere](https://send-anywhere.com/)：远程发送文件
+- [Convertio](https://convertio.co/zh/)：在线文件转换器
+- [OnlineConvert](https://cn.onlineconvert.com/)：在线文件转换器
+- [BigJPG](https://bigjpg.com/zh)：AI人工智能图片放大
+- [TinyPNG](https://tinypng.com/)：无损压缩图片
