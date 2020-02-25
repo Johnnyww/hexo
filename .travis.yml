@@ -4,6 +4,12 @@ node_js:
 branchs:
   only:
   - master
+cache:
+  npm: false
+install:
+  - npminstall
+script:
+  - npm run ci
 addons:
   ssh_known_hosts:
   - $SERVER_IP
