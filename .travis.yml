@@ -7,7 +7,7 @@ branchs:
 cache:
   npm: false
 install:
-  - npminstall
+  - npm install
 script:
   - npm run ci
 addons:
