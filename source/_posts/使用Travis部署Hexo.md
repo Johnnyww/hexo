@@ -32,8 +32,7 @@ Travis 会列出 Github 上面你的所有仓库，以及你所属于的组织�
 假设现在已经对某个项目开启了 Travis，那么先去看看 Settings 里默认开启的那几项，根据自己实际需求进行设置，没什么特殊需求默认的设置就可以了。
 2.创建添加 .travis.yml 到项目的根目录（稍后要提交到你关联的仓库中的）说白了接下来的事情都是如何去写这个配置文件，因为 Travis 全是根据这个配置文件去执行相应动作的。
 3.在本地项目根目录的master分支里面添加 .travis.yml 配置文件，添加如下配置:
-```yaml
-# .travis.yml
+```yaml .travis.yml https://github.com/Johnnyww/hexo/blob/master/.travis.yml 链接地址
 language: node_js   #前端工程所以是JavaScript，编译环境是node_js
 node_js:
 - 12.14.1   #指定node版本
