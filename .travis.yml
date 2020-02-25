@@ -8,8 +8,6 @@ cache:
   npm: false
 install:
   - npm install
-script:
-  - npm run ci
 addons:
   ssh_known_hosts:
   - $SERVER_IP
