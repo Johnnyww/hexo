@@ -16,8 +16,11 @@ timezone: ''
 url: https://www.chenjunxin.com
 root: /
 #permalink: :year/:month/:day/:title/
-#permalink: post/:abbrlink.html
-permalink: :title/
+permalink: post/:abbrlink.html
+abbrlink:
+ alg: crc32  # 算法：crc16(default) and crc32
+ rep: hex    # 进制：dec(default) and hex
+#permalink: :title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks

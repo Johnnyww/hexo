@@ -1,14 +1,15 @@
 ---
 title: 使用Travis部署Hexo
-date: 2020-02-06 21:24:06
-tags: 
-- Travis
+tags:
+  - Travis
 categories:
-- 工具
-- Travis
+  - 工具
+  - Travis
 keywords:
-- Travis
-- Hexo
+  - Travis
+  - Hexo
+abbrlink: b69cbc2b
+date: 2020-02-06 21:24:06
 ---
 使用Travis平台的可持续集成服务来部署自己的Hexo博客。
 

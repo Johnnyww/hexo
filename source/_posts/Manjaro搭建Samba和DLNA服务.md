@@ -1,17 +1,18 @@
 ---
 title: Manjaro搭建Samba和DLNA服务
-date: 2020-02-03 18:23:35
 tags:
-- Manjaro安装和配置
-- Samba
-- DLNA
+  - Manjaro安装和配置
+  - Samba
+  - DLNA
 categories:
-- 技术
-- Manjaro
+  - 技术
+  - Manjaro
 keywords:
-- Manjaro
-- Samba
-- DLNA
+  - Manjaro
+  - Samba
+  - DLNA
+abbrlink: 8baffc66
+date: 2020-02-03 18:23:35
 ---
 需求:想着装好的Manjaro跟同一网络下我的windows系统的笔记本之间能共享借助网络互传些数据,顺便可以的话就让家里的小米电视播放我放在电脑上的一些媒体资源。
 在这过程中，了解了些东西，顺便总结一下。
