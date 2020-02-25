@@ -122,9 +122,9 @@ scheme: Muse
 menu:
   home: / || home
   #about: /about/ || user
-  tags: /tags || tags
-  categories: /categories || th
-  archives: /archives || archive
+  tags: /tags/ || tags
+  categories: /categories/ || th
+  archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
   #commonweal: /404/ || heartbeat
@@ -394,7 +394,7 @@ bookmark:
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
   enable: true
-  permalink: https://github.com/johnnyww
+  permalink: https://github.com/johnnyww?tab=repositories
   title: Follow me on GitHub
 
 
@@ -538,7 +538,7 @@ mediumzoom: false
 
 # Vanilla JavaScript plugin for lazyloading images.
 # For more information: https://github.com/ApoorvSaxena/lozad.js
-lazyload: false
+lazyload: true
 
 # Pangu Support
 # For more information: https://github.com/vinta/pangu.js
@@ -686,6 +686,7 @@ google_analytics:
   # By default, NexT will load an external gtag.js script on your site.
   # If you only need the pageview feature, set the following option to true to get a better performance.
   only_pageview: false
+  localhost_ignored: true
 
 # Baidu Analytics
 baidu_analytics: c694f10d0cd3c87d69a8be39bb4e7a46
