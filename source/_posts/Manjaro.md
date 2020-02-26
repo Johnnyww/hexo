@@ -203,7 +203,7 @@ sudo pacman -S libpinyin
 ```bash
 ibus-setup #运行ibus
 ```
-出现提示:![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/ibus.png)
+出现提示:![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_ibus.webp)
 在`$HOME/.bashrc`中加入下面这段就好了
 ```bash
 export GTK_IM_MODULE=ibus
@@ -326,7 +326,7 @@ sudo pacman -S deepin.com.qq.im
 #### 深度微信
 微信是自己从github上下的旧版的包2.7.188版本,并根据文档修改对应的安装配置    
 https://github.com/countstarlight/deepin-wine-wechat-arch
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/deepin-wine-wechat.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_deepin_wine_wechat.webp)
 安装完后手动切换deepin-wine环境
 
 1. 安装 deepin-wine
@@ -605,7 +605,7 @@ SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知N
 ```bash
 lsblk --discard
 ```
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manjaro_SSD_IO_Check.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_manjaro_ssd_io_check.webp)
 `DISC-GRAN`和`DISC-MAX`关于使用的Trim方式，Nvme 协议固态是不推荐使用的`ContinuousTRIM`方式的。(详见[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive/NVMe#Discards))
 所以使用的定期执行fstrim的方式，即添加一个定时任务或服务让其自动执行，如每周执行一次trim操作。 参考[PeriodicTRIM](https://wiki.archlinux.org/index.php/Solid_state_drive#Periodic_TRIM)
 ```bash
@@ -624,7 +624,7 @@ ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 ```
 然后重启电脑永久生效，再查看当前固态的IO调度器:
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/Manajro_SSD_IO_1.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_manajro_ssd_io.webp)
 可以看到我当前NVME盘没有使用任何调度器，SATA固态使用的是deadline，而机械硬盘使用的是bfq。
 
 ### 6.开发软件
@@ -983,7 +983,7 @@ sudo pacman -S fzf
 
 ##### 自动跳转插件 autojump
 在终端输入d，可以显示刚刚走过的路径，然后按数字选择进入哪一个目录。（这个插件需要自己下)
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/autojump.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_autojump.webp)
 ```bash
 # clone 到本地
 git clone git://github.com/joelthelion/autojump.git
@@ -1059,18 +1059,18 @@ source ~/.zshrc
 ### 8.科学上网
 #### Shadowsocks客户端
 先用manjaro自带的octopi搜索shadowsocks-qt5，然后安装
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.webp)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_shadowsocks_qt5_00.webp)
 安装成功并配置好你自己的ss后，如下:
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/shadowsocks-qt5.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_shadowsocks_qt5_01.webp)
 此时进入系统设置-代理下配置已经连接上的代理端口，如下图:
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/global%20proxy.png)
+![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/a55f0545_global_proxy.webp)
 此时，Chrome浏览器就可以科学上网了，但这是全局的设置，而且没有规则绕过一些国内的网址，因此还要继续设置。
 打开Chrome网上应用商店-搜索安装Proxy SwitchyOmega扩展
 
 然后设置一个proxy
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_switchyomega_proxysetting.webp)
 再新建设置一个auto switch,规则列表填写地址https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，点击立即更新情景模式，按照如下配置:
-![](https://oss.chenjunxin.com/picture/blogPicture/2020/Manjaro/SwitchyOmega_ProxySetting_AutoSwitch.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_switchyomega_proxysetting_autoswitch.webp)
 把这个auto switch情景模式设置为插件默认的就可以了，实现按照规则科学上网，这里是符合规则内的才翻墙，规则之外的直连访问。**记得改回系统刚才设置的全局代理**。
 
 #### V2Ray客户端

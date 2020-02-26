@@ -168,7 +168,7 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: https://oss.chenjunxin.com/picture/avatar.jpg #/images/avatar.gif
+  url: https://oss.chenjunxin.com/picture/blogPicture/blog_avatar_01.webp #/images/avatar.gif
   # If true, the avatar will be dispalyed in circle.
   rounded: true
   # If true, the avatar will be rotated with the cursor.

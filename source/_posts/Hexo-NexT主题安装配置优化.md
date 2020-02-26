@@ -326,7 +326,7 @@ lazyload: true
 
 #### 添加图片灯箱
 添加灯箱功能，实现点击图片后放大聚焦图片，并支持幻灯片播放、全屏播放、缩略图、快速分享到社交媒体等，该功能由 [fancyBox](https://github.com/fancyapps/fancybox) 提供，效果如下：
-![fancyBox 灯箱](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Hexo/fancybox_demo.png)
+![fancyBox 灯箱](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_fancybox_demo.webp)
 在根目录下执行以下命令安装相关依赖：
 ```bash
 $ git clone https://github.com/theme-next/theme-next-fancybox3 themes/next/source/lib/fancybox
@@ -460,9 +460,9 @@ $ hexo s
 #####  添加 Google 统计
 访问 [Google Analytics](https://analytics.google.com/)
 注册登录后，新增一个统计网站，填写网站信息，点击下面的获取统计 ID，如图：
-![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Hexo/Google%20Analytics_Picture_01.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_google_analytics_picture_00.webp)
 进入页面后，你会看到统计 ID，复制它，如图：
-![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/2020/Hexo/Google%20Analytics_Picture_02.png)
+![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_google_analytics_picture_01.webp)
 然后编辑主题配置文件，找到关键字 `google_analytics`，删除注释`#`并填写获取到的统计 ID：
 ```yaml themes/next/_config.yml
 # Google Analytics
