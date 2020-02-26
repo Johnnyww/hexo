@@ -15,7 +15,7 @@ date: 2020-01-31 21:19:52
 
 进入windows磁盘管理器，分别新建两个简单卷，只设置大小，**不需要格式化**。一个设置为600M大小用于挂载efi,另一个用于挂载根目录/,大小随意。(我是在一块500g的固态上分出一半来装的，需要注意的是如果重新装系统的时候,挂在efi那个分区不能直接格式化删除，不然后面再分成一样大小的还是挂载efi会报错，没搞懂什么问题，一开始分的1g,后面直接格式化了，一直分1g一直报错，就分了600M装，才莫名成功了，本来都想装虚拟机算了。)
 
-##制作Manjaro镜像
+**制作Manjaro镜像**
 直接官网下的kde镜像，此次使用的是KDE Plasma 18.1.5版本， 然后用刻录工具刻录到u盘上，这次使用的是[usbwrite](http://7dx.pc6.com/wwb5/USBWriter13.zip) ,也可以使用rufus。
 <!-- more -->
 # 二.Manjaro系统安装
@@ -1349,3 +1349,4 @@ sudo pacman -S imwheel #配置文件自己上网查
 - [将干净的 Manjaro 快速配置为工作环境](https://blog.triplez.cn/manjaro-quick-start/)
 - [记录一次linux系统迁移过程](https://rovo98.coding.me/posts/3babee60/)
 - [manjaro踩坑记](https://mrswolf.github.io/zh-cn/2019/05/24/manjaro%E8%B8%A9%E5%9D%91%E8%AE%B0/#SSD%E9%85%8D%E7%BD%AE)
+- [在Manjaro Linux下安装驱动程序的两种方法](https://ywnz.com/linuxjc/4850.html)

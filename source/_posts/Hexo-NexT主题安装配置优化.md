@@ -843,3 +843,4 @@ url 必须为有效链接地址才会以链接的形式显示在右上角，否�
 - [Hexo + Next 主题博客提交百度谷歌收录](https://luanzhuxian.github.io/post/82d92ad4.html)
 - [hexo优化之——使用gulp压缩资源](https://todebug.com/use-gulp-with-hexo/)
 - [Hexo博客静态资源压缩](https://hasaik.com/posts/495d0b23.html)
+- [Hexo-NexT 主题个性优化](https://guanqr.com/tech/website/hexo-theme-next-customization/#%E5%BD%92%E6%A1%A3%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E5%8D%81%E4%BA%8C%E7%94%9F%E8%82%96)
