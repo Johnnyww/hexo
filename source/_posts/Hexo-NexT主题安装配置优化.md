@@ -198,6 +198,7 @@ footer:
 sidebar:
   position: right
   display: post
+  onmobile: true # 移动端显示侧栏,只有设计模板为Muse或Mist才能使用
 ```
 设置侧栏的位置，修改 sidebar.position 的值，支持的选项有：
 - left - 靠左放置
