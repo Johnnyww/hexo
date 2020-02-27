@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var minifycss = require('gulp-minify-css');
 var minifycss = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
@@ -37,7 +36,11 @@ gulp.task('minify-js', function() {
         .pipe(uglify()) //压缩混淆
         .pipe(gulp.dest('./public'));
 });
-// 压缩图片
+// 压缩public/images 目录内图片(gulp Version>3)
+//            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
+//             progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+//             interlaced: false, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+//             multipass: false, //类型：Boolean 默认：false 多次优化svg直到完全优化
 gulp.task('minify-images', function() {
     return gulp.src('./public/images/**/*.*')
         .pipe(imagemin(
@@ -53,5 +56,7 @@ gulp.task('minify-images', function() {
         {verbose: true}))
         .pipe(gulp.dest('./public/images'));
 });
-// 默认任务
+//4.0以后的写法
+// 执行 gulp 命令时执行的任务
 gulp.task('default',gulp.series(gulp.parallel('minify-html','minify-css','minify-js','minify-images')));
+
