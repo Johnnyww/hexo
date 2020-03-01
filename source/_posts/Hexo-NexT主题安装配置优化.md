@@ -674,16 +674,25 @@ nofollow 标签是由谷歌领头创新的一个反垃圾链接的标签，并�
 在站点的根目录下执行以下命令
 ```bash
 $ npm install gulp -g
-$ npm install gulp-minify-css gulp-uglify gulp-htmlmin gulp-htmlclean gulp-imagemin  --save
+$ npm installgulp-clean-css gulp-uglify gulp-htmlmin gulp-htmlclean gulp-imagemin --save
 ```
+安装gulp-imagemin时会安装gifsicle的一些依赖，如果命令行出现:
+```bash
+$ /bin/sh: autoreconf: command not found
+```
+则是系统缺少安装gifsicle的命令autoreconf，执行如下命令:
+```bash
+$ yum install autoconf automake libtool
+```
+
 在博客根目录下新建 gulpfile.js ，并填入以下内容：
 ```js hexo/gulpfile.js
 var gulp = require('gulp');
-var minifycss = require('gulp-minify-css');
+var minifycss = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var htmlclean = require('gulp-htmlclean');
-//var imagemin = require('gulp-imagemin');
+var imagemin = require('gulp-imagemin');
 
 // 压缩html
 gulp.task('minify-html', function() {
@@ -716,21 +725,32 @@ gulp.task('minify-js', function() {
         .pipe(uglify()) //压缩混淆
         .pipe(gulp.dest('./public'));
 });
-// 压缩图片
+// 压缩public/images 目录内图片(gulp Version>3)
+//            optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
+//             progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+//             interlaced: false, //类型：Boolean 默认：false 隔行扫描gif进行渲染
+//             multipass: false, //类型：Boolean 默认：false 多次优化svg直到完全优化
 gulp.task('minify-images', function() {
     return gulp.src('./public/images/**/*.*')
         .pipe(imagemin(
-        [imagemin.gifsicle({'optimizationLevel': 3}),
-        imagemin.mozjpeg({'progressive': true}),
-        imagemin.optipng({'optimizationLevel': 7}),
-        imagemin.svgo()],
-        {'verbose': true}))
+        [imagemin.gifsicle({interlaced: true,optimizationLevel: 3}),
+        imagemin.mozjpeg({progressive: true}),
+        imagemin.optipng({optimizationLevel: 7}),
+        imagemin.svgo({
+                plugins: [
+                        {removeViewBox: true},
+                        {cleanupIDs: false}
+                ]
+        })],
+        {verbose: true}))
         .pipe(gulp.dest('./public/images'));
 });
-// 默认任务
+//gulp4.0以后的写法
+// 执行 gulp 命令时执行的任务
 gulp.task('default',gulp.series(gulp.parallel('minify-html','minify-css','minify-js','minify-images')));
 ```
-生成博文时执行 hexo g && gulp 就会根据 gulpfile.js 中的配置，对 public 目录中的静态资源文件进行压缩
+生成博文时执行 hexo g && gulp 就会根据 gulpfile.js 中的配置，对 public 目录中的静态资源文件进行压缩。
+
 
 # 扩展
 ## 草稿 && 布局
