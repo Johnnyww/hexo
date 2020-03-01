@@ -18,14 +18,11 @@ comments: false
 # 工具
 
 - [Send Anywhere](https://send-anywhere.com/)：远程发送文件
-
 - [Convertio](https://convertio.co/zh/)：在线文件转换器
-
 - [OnlineConvert](https://cn.onlineconvert.com/)：在线文件转换器
-
 - [BigJPG](https://bigjpg.com/zh)：AI人工智能图片放大
-
 - [TinyPNG](https://tinypng.com/)：无损压缩图片
+- 
 
 # 网络工具
 - [IPIP](https://www.ipip.net/)：在此网站上输入IP地址，检测节点延迟
@@ -34,4 +31,9 @@ comments: false
 - [Port.Ping](https://port.ping.pe/)：在此网站上输入IP地址和端口，检测端口是否成功打开可用
 
 # 域名
-https://www.freenom.com/ 可在网站上看是否有免费的域名可用
+- [freenom](https://www.freenom.com/)：可在网站上看是否有免费的域名可用
+
+# 脚本
+
+- [ZBench](https://www.bwgblog.net/zbench.html)：Linux下服务器性能测试脚本
+- [Superspeed](https://www.bwgblog.net/superspeed-sh.html)：测试VPS到国内速度的脚本
