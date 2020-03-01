@@ -1,8 +1,6 @@
 ---
 title: CentOS7上Docker部署V2Ray
-date: 2020-03-01 14:29:18
 tags:
-  - Docker
   - V2Ray
 categories:
   - 科学上网
@@ -10,10 +8,12 @@ categories:
 keywords:
   - Docker
   - V2Ray
-  - CentOS7
+abbrlink: '17242235'
+date: 2020-03-01 14:29:18
 description:
 ---
 因为之前用的[Vultr](https://www.vultr.com/)的VPS网络经常不太稳定，昨天换了[HostWinds](https://www.hostwinds.com/)家的VPS,所以要从头配置起V2Ray,顺便记录一下，方便日后再换VPS用。
+<!--more-->
 # 安装Dokcer
 1. 使用root账户登录，把yum包更新到最新
 ```bash
@@ -166,10 +166,11 @@ $ sysctl net.ipv4.tcp_available_congestion_control
 net.ipv4.tcp_available_congestion_control = reno cubic bbr
 $ lsmod | grep bbr
 tcp_bbr 20480 8
-输出内容如上，则表示BBR已经成功开启。
 ```
+输出内容如上，则表示BBR已经成功开启。
 
 # 参考链接
 - [V2Ray 記錄](https://ppundsh.github.io/posts/e457/)
 - [CENTOS7.6 配置BBR加速](https://www.diyihaodian.com/2019/02/07/14/44/27/135/)
 - [如何在 Docker 安装 V2ray](https://tomford1986.blogspot.com/2019/02/docker-v2ray.html)
+- [V2Ray / SSR 传输协议哪个好? (各种协议对比)](https://www.idleleo.com/05/2071.html)
