@@ -670,6 +670,7 @@ nofollow 标签是由谷歌领头创新的一个反垃圾链接的标签，并�
   ```
 
 #### 博文压缩
+
 我们利用Hexo生成的博客文件中存在大量的空格和空行，从而使得博客资源中有很多不必要的内存消耗，使得网站加载变慢，使用gulp压缩资源，首先安装：
 在站点的根目录下执行以下命令
 ```bash
@@ -751,6 +752,229 @@ gulp.task('default',gulp.series(gulp.parallel('minify-html','minify-css','minify
 ```
 生成博文时执行 hexo g && gulp 就会根据 gulpfile.js 中的配置，对 public 目录中的静态资源文件进行压缩。
 
+#### 网页样式布局
+在对 NexT 主题的个性优化中，如果想要添加一些个性化的内容，就需要对内部代码进行修改。主题提供了许多注入点，可以通过注入点插入自己想要的东西，而不会对原有的主题内部文件进行大量的修改。这样便于以后主题的升级，避免一系列的错误发生。NexT 主题更新到 v7.2.0 后，[PR #868](https://github.com/theme-next/hexo-theme-next/pull/868) 简化了自定义内容的添加方法，删除了以前版本中所用的 css/_custom.styl 自定义 CSS 样式文件。如果想要修改样式或者在 HTML 中的 <head>、<body> 等部位插入代码。即直接在博客 sourse 资源文件夹下新建自定义文件 _data/xxx 实现该功能。
+在主题配置文件 _config.yml 中，写道：
+```yaml ~/themes/next/_config.yml
+# Define custom file paths.
+# Create your custom files in site directory `source/_data` and uncomment needed files below.
+custom_file_path:
+  #head: source/_data/head.swig
+  #header: source/_data/header.swig
+  #sidebar: source/_data/sidebar.swig
+  #postMeta: source/_data/post-meta.swig
+  #postBodyEnd: source/_data/post-body-end.swig
+  #footer: source/_data/footer.swig
+  #bodyEnd: source/_data/body-end.swig
+  #variable: source/_data/variables.styl
+  #mixin: source/_data/mixins.styl
+  #style: source/_data/styles.styl
+```
+如果需要自定义 CSS 样式，需要将上述代码中 `custom_file_path:` 下的 `#style: source/_data/styles.styl` 注释取消，然后根据该自定义文件存放路径创建相应文件 `styles.styl`，在该文件中添加自定义内容。同样，如果需要在 `` 中添加内容，比如修改字体时引入 Google Fonts 以及分析博客数据时引入 Google Analytics，则需要新建 `head.swig` 文件，在其中添加自定义内容即可。在 `post.swig` 中添加的文章结尾样式，可以直接添加在 `post-body-end.swig` 文件中。
+##### 使用 Google Fonts
+[Google Fonts](https://fonts.google.com/)提供了数百种高质量英文字体的 API，你可以通过调用 Google Fonts 免费使用其提供的字体服务。目前 Google Fonts 提供了几种中文简体字体，其中就有思源宋体。
+面对电子显示屏上千篇一律的黑体字，当读者看到一个显示宋体字的网页自然会眼前一亮。再加上合理的排版，你的博客必然会脱颖而出。宋体的衬线更适合长时间阅读，这也是目前各类阅读器或者浏览器上的阅读模式都会使用衬线字的原因。使用 Google Fonts 字体的方法很简单，NexT 主题配置文件中已经提供了设置：
+```yaml ~/themes/next/_config.yml
+font:
+  # Use custom fonts families or not.
+  # Depended options: `external` and `family`.
+  enable: false
+
+  # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
+  host:
+
+  # Font options:
+  # `external: true` will load this font family from `host` above.
+  # `family: Times New Roman`. Without any quotes.
+  # `size: x.x`. Use `em` as unit. Default: 1 (16px)
+
+  # Global font settings used for all elements inside <body>.
+  global:
+    external: true
+    family: Lato
+    size:
+
+  # Font settings for site title (.site-title).
+  title:
+    external: true
+    family:
+    size:
+
+  # Font settings for headlines (<h1> to <h6>).
+  headings:
+    external: true
+    family:
+    size:
+
+  # Font settings for posts (.post-body).
+  posts:
+    external: true
+    family:
+
+  # Font settings for <code> and code blocks.
+  codes:
+    external: true
+    family:
+```
+首先将 enable: 的 false 改为 true，然后在 host: 后添加 Google Fonts API 地址：fonts.googleapis.com。考虑到国内的网络对 Google 的域名并不友好，建议将 googleapis.com 修改为烧饼博客提供的镜像 loli.net,变成fonts.loli.net
+然后，设置中下面的一些选项，就是设定博客各区域的字体，比如网站标题 title，文章内容 posts这些都可以进行修改，你要做的只是到 Google Fonts 上找到适合的字体，然后将字体的名字填写到 family: 中。最关键的是 global 字体的设定，这里的字体将会是你网站的基本（全局）字体。建议不要在这里填思源宋体的名字 Noto Serif SC，而是选取一款英文字体进行填写。因为中文字体往往携带同样的英文字体，如果将中文字体优先级设置为第一位，那么英文字体必将也会是中文字体的样式。如果你在这里设置的是 Noto Serif SC，那么英文字体也会是 Noto Serif SC。那么，中文字体到哪里去设置呢？当然还是要到 base.styl 文件中，直接这样修改：
+```diff ~/themes/next/source/css/_variables/base.styl
+// Font families.
+-$font-family-chinese      = "PingFang SC", "Microsoft YaHei"
++$font-family-chinese      = "Noto Serif SC"
+```
+然后进入 [Google Fonts](https://fonts.google.com/)，搜索 Noto Serif SC，点 + 号选择，选择好后底部会弹出一个提示框，里面有使用说明。还可以点击提示框中的 CUSTOMIZE 定制要加载的字重与语言。之后，点击 EMBED，复制生成的 <link> 代码，添加到博客的 <head> 标签内，NexT 主题可直接添加到 ~/source/_data/head.swig 文件中。如果你想使用上文中提到的烧饼博客镜像，就将代码中的将 googleapis.com 修改为 loli.net。
+![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_hexo-theme-next-google-fonts-select.webp)
+如下代码：
+```stylus ~/source/_data/head.swig
+<link href="https://fonts.loli.net/css?family=Noto+Serif+SC:400,500,700&display=swap&subset=chinese-simplified" rel="stylesheet">
+```
+考虑到宋体的笔画要比黑体细，因此建议通过自定义 CSS 将字体的颜色加深，比如修改为 #333，以达到较好的阅读效果。
+```stylus ~/source/_data/styles.styl
+.post-body {
+    color: #333;
+}
+```
+这种先在 <head> 中引入字体，再通过 CSS 设定字体显示部位的方式适用于各种网页的设计，不局限于 NexT 主题。另外，这里给出当前博客字体设定：
+中文字体：Noto Serif SC
+英文字体：EB Garamond
+标题字体：Cinzel Decorative
+代码字体：Source Code Pro
+配置文件修改如下:
+
+```diff ~/themes/next/_config.yml
+font:
+-  enable: false
++  enable: true
+
+  # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
+-  host: 
++  host: //fonts.loli.net
+
+  # Font options:
+  # `external: true` will load this font family from `host` above.
+  # `family: Times New Roman`. Without any quotes.
+  # `size: x.x`. Use `em` as unit. Default: 1 (16px)
+
+  # Global font settings used for all elements inside <body>.
+  global:
+    external: true
+-   family: Lato
++   family: EB Garamond 
+    size:
+
+  # Font settings for site title (.site-title).
+  title:
+    external: true
++   family: Cinzel Decorative
+    size:
+
+  # Font settings for headlines (<h1> to <h6>).
+  headings:
+    external: true
+    family:
+    size:
+
+  # Font settings for posts (.post-body).
+  posts:
+    external: true
+    family:
+
+  # Font settings for <code> and code blocks.
+  codes:
+    external: true
++   family: Source Code Pro
+```
+#### 归档页面添加十二生肖
+![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_add-chinese-zodiac-to-next-title.webp)
+在归档页面的年份后添加十二生肖的图案，具体样式可以参考[归档页面](https://www.chenjunxin.com/archives/)。
+首先是在[这里](https://oss.chenjunxin.com/files/blogfiles/9ec4151c_chinese-zodiac.zip)下载十二生肖字体。下载后将解压的三个字体文件全部放在根目录 ~/source/fonts/ 下（若无 fonts 文件夹请自建）。
+然后编辑主题中的 post-collapse.swig 文件，做如下修改：
+
+```diff ~/themes/next/layout/_macro/post-collapse.swig
+{%- if year !== current_year %}
+  {%- set current_year = year %}
+  <div class="collection-year">
+-   <{%- if theme.seo %}h2{% else %}h1{%- endif %} class="collection-header">{{ current_year }}</{%- if theme.seo %}h2{% else %}h1{%- endif %}>
++   <{%- if theme.seo %}h2{% else %}h1{%- endif %} class="collection-header">{{ current_year }}
++     <div class="chinese-zodiac">
++       {%- if current_year % 12 == 0 %}
++         <i class="symbolic-animals icon-monkey"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 1 %}
++         <i class="symbolic-animals icon-rooster"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 2 %}
++         <i class="symbolic-animals icon-dog"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 3 %}
++         <i class="symbolic-animals icon-pig"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 4 %}
++         <i class="symbolic-animals icon-rat"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 5 %}
++         <i class="symbolic-animals icon-ox"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 6 %}
++         <i class="symbolic-animals icon-tiger"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 7 %}
++         <i class="symbolic-animals icon-rabbit"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 8 %}
++         <i class="symbolic-animals icon-dragon"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 9 %}
++         <i class="symbolic-animals icon-snake"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 10 %}
++         <i class="symbolic-animals icon-horse"></i>
++       {%- endif %}
++       {%- if current_year % 12 == 11 %}
++         <i class="symbolic-animals icon-goat"></i>
++       {%- endif %}
++     </div>
++   </{%- if theme.seo %}h2{% else %}h1{%- endif %}>
+  </div>
+{%- endif %}
+```
+最后再添加自定义样式到 ~/source/_data/styles.styl 中：
+```stylus ~/source/_data/styles.styl
+.chinese-zodiac {
+    float: right;
+}
+@font-face {
+  font-family: 'chinese-zodiac';
+  font-display: swap;
+  src: url('/fonts/chinese-zodiac.eot');
+  src: url('/fonts/chinese-zodiac.eot') format('embedded-opentype'),
+       url('/fonts/chinese-zodiac.woff2') format('woff2'),
+       url('/fonts/chinese-zodiac.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+.symbolic-animals {
+  display: inline-block;
+  font: normal normal normal 14px/1 chinese-zodiac;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-dragon:before { content: '\e806'; }
+.icon-tiger:before { content: '\e809'; }
+.icon-pig:before { content: '\e810'; }
+.icon-horse:before { content: '\e813'; }
+.icon-rat:before { content: '\e816'; }
+.icon-goat:before { content: '\e818'; }
+.icon-snake:before { content: '\e820'; }
+.icon-ox:before { content: '\e822'; }
+.icon-dog:before { content: '\e825'; }
+.icon-rabbit:before { content: '\e826'; }
+.icon-monkey:before { content: '\e829'; }
+.icon-rooster:before { content: '\e82f'; }
+```
 
 # 扩展
 ## 草稿 && 布局
