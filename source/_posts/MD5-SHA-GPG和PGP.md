@@ -1,0 +1,157 @@
+---
+title: 'MD5,SHA,GPG和PGP'
+tags:
+  - MD5
+  - SHA
+  - PGP
+  - GPG
+categories:
+  - 技术
+  - 密码学
+keywords:
+  - MD5
+  - SHA
+  - PGP
+  - GPG
+abbrlink: 383743f2
+date: 2020-03-03 11:50:04
+katex: true
+description:
+---
+
+#  哈希与加密的区别
+
+首先要了解哈希（Hash）和加密（Encrypt）的区别，正确区别两者是正确选择和使用哈希与加密的基础。
+概括来说，哈希（Hash）是将目标文本转换成具有相同长度的、不可逆的杂凑字符串（或叫做消息摘要），而加密（Encrypt）是将目标文本转换成具有不同长度的、可逆的密文。
+具体来说，两者有如下重要区别：
+
+1. **哈希算法往往被设计成生成具有相同长度的文本，而加密算法生成的文本长度与明文本身的长度有关**。
+例如，设我们有两段文本：“Microsoft”和“Google”。两者使用某种哈希算法得到的结果分别为：“140864078AECA1C7C35B4BEB33C53C34”和“8B36E9207C24C76E6719268E49201D94”，而使用某种加密算法的到的结果分别为“Njdsptpgu”和“Hpphmf”。可以看到，哈希的结果具有相同的长度，而加密的结果则长度不同。实际上，如果使用相同的哈希算法，不论你的输入有多么长，得到的结果长度是一个常数，而加密算法往往与明文的长度成正比。
+2. **哈希算法是不可逆的，而加密算法是可逆的**。
+这里的不可逆有两层含义，一是“给定一个哈希结果R，没有方法将E转换成原目标文本S”，二是“给定哈希结果R，即使知道一段文本S的哈希结果为R，也不能断言当初的目标文本就是S”。其实稍微想想就知道，哈希是不可能可逆的，因为如果可逆，那么哈希就是世界上最强悍的压缩方式了——能将任意大小的文件压缩成固定大小。
+加密则不同，给定加密后的密文R，存在一种方法可以将R确定的转换为加密前的明文S。
+
+# 哈希与加密的数学基础
+
+从数学角度讲，哈希和加密都是一个映射。下面正式定义两者：
+
+- 一个哈希算法![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif)是一个多对一映射，给定目标文本S，H可以将其唯一映射为R，并且对于所有S，R具有相同的长度。由于是多对一映射，所以H不存在逆映射![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif),使得R转换为唯一的S。
+
+- 一个加密算法![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_R%3DE(S%2CK_E).gif)是一个一一映射，其中第二个参数叫做加密密钥，E可以将给定的明文S结合加密密钥Ke唯一映射为密文R，并且存在另一个一一映射![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DD(R%2CK_D).gif)，可以结合Kd将密文R唯一映射为对应明文S，其中Kd叫做解密密钥。
+
+由于哈希算法的定义域是一个无限集合，而值域是一个有限集合，将无限集合映射到有限集合，每个哈希结果都存在无数个可能的目标文本，因此哈希不是一一映射，是不可逆的。 而加密算法是一一映射，因此理论上来说是可逆的。
+
+# 哈希算法(摘要算法)
+常见的Hash算法有MD5(Message-Digest Algorithm)和SHA(Secure Hash Algorithm)。SHA又包括 SHA-1 和 SHA-2(SHA-224、SHA-256、SHA-384、SHA-512) 和SHA-3。
+- MD5是输入不定长度信息，输出固定长度128-bits的算法。经过程序流程，生成四个32位数据，最后联合起来成为一个128-bits散列。基本方式为，求余、取余、调整长度、与链接变量进行循环运算，得出结果。
+- SHA-1在许多安全协议中广为使用，包括TLS和SSL、PGP、SSH、S/MIME和IPsec，曾被视为是MD5（更早之前被广为使用的散列函数）的后继者。
+- SHA-2它的算法跟SHA-1基本上仍然相似；因此有些人开始发展其他替代的散列算法。
+- 由于对MD5出现成功的破解，以及对SHA-1和SHA-2出现理论上破解的方法，NIST感觉需要一个与之前算法不同的，可替换的加密杂凑算法，也就是现在的SHA-3。
+
+## SHA算法家族哈希值大小及输出长度:
+- SHA-1算法的哈希值大小为160位，其计算输出长度为40位16进制字符串。
+- SHA-224算法的哈希值大小为224位，其计算输出长度为56位16进制字符串。
+- SHA-256算法的哈希值大小为256位，其计算输出长度为64位16进制字符串。
+- SHA-384算法的哈希值大小为384位，其计算输出长度为96位16进制字符串。
+- SHA-512算法的哈希值大小为512位，其计算输出长度为128位16进制字符串。
+
+## SHA1与MD5算法比较
+SHA1和MD5做为两种单向散列算法，二者均由MD4算法延伸导出，它们的强度及相关特性也非常相似。两者的区别主要体现以下几点：
+1. SHA1防碰撞性更好：两者最主要的区别还在于SHA1要比MD5摘要要长 32位。单从强行攻击角度来说，要破结一个MD5哈希摘要报文，其需要操作的数量级为2^128。而对于SHA1哈希摘要报文，其所需的数量级为2^160。从这方面来说，SHA1具有更好的抗强行攻击安全性。
+
+2. MD5运算速度更快：由于MD5比SHA1更短，在相同的硬件上，计算MD5哈希摘要要 比计算SHA1哈希摘要速度更快。
+
+3. SHA1相对安全：SHA1MD5，而MD5在设计方面也易受密码分析的攻击，理论上讲SHA1的安全性要高于MD5。
+
+## MD5,SHA实际应用
+
+1. Git的分支版本号管理就是用了SHA-1根据内容改变生成一串消息摘要。
+使用git中的hash命令也可以查看指定文件的sha-1值:
+```bash
+$ git hash-object  README.md
+a13c2dba7f888de53aa3e84e69e8a131109bbfc8
+```
+那么Git是否考虑到SHA1碰撞的问题，可以看[这里](https://www.zhihu.com/question/23789956/answer/148204243)
+
+2. Docker中经常使用的生成各种UUID的是SHA-256算法，例如镜像层ImageID,容器ID。所有镜像层和容器层都保存在宿主机的文件系统/var/lib/docker/中，由存储驱动进行管理。
+
+3. Linux下校验下载文件的完整性(MD5,SHA256)
+- MD5校验
+```bash
+#直接输出MD5 Hash
+$ md5sum your-downloaded-file-name
+fd4a1b802373c57c10c926eb7ac823d8  your-downloaded-file-name
+#当前目录下所有文件生成MD5 Hash
+$ md5sum * | tee hi.md5
+#将MD5 Hash值保存到md5-hash.txt文件中.
+$ md5sum your-downloaded-file-name > md5-hash.txt
+# 显示输出的md5-hast.txt内容
+$ cat md5-hash.txt
+fd4a1b802373c57c10c926eb7ac823d8  your-downloaded-file-name
+# 通过md5-hash.txt来校验你下载的文件是否正确
+$ md5sum -c md5-hash.txt
+your-downloaded-file-name: OK
+```
+你是文件的发布者话，你可以通过md5sum把文件的哈希值发送给验证者，这样下载你文件的人就可以通过MD5哈希值来验证你的文件正确性。反过来，我们在网站上下载文件之后，同时可以获取发布者的MD5哈希值和本地生成的Hash值对比，如果一致，认为文件是正确的。
+
+- SHA265校验
+原理： 原理同MD5一样，都是通过对文件进行HASH求值，比对文件发布者发布的HASH值，通过是否相等判断文件是否被篡改。
+sha256sum 命令 和 md5sum 命令一样的功能，只是使用算法不同，sha256相对 md5sum 更为准确，所以现在很多的系统的发行版都是使用 sha256sum 进行校验！实际例子：[Kali Linux](https://www.kali.org/downloads/)
+```bash
+$ sha256sum kali-linux-light-2018.2-amd64.iso 
+554f020b0c89d5978928d31b8635a7eeddf0a3900abcacdbc39616f80d247f86  kali-linux-light-2018.2-amd64.iso
+```
+
+# 对称加密和非对称加密
+**对称加密**：指的就是加、解密使用的同是一串密钥，所以被称做对称加密。对称加密只有一个密钥作为私钥。 常见的对称加密算法：DES、3DES、DESX、Blowfish、IDEA、RC4、RC5、RC6 和 AES等。
+
+**非对称加密**：指的是加、解密使用不同的密钥，一把作为公开的公钥，另一把作为私钥。公钥加密的信息，只有私钥才能解密。反之，私钥加密的信息，只有公钥才能解密。 举个例子，你向某公司服务器请求公钥，服务器将公钥发给你，你使用公钥对消息加密，那么只有私钥的持有人才能对你的消息解密。与对称加密不同的是，公司服务器不需要将私钥通过网络发送出去，因此安全性大大提高。最常用的非对称加密算法：RSA、ECC （移动设备用）、Diffie-Hellman、El Gamal、DSA （数字签名用）
+
+**对称加密优缺点**：对称加密相比非对称加密算法来说，加解密的效率要高得多、加密速度快。但是缺陷在于对于密钥的管理和分发上比较困难，不是非常安全，密钥管理负担很重。
+**非对称加密优缺点**：安全性更高，公钥是公开的，密钥是自己保存的，不需要将私钥给别人。缺点：加密和解密花费时间长、速度慢，只适合对少量数据进行加密。
+
+**总结**：安全肯定是非对称加密安全，但是效率比较慢，对称加密效率高，但是不安全。严谨一点的做法是混合起来使用，将对称加密的密钥使用非对称加密的公钥进行加密，然后发送出去，接收方使用私钥进行解密得到对称加密的密钥，然后双方可以使用对称加密来进行沟通。实际工作中直接使用非对称加、解密其实也可以，因为我们平时一般请求的报文不会很大，加解密起来速度在可接受范围内，或者可以对敏感字段，比如密码、手机号、身份证号等进行分段加密，效率还可以。
+
+# PGP和GPG
+## 什么是PGP
+PGP（Pretty Good Privacy）是一套用于讯息加密、验证的应用程序，采用IDEA的散列算法作为加密和验证之用。
+PGP加密由一系列散列、数据压缩、对称密钥加密，以及公钥加密的算法组合而成。每个步骤均支持几种算法，用户可以选择一个使用。每个公钥均绑定一个用户名和/或者E-mail地址。
+PGP的主要开发者是菲尔·齐默曼（Phil Zimmermann）。齐默曼于1991年将PGP在互联网上免费发布。PGP本身是商业应用程序；开源并具有同类功能的工具名为GnuPG（GPG）。PGP及其同类产品均遵守OpenPGP数据加解密标准。
+
+## 什么是GPG
+GnuPG（GNU Privacy Guard，GPG）是一种加密软件，它是PGP加密软件的开源替代物。GnuPG依照由IETF制定的OpenPGP技术标准设计。GnuPG是用于加密、数字签章及产生非对称匙对的软件。GPG 兼容 PGP（Pretty Good Privacy）的功能。
+
+## GPG实际应用
+尽管MD5,SHA等哈希函数就可以用于日常校验安装包是否被改变过，但是还是有一定的可能性发生修改后的数据包哈希结果的值还是和之前相同，而且也无法证明这个包就是特定的某个人或者特定的官方机构发出来的。所以用到了GPG来进一步签名认证。
+Github 使用 GPG 签名验证一般Linux发行版都包含GPG软件包，可以通过发行版的包管理器来安装（一般发行版都会默认安装，因为这个软件太重要了）。使用下面的命令确认当前系统是否安装了GPG
+```bash
+$ gpg --version
+```
+### 常规操作
+#### 生成密钥
+```bash
+## 生成新的密钥对
+$ gpg --gen-key 
+$ gpg --generate-key 
+## 以全功能形式生成新的密钥对（期间会有一些密钥的配置）
+$ gpg --full-generate-key
+$ gpg --full-gen-key  
+```
+#### 列出密钥
+```bash
+#列出公钥
+$ gpg --list-keys
+$ gpg --list-key [用户ID]
+#列出私钥
+$ gpg --list-secret-keys 
+```
+# 参考链接
+
+- [哈希(Hash)与加密(Encrypt)的基本原理、区别及工程应用](https://www.cnblogs.com/leoo2sk/archive/2010/10/01/hash-and-encrypt.html)
+- [哈希算法与MD5、SHA](https://zhuanlan.zhihu.com/p/37165658)
+- [md5sum 和 sha256sum用于 验证软件完整性](https://www.cnblogs.com/xuyaowen/p/md5sum_sha256_usages.html)
+- [Linux下校验下载文件的完整性(MD5,SHA1,PGP)](http://blog.useasp.net/archive/2014/03/29/use-md5-sha1-or-pgp-to-check-downloaded-file-integrity-on-linux.aspx)
+- [对称加密、非对称加密、RSA(总结)](https://juejin.im/post/5abb6c8651882555784e051d)
+- [Github 使用 GPG 签名验证](https://rekols.github.io/2019/08-03/github-using-gpg/)
+- [GPG使用教程](https://www.bitlogs.tech/2019/01/gpg%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/)
+- [GPG 与端到端加密：论什么才是可以信任的](https://zhuanlan.zhihu.com/p/29575509)
