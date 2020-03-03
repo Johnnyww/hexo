@@ -22,6 +22,7 @@ comments: false
 - [OnlineConvert](https://cn.onlineconvert.com/)：在线文件转换器
 - [BigJPG](https://bigjpg.com/zh)：AI人工智能图片放大
 - [TinyPNG](https://tinypng.com/)：无损压缩图片
+- [WALLPAPER ABYSS](https://wall.alphacoders.com/)：高质量壁纸网站
 
 # 网络工具
 - [IPIP](https://www.ipip.net/)：在此网站上输入IP地址，检测节点延迟
