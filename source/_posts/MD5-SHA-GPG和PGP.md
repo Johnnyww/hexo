@@ -30,12 +30,12 @@ description:
 2. **哈希算法是不可逆的，而加密算法是可逆的**。
 这里的不可逆有两层含义，一是“给定一个哈希结果R，没有方法将E转换成原目标文本S”，二是“给定哈希结果R，即使知道一段文本S的哈希结果为R，也不能断言当初的目标文本就是S”。其实稍微想想就知道，哈希是不可能可逆的，因为如果可逆，那么哈希就是世界上最强悍的压缩方式了——能将任意大小的文件压缩成固定大小。
 加密则不同，给定加密后的密文R，存在一种方法可以将R确定的转换为加密前的明文S。
-
+<!--more-->
 # 哈希与加密的数学基础
 
 从数学角度讲，哈希和加密都是一个映射。下面正式定义两者：
 
-- 一个哈希算法![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif)是一个多对一映射，给定目标文本S，H可以将其唯一映射为R，并且对于所有S，R具有相同的长度。由于是多对一映射，所以H不存在逆映射![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif),使得R转换为唯一的S。
+- 一个哈希算法![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif)是一个多对一映射，给定目标文本S，H可以将其唯一映射为R，并且对于所有S，R具有相同的长度。由于是多对一映射，所以H不存在逆映射![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DH%5E%7B-1%7D(R).gif)使得R转换为唯一的S。
 
 - 一个加密算法![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_R%3DE(S%2CK_E).gif)是一个一一映射，其中第二个参数叫做加密密钥，E可以将给定的明文S结合加密密钥Ke唯一映射为密文R，并且存在另一个一一映射![](https://oss.chenjunxin.com/picture/blogPicture/383743f2_S%3DD(R%2CK_D).gif)，可以结合Kd将密文R唯一映射为对应明文S，其中Kd叫做解密密钥。
 
