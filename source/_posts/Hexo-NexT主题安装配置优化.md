@@ -901,6 +901,7 @@ font:
 ```
 
 #### 归档页面添加十二生肖
+
 ![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_add-chinese-zodiac-to-next-title.webp)
 在归档页面的年份后添加十二生肖的图案，具体样式可以参考[归档页面](https://www.chenjunxin.com/archives/)。
 首先是在[这里](https://oss.chenjunxin.com/files/blogfiles/9ec4151c_chinese-zodiac.zip)下载十二生肖字体。下载后将解压的三个字体文件全部放在根目录 ~/source/fonts/ 下（若无 fonts 文件夹请自建）。
@@ -990,6 +991,55 @@ font:
 .icon-monkey:before { content: '\e829'; }
 .icon-rooster:before { content: '\e82f'; }
 ```
+
+#### 添加数学公式支持
+这里看了各种对比之后，试验过后选择支持mathjax的pandoc,其他的老是会有各种奇怪的问题。
+
+##### 安装pandoc
+Manjaro:
+```bash
+$ sudo pacman -S pandoc
+```
+CentOS7:
+在[官网](https://pandoc.org/releases.html)下载压缩包
+```bash
+# pandoc 2.0 之后的版本可如下安装
+$ sudo tar xvzf pandoc-2.9.2-linux-amd64.tar.gz --strip-components 1 -C /usr
+# 查看 pandoc 路径，可直接用 rm /usr/bin/pandoc 删除
+$ which pandoc
+$ pip install pandocfilters  # 安装依赖
+# 查看语法
+$ pandoc -h
+# 查看版本
+$ pandoc -v
+```
+
+##### 更换Hexo渲染器
+```bash
+$ npm uninstall hexo-renderer-marked --save
+$ npm install hexo-renderer-pandoc --save
+```
+修改主题配置文件，这里以next为例:
+```diff
+# Math Formulas Render Support
+math:
+  # Default (true) will load mathjax / katex script on demand.
+  # That is it only render those page which has `mathjax: true` in Front-matter.
+  # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.
++  per_page: true
+
+  # hexo-renderer-pandoc (or hexo-renderer-kramed) required for full MathJax support.
+  mathjax:
++    enable: true
+    # See: https://mhchem.github.io/MathJax-mhchem/
+    mhchem: false
+```
+注意事项
+如果你使用这款Pandoc renderer,那么书写 Markdown 时候需要遵循[Pandoc 对 Markdown的规定](https://pandoc.org/MANUAL.html#pandocs-markdown)。
+
+有一些比较明显的需要注意的事项：正常的文字后面如果跟的是`list`, `table`或者`quotation`，文字后面需要空一行，如果不空行，这些环境将不能被 Pandoc renderer 正常渲染。
+
+另外，文中的 URL 使用 Pandoc 渲染以后是普通的文本格式，不能点击，可以通过用`<>`包围 URL 的方式把 URL 变成可点击的 URL。
 
 # 扩展
 ## 草稿 && 布局
@@ -1111,3 +1161,4 @@ url 必须为有效链接地址才会以链接的形式显示在右上角，否�
 - [hexo优化之——使用gulp压缩资源](https://todebug.com/use-gulp-with-hexo/)
 - [Hexo博客静态资源压缩](https://hasaik.com/posts/495d0b23.html)
 - [Hexo-NexT 主题个性优化](https://guanqr.com/tech/website/hexo-theme-next-customization/#%E5%BD%92%E6%A1%A3%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E5%8D%81%E4%BA%8C%E7%94%9F%E8%82%96)
+- [在不同平台安装使用 pandoc](https://zhaozhiyuan.org/post/install-pandoc/)
