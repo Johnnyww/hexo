@@ -11,37 +11,41 @@ abbrlink: a55f0545
 date: 2020-01-31 21:19:52
 ---
 
-# 一.在Windows系统上进行分区
+# 在Windows系统上进行分区
 
 进入windows磁盘管理器，分别新建两个简单卷，只设置大小，**不需要格式化**。一个设置为600M大小用于挂载efi,另一个用于挂载根目录/,大小随意。(我是在一块500g的固态上分出一半来装的，需要注意的是如果重新装系统的时候,挂在efi那个分区不能直接格式化删除，不然后面再分成一样大小的还是挂载efi会报错，没搞懂什么问题，一开始分的1g,后面直接格式化了，一直分1g一直报错，就分了600M装，才莫名成功了，本来都想装虚拟机算了。)
 
 **制作Manjaro镜像**
+
 直接官网下的kde镜像，此次使用的是KDE Plasma 18.1.5版本， 然后用刻录工具刻录到u盘上，这次使用的是[usbwrite](http://7dx.pc6.com/wwb5/USBWriter13.zip) ,也可以使用rufus。
 <!-- more -->
-# 二.Manjaro系统安装
-## 1.BIOS的设置关闭掉Secure Boot
-关闭掉Secure Boot
-硬盘模式设置为ahci（根据机型貌似有些不用设置）
+
+# Manjaro系统安装
+## BIOS的设置关闭掉Secure Boot
+关闭掉Secure Boot  
+硬盘模式设置为ahci（根据机型貌似有些不用设置）  
 引导模式使用uefi（据说双系统win是mbr则manjaro也使用mbr比较好，我的是GPT）
 
-## 2.进入安装界面进行安装进入U盘之后首先回车选择最后一个是简体中文
-进入U盘之后首先回车选择最后一个是简体中文
-driver  因为是n卡就选择no free，其他情况选free或网上查bios选项等配置
-然后回车 Boot:Manjaro.x86_64 kde
-进入安装安装界面之后点击launch installr
-地区选择Asia 区域选择Shanghai
-分区,双系统有两种情况
+## 进入安装界面进行安装进入U盘之后首先回车选择最后一个是简体中文
+1. 进入U盘之后首先回车选择最后一个是简体中文
+2. driver  因为是n卡就选择no free，其他情况选free或网上查bios选项等配置
+3. 然后回车 Boot:Manjaro.x86_64 kde
+4. 进入安装安装界面之后点击launch installr
+5. 地区选择Asia 区域选择Shanghai
+6. 分区,双系统有两种情况
+
 ### mbr启动
-这里我们直接划分出来一块分区文件系统选择ext4，挂载点 /
+这里我们直接划分出来一块分区文件系统选择ext4，挂载点 `/`  
+
 ### uefi启动模式
-这里需要一个esp分区
-划出600MB分区，文件系统fat16或fat32，挂载点boot/efi，标记boot，esp
-还需要一个根分区也就是系统分区
-划出分区，文件系统ext4，挂载点 / ，无需标记
-可以进行安装了。(/home,/swap都不用管，要是只有8g内存可以考虑配置/swap，挂载点选linuxswap就行)
+这里需要一个esp分区  
+划出600MB分区，文件系统fat16或fat32，挂载点`boot/efi`，标记boot，esp
+还需要一个根分区也就是系统分区  
+划出分区，文件系统ext4，挂载点 `/` ，无需标记  
+可以进行安装了。(/home,/swap都不用管，要是只有8g内存可以考虑配置/swap，挂载点选linuxswap就行)  
 安装完后点击重启计算机，在完全关闭后拔出u盘。开机后进入bios选择Manjaro引导到第一位，保存进入系统。
 
-# 三.系统设置和软件安装
+# 系统设置和软件安装
 ## 系统设置
 **进行软件源设置以及系统更新首先，我们先把它打开文件的方式改为双击**
 首先，我们先把它打开文件的方式改为双击
@@ -51,7 +55,7 @@ driver  因为是n卡就选择no free，其他情况选free或网上查bios选�
 ```bash
 sudo pacman-mirrors -i -c China -m rank
 ```
-在第命令结束的时候会弹出一个窗口让你选择想要使用的源，选最快的那个就行了。(例如:https://mirrors.ustc.edu.cn/manjaro/ 中科大的)
+在第命令结束的时候会弹出一个窗口让你选择想要使用的源，选最快的那个就行了。(例如:[https://mirrors.ustc.edu.cn/manjaro/](https://mirrors.ustc.edu.cn/manjaro/) 中科大的)
 或者直接编辑文件添加源地址:
 
 ```bash
@@ -110,30 +114,34 @@ sudo pacman -S wqy-microhei
 
 ## 软件安装
 
-### 1.安装AUR管理工具:
+### 安装AUR管理工具:
 想要使用AUR中的软件，一种方式是在图形的软件安装界面的设置中把AUR打开，然后搜索进行安装，另外是使用命令行工具进行安装。由于Yaourt已经不再维护，这里选择了Yay来管理AUR仓库中的软件。
 ```bash
 sudo pacman -S yay
 ```
-Yay默认使用法国的aur.archlinux.org作为AUR源，可以更改为国内清华大学提供的镜像。
-yay 用户执行以下命令修改aururl:
-yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+Yay默认使用法国的aur.archlinux.org作为AUR源，可以更改为国内清华大学提供的镜像。  
+yay 用户执行以下命令修改aururl:  
+```bash
+$ yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+```
 修改的配置文件位于 ~/.config/yay/config.json  去掉 # AURURL 的注释，修改为
+```json
 AURURL="https://aur.tuna.tsinghua.edu.cn"
+```
 **yay 安装命令不需要加 sudo**,yay的命令参数跟pacman参数基本一致,还可通过以下命令查看修改过的配置:
 ```bash
-yay -P -g
+$ yay -P -g
 ```
 yay 的常用命令：
 ```bash
-yay -S package # 从 AUR 安装软件包
-yay -Rns package # 删除包
-yay -Syu # 升级所有已安装的包
-yay -Ps # 打印系统统计信息
-yay -Qi package # 检查安装的版本
+$ yay -S package # 从 AUR 安装软件包
+$ yay -Rns package # 删除包
+$ yay -Syu # 升级所有已安装的包
+$ yay -Ps # 打印系统统计信息
+$ yay -Qi package # 检查安装的版本
 ```
 
-### 2.安装中文字体:
+### 安装中文字体:
 ```bash
 sudo pacman -S wqy-zenhei
 sudo pacman -S wqy-bitmapfont
@@ -144,12 +152,12 @@ sudo pacman -S adobe-source-han-sans-cn-fonts
 sudo pacman -S adobe-source-han-serif-cn-fonts
 ```
 
-### 3.中文输入法安装:
+### 中文输入法安装:
 fcitx和ibus都可以配置中文输入法
 fcitx 或 ibus 两个选其一 推荐fcitx(一开始装了ibus，后面转了fcitx)
 
 #### fcitx安装
-1.安装安装输入法模块:
+1. 安装安装输入法模块:
 ```bash
 sudo pacman -S fcitx-im #安装全部输入法模块
 
@@ -162,32 +170,31 @@ $ yay -S fcitx-im
 Enter a selection (default=all):
 #直接按回车，默认4个都安装，不然后面在有些应用或者终端调不出输入法
 ```
-2.安装输入法配置工具
+2. 安装输入法配置工具
 ```bash
 sudo pacman -S fcitx-configtool
 ```
-3.安装中文输入法选其一（我选的sunpinyin，rime和goolepinyin据说不支持模糊音）
+3. 安装中文输入法选其一（我选的sunpinyin，rime和goolepinyin据说不支持模糊音）
 ```bash
 sudo pacman -S fcitx-sunpinyin
 sudo pacman -S fcitx-rime
 sudo pacman -S fcitx-libpinyin
 sudo pacman -S fcitx-googlepinyin
 ```
-4.安装云拼音（可选）
+4. 安装云拼音（可选）
 ```bash
 sudo pacman -S fcitx-cloudyinpin
 ```
 安装fcitx-cloudpinyin后，googlepinyin，fcitx自带的pinyin，sunpinyin的候选次列表都会具有云辅助，更加智能。（rime不支持）
-5.修改配置文件`$HOME/.xprofile`，右键粘贴如下代码并保存:
+5. 修改配置文件`$HOME/.xprofile`，右键粘贴如下代码并保存:
 ```bash
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 ```
-6.**注销重新登录或者重启系统。**
+6. **注销重新登录或者重启系统。**
 
 #### ibus安装
-
 ```bash
 sudo pacman -S ibus #安装ibus软件包
 sudo pacman -S ibus-qt
@@ -219,7 +226,7 @@ ibus-daemon -x -d
 ```
 **再重启发现输入法能开机自动启动了**
 
-### 4.更改项目文件英文名
+### 更改项目文件英文名
 修改目录映射文件名:
 ```bash
 sudo nano .config/user-dirs.dirs
@@ -248,7 +255,7 @@ mv 视频 to Videos
 ```
 **重启系统**
 
-### 5.常用软件安装
+### 常用软件安装
 #### 解压工具安装
 ```bash
 sudo pacman -S unrar unzip p7zip
@@ -325,7 +332,7 @@ sudo pacman -S deepin.com.qq.im
 
 #### 深度微信
 微信是自己从github上下的旧版的包2.7.188版本,并根据文档修改对应的安装配置    
-https://github.com/countstarlight/deepin-wine-wechat-arch
+[https://github.com/countstarlight/deepin-wine-wechat-arch](https://github.com/countstarlight/deepin-wine-wechat-arch)
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_deepin_wine_wechat.webp)
 安装完后手动切换deepin-wine环境
 
@@ -334,8 +341,8 @@ https://github.com/countstarlight/deepin-wine-wechat-arch
 yay -S deepin-wine
 ```
 2. 修改 deepin-wine-wechat 的启动文件
-修改如下两个文件中的 WINE_CMD 的值：
-/opt/deepinwine/apps/Deepin-WeChat/run.sh
+修改如下两个文件中的 WINE_CMD 的值：  
+/opt/deepinwine/apps/Deepin-WeChat/run.sh  
 /opt/deepinwine/tools/run.sh
 ```diff
 -WINE_CMD="wine"
@@ -380,10 +387,12 @@ yay -S deepin.com.thunderspeed
 
 #### Aria2
 下载器，支持 HTTP(S)，FTP，SFTP，BitTorrent和Metalink 协议
+
 ##### 安装
 ```bash
 sudo pacman -S aria2
 ```
+
 ##### 配置
 配置文件
 ```bash
@@ -567,7 +576,7 @@ rfkill unblock 0 #取消阻止
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 ```
-打开`系统设置->蓝牙>适配器`看是否能识别适配器,如果不能识别则需要更换蓝牙适配器。能识别的话再继续下一步，可以直接系统设置中点击连接，也可以终端启动bluetoothctl交互命令。
+打开`系统设置->蓝牙>适配器`看是否能识别适配器,如果不能识别则需要更换蓝牙适配器。能识别的话再继续下一步，可以直接系统设置中点击连接，也可以终端启动bluetoothctl交互命令。  
 使用bluetoothctl连接到蓝牙设备：
 ```bash
 bluetoothctl
@@ -594,16 +603,18 @@ Device F8:DF:15:40:E3:C3 (public)
         UUID: Handsfree                 (0000111e-0000-1000-8000-00805f9b34fb)
         RSSI: -55
 ```
+
 #### 系统信息查看软件(类似AIDA64)  
 ```bash
-yay -S hardinfo
+$ yay -S hardinfo
 ```
+
 #### SSD优化配置
 ##### 开启Trim功能
-SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知NAND闪存固态硬盘(SSD)哪些数据块可以删除，因为它们已经不再使用了。使用TRIM可以提高向SSD写入数据的性能，延长SSD的使用寿命。可以参考[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM)
+SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知NAND闪存固态硬盘(SSD)哪些数据块可以删除，因为它们已经不再使用了。使用TRIM可以提高向SSD写入数据的性能，延长SSD的使用寿命。可以参考[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM),
 在使用Trim功能之前需要查看固态硬盘是否支持，否则可能造成数据丢失:
 ```bash
-lsblk --discard
+$ lsblk --discard
 ```
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_manjaro_ssd_io_check.webp)
 `DISC-GRAN`和`DISC-MAX`关于使用的Trim方式，Nvme 协议固态是不推荐使用的`ContinuousTRIM`方式的。(详见[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive/NVMe#Discards))
@@ -613,6 +624,7 @@ sudo systemctl enable fstrim.timer
 sudo systemctl start fstrim.timer #开启fstrim
 ```
 启用fstrim.timer服务则会自动每周运行一次fstrim.service去进行trim,不用手动调用。
+
 ##### IO调度器选择
 一般来说，IO调度算法是为低速硬盘准备的，对于固态，最好是不使用任何IO调度器，或使用对硬盘干预程度最低的调度算法。这里可以照搬官方的[配置](https://wiki.archlinux.org/index.php/Improving_performance#Storage_devices)
 ```bash :/etc/udev/rules.d/60-schedulers.rules
@@ -664,7 +676,7 @@ Java(TM) SE Runtime Environment (build 1.8.0_241-b07)
 Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)
 ```
 前面那个不行在加上底下这个配置jdk环境变量
-修改配置文件`/etc/profile`
+修改配置文件`/etc/profile`  
 setting for jdk-oracle
 ```bash
 JAVA_HOME=/home/johnnychan/Public/programs/java/jdk8/jdk1.8.0_241
@@ -679,19 +691,22 @@ source /etc/profile
 
 #### Maven安裝配置
 在/usr/local/lib 目录下新建一个文件夹maven：
+```bash
 sudo mkdir /usr/local/lib/maven
+```
 将文件解压到这个目录下：
 ```bash
-tar -zxvf apache-maven-3.6.3-bin.tar.gz -C  /usr/local/lib/maven
+$ tar -zxvf apache-maven-3.6.3-bin.tar.gz -C  /usr/local/lib/maven
 ```
-也可以放到别的路径下，可以看一下linux目录一般存放规则：http://blog.csdn.net/fuzhongyu2/article/details/52437161
-配置环境变量
-环境变量分为用户变量和系统变量。
-用户变量配置文件：~/.bashrc（在当前用户主目录下的隐藏文件，可以通过`ls -a`查看到)
-系统环境配置文件：/etc/profile
-用户变量和系统变量的配置方法一样，本文以配置用户变量为例。
-编译配置文件.bashrc:
-在终端输入:
+也可以放到别的路径下，可以看一下linux目录一般存放规则：[http://blog.csdn.net/fuzhongyu2/article/details/52437161](http://blog.csdn.net/fuzhongyu2/article/details/52437161)
+配置环境变量  
+环境变量分为用户变量和系统变量。  
+用户变量配置文件：~/.bashrc（在当前用户主目录下的隐藏文件，可以通过`ls -a`查看到)  
+系统环境配置文件：/etc/profile  
+用户变量和系统变量的配置方法一样，本文以配置用户变量为例。  
+编译配置文件.bashrc:  
+在终端输入:  
+
 ```bash
 sudo nano ~/.bashrc
 ```
@@ -892,6 +907,7 @@ pkill X
  }
 ```
 修改保存后重启 Docker 以使配置生效。
+
 #### Nginx
 ```bash
 sudo pacman -S nginx
@@ -899,6 +915,7 @@ systemctl start nginx #启动Nginx服务
 systemctl enable nginx #Nginx服务开机时启动
 ```
 http://127.0.0.1 的默认页面是:/usr/share/nginx/html/index.html,你可以修改在 /etc/nginx/ 目录中的文件来更改配置 ./etc/nginx/nginx.conf 是主配置文件。
+
 ##### Nginx配置下载目录
 在原有nginx配置中增加location模块，对127.0.0.1访问路径设置为下载目录根目录/home/johnnychan/Downloads/ThunderDownloads,并且对该location块开启目录文件列表，详细配置如下：
 ```json
@@ -910,17 +927,17 @@ autoindex_localtime on;  # 显示的文件时间为文件的服务器时间
 charset utf-8,gbk;  # 避免中文乱码
 }
 ```
+
 ##### Nginx的403 Forbidden解决的办法(权限文件和文件不存在)
 要修改nginx运行用户为拥有配置的root路径拥有权限的用户，或者修改目录的权限。在/etc/nginx/nginx.conf 前面加上一句：
 ```json
 user xxx;
 ```
-就可以了，其中，xxx就是运行nginx的用户。
-完成了上面的，访问还出现错误，很有可能是你的目录里没有文件，然后又没有列出目录的权限。 
+就可以了，其中，xxx就是运行nginx的用户。  
+完成了上面的，访问还出现错误，很有可能是你的目录里没有文件，然后又没有列出目录的权限。   
 检查你的/home/xxx/website/nginxweb文件夹里面是否有配置的默认文件，默认文件在nginx.conf里面的index，或者使用上面的方法生成文件索引。
 
 ### 7.终端软件
-
 ```bash
 sudo pacman -S neofetch # 终端打印出你的系统信息
 sudo pacman -S htop #命令行显示进程信息
@@ -1017,21 +1034,18 @@ source ~/.zshrc
 ```
 
 #### 配置环境变量使得zsh和bash都生效
-为了便于在bash和zsh切换后可以使用同样的配置的alias等配置，采用如下方案：
-自定义配置放在.profile中
-.bashrc配置文件中使用source ~/.profile加载自定义配置
-.zshrc配置文件中使用[[ -e ~/.profile ]] && emulate sh -c ‘source ~/.profile’加载自定义配置
+为了便于在bash和zsh切换后可以使用同样的配置的alias等配置，采用如下方案：  
+自定义配置放在.profile中  
+.bashrc配置文件中使用source ~/.profile加载自定义配置  
+.zshrc配置文件中使用[[ -e ~/.profile ]] && emulate sh -c ‘source ~/.profile’加载自定义配置  
 配置文件示例如下：
-- .bashrc
-zzzzzzzzzzzzz原有配置
-下面一行为新加配置
-```bash
+
+- 在.bashrc原有配置最下面新加一行配置
+```
 source ~/.profile
 ```
-- .zshrc
-zzzzzzzzzzzzz原有配置
-下面一行为新加配置
-```bash
+- .在zshrc原有配置最下面新加一行配置
+```
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 ```
 - .profile
@@ -1044,15 +1058,15 @@ export EDITOR=/usr/bin/nano
 ```
 然后执行:
 ```bash
-source ~/.profile
+$ source ~/.profile
 ```
 在bash终端执行:
 ```bash
-source ~/.bashrc
+$ source ~/.bashrc
 ```
 在zsh终端执行:
 ```bash
-source ~/.zshrc
+$ source ~/.zshrc
 ```
 这样把算定义配置放在.profile里，即可在bash和zsh中使用同样的自定义环境了。
     
@@ -1065,18 +1079,17 @@ source ~/.zshrc
 此时进入系统设置-代理下配置已经连接上的代理端口，如下图:
 ![](https://chenjunxin.oss-cn-shenzhen.aliyuncs.com/picture/blogPicture/a55f0545_global_proxy.webp)
 此时，Chrome浏览器就可以科学上网了，但这是全局的设置，而且没有规则绕过一些国内的网址，因此还要继续设置。
-打开Chrome网上应用商店-搜索安装Proxy SwitchyOmega扩展
-
+打开Chrome网上应用商店-搜索安装Proxy SwitchyOmega扩展  
 然后设置一个proxy
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_switchyomega_proxysetting.webp)
-再新建设置一个auto switch,规则列表填写地址https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt ，点击立即更新情景模式，按照如下配置:
+再新建设置一个auto switch,规则列表填写地址[https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt](https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt) ，点击立即更新情景模式，按照如下配置:
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_switchyomega_proxysetting_autoswitch.webp)
 把这个auto switch情景模式设置为插件默认的就可以了，实现按照规则科学上网，这里是符合规则内的才翻墙，规则之外的直连访问。**记得改回系统刚才设置的全局代理**。
 
 #### V2Ray客户端
 运行官方一键安装脚本:
 ```bash
-bash <(curl -L -s https://install.direct/go.sh)
+$ bash <(curl -L -s https://install.direct/go.sh)
 ```
 或者使用Manjaro自带的包管理器安装
 ```bash
@@ -1086,7 +1099,7 @@ sudo pacman -S v2ray
 ArchLinux下的v2ray/config.json
 使用v2ray自带了一个检查工具v2ray -test检查json文件
 ```bash
-v2ray -test -config /etc/v2ray/config.json` #检查json
+$ v2ray -test -config /etc/v2ray/config.json` #检查json
 V2Ray 4.22.1 (V2Fly, a community-driven edition of V2Ray.) Custom (go1.13.5 linux/amd64)
 A unified platform for anti-censorship.
 Configuration OK.
@@ -1100,22 +1113,24 @@ systemctl start v2ray   #启动v2ray
 
 #### 终端代理
 为了解决终端下载被墙服务器的安装包失败的问题，所以需要让终端也可以翻墙，顺便提升下载速度。工具有polipo 和 privoxy 两种,polipo 貌似只能全局代理，privoxy 全局/自动两种代理方式都可以实现。**全局代理下，访问 localhost 时也会走代理，可能导致无法正常访问本地服务**。
+
 ##### privoxy 实现全局和自动代理
 privoxy 可以配置 .action 格式的代理规则文件。通过控制规则文件实现全局和自动代理。
 action 文件可以手动编辑，也可以从 gfwlist 生成。
 下面将先介绍 privoxy 的安装配置，再介绍 action 文件的生成。
+
 ###### 安装配置
 安装 privoxy：
 ```bash
-yay -S privoxy
+$ yay -S privoxy
 ```
 进入目录 `/etc/privoxy`，可以看到目录结构大致为：
 
--`config` 配置文件，这个文件很长。。
--`*.action` 代理规则文件
--`*.filter` 过滤规则文件
--`trust` 不造干嘛用
--`templates/` 同上
+- `config` 配置文件，这个文件很长。。
+- `*.action` 代理规则文件
+- `*.filter` 过滤规则文件
+- `trust` 不造干嘛用
+- `templates/` 同上
 
 开始修改配置文件。
 privoxy 有 filter （过滤）的功能，可以用来实现广告拦截。不过这里只希望实现自动代理，在配置文件中把 filter 部分注释掉：
@@ -1151,10 +1166,10 @@ forward-socks5 / 127.0.0.1:1081 .
 # 根据规则自动代理
 forward-socks5 .google.com 127.0.0.1:1081 .
 ```
-**注意！每行最后还有一个点。**
-实现全局代理就是第一种写法了。
-但是如果要自动代理，第二种直接写在配置文件里的做法其实不太合适，更合适的做法是写成 action 文件，配置文件中只管引用。
-把上面的注释掉。
+**注意！每行最后还有一个点。**  
+实现全局代理就是第一种写法了。  
+但是如果要自动代理，第二种直接写在配置文件里的做法其实不太合适，更合适的做法是写成 action 文件，配置文件中只管引用。  
+把上面的注释掉。  
 新建 action 文件 my.action，内容如下：
 ```bash
 # 这一行表示本 action 文件中所有条目都使用代理
@@ -1179,6 +1194,7 @@ pip install gfwlist2privoxy
 ```
 gfwlist2privoxy 不支持 python3.x，安装时注意使用的是 pip2 还是 pip3。
 参数说明：
+
 - `-i/--input` 输入，本地 gfwlist 文件或文件 URL。这里使用上面的 gfwlist
 - `-f/ --file` 输出，即生成的 action 文件的目录。这里输出到  `/etc/privoxy/gfwlist.action`
 - `-p/ --proxy` SS 代理地址，生成后可以修改。这里是 `127.0.0.1:1081`
@@ -1199,9 +1215,9 @@ systemctl start privoxy.service
 systemctl -l status privoxy.service
 ```
 
-配置环境变量
+配置环境变量  
 在~/.bashrc或者~/.zshrc中输入
-```bash
+```
 export https_proxy=127.0.0.1:8118
 export http_proxy=127.0.0.1:8118
 ```
@@ -1222,63 +1238,67 @@ yay -S plasma5-applets-netspeed
 sudo pacman -S latte-dock
 ```
 - Global Menu
-可以访问https://store.kde.org/ 找插件，或者在AUR包的网站上根据插件名找是否有相应的包安装。
+可以访问[https://store.kde.org/](https://store.kde.org/) 找插件，或者在AUR包的网站上根据插件名找是否有相应的包安装。
+
 ### KDE设置
-一些桌面设置：
-显示：
+一些桌面设置：  
+显示：  
 屏幕 120% 放大： 系统设置 > 显示 > 全局缩放> 1.2 
 
-全局菜单：
+全局菜单：  
 因为有了 Latte Dock，不再需要任务栏了，取而代之的是全局菜单。需要添加全局菜单的桌面部件
 ```
 sudo pacman -S appmenu-gtk-module
 sudo pacman -S libdbusmenu-glib  # For electron apps menu
 ```
 
-锁屏：
+锁屏：  
 系统设置 > 工作空间行为 > 锁屏 > 键盘快捷键 设为 Meta + L 。
 
-KDE 桌面动画：
+KDE 桌面动画：  
 系统设置 > 工作空间行为 > 桌面特效 设置你喜欢的桌面效果。
 
-打开文件：
-KDE 默认是单击打开文件，需要修改成跟Window一样的话：
+打开文件：  
+KDE 默认是单击打开文件，需要修改成跟Window一样的话：  
 系统设置 > 工作空间行为 > 常规行为 > 点击行为
 
 # 四.一些命令与技巧
-
 ## 常用pacman命令
 ### 更新系统
 在 Archlinux系 中，使用一条命令即可对整个系统进行更新:
 ```bash
-pacman -Syu
+$ pacman -Syu
 ```
 如果你已经使用pacman -Sy将本地的包数据库与远程的仓库进行了同步，也可以只执行:
 ```bash
-pacman -Su
+$ pacman -Su
 ```
 
 ### 安装包
 `pacman -S` 包名：例如，执行 `pacman -S firefox` 将安装 Firefox
-你也可以同时安装多个包，只需以空格分隔包名即可
-`pacman -Sy` 包名：与上面命令不同的是，该命令将在同步包数据库后再执行安装
-`pacman -Sv` 包名：在显示一些操作信息后执行安装
-`pacman -U`：安装本地包，其扩展名为 pkg.tar.gz
+你也可以同时安装多个包，只需以空格分隔包名即可  
+`pacman -Sy` 包名：与上面命令不同的是，该命令将在同步包数据库后再执行安装  
+`pacman -Sv` 包名：在显示一些操作信息后执行安装  
+`pacman -U`：安装本地包，其扩展名为 pkg.tar.gz  
 `pacman -U http://www.example.com/repo/example.pkg.tar.xz` 安装一个远程包（不在pacman配置的源里面）
+
 ### 删除包
-`pacman -R` 包名：该命令将只删除包，保留其全部已经安装的依赖关系
-`pacman -Rs` 包名：在删除包的同时，删除其所有没有被其他已安装软件包使用的依赖
-`pacman -Rsc` 包名：在删除包的同时，删除所有依赖这个软件包的程序
+`pacman -R` 包名：该命令将只删除包，保留其全部已经安装的依赖关系  
+`pacman -Rs` 包名：在删除包的同时，删除其所有没有被其他已安装软件包使用的依赖  
+`pacman -Rsc` 包名：在删除包的同时，删除所有依赖这个软件包的程序  
 `pacman -Rd` 包名：在删除包时不检查依赖
+
 ### 搜索包
-`pacman -Ss` 关键字：在仓库中搜索含关键字的包
-`pacman -Qs` 关键字： 搜索已安装的包
-`pacman -Qi` 包名：查看有关包的详尽信息
+`pacman -Ss` 关键字：在仓库中搜索含关键字的包  
+`pacman -Qs` 关键字： 搜索已安装的包  
+`pacman -Qi` 包名：查看有关包的详尽信息  
 `pacman -Ql` 包名：列出该包的文件
+
 ### 其他用法
-`pacman -Sw` 包名：只下载包，不安装
-`pacman -Sc`：清理未安装的包文件，包文件位于/var/cache/pacman/pkg/目录 
+`pacman -Sw` 包名：只下载包，不安装  
+`pacman -Sc`：清理未安装的包文件，包文件位于/var/cache/pacman/pkg/目录   
 `pacman -Scc`：清理所有的缓存文件
+
 ### pacman替代命令yay
 ```bash
 sudo pacman -S yay
@@ -1288,7 +1308,7 @@ yay 的命令参数跟pacman参数基本一致。
 ## 常用命令
 ### 查看网卡信息
 ```bash
-lspci|grep -i net
+$ lspci|grep -i net
 ```
 
 ### 查看已经启用的服务
@@ -1321,18 +1341,18 @@ git-noproxy(){
 
 ## 一些小技巧
 ### 快捷键
-F12：拉幕式终端
-Alt+空格：调出全局搜索
-Ctrl+F8：切出多桌面窗口
+F12：拉幕式终端  
+Alt+空格：调出全局搜索  
+Ctrl+F8：切出多桌面窗口  
+
 ### 鼠标操作
-在左上角撮几下，平铺所有窗口。
-鼠标滚轮好慢,
+在左上角撮几下，平铺所有窗口。  
+鼠标滚轮好慢：
 ```bash
 sudo pacman -S imwheel #配置文件自己上网查
 ```
 
 # 参考链接
-
 - [Manjaro 安装体验小结](https://michael728.github.io/2019/08/03/linux-manjaro-install/)
 - [Manjaro的尝试](https://zzycreate.github.io/2018/11/03/Manjaro%E7%9A%84%E5%B0%9D%E8%AF%95/)
 - [Manjaro安装，配置，美化指南](https://www.cnblogs.com/zryabc/p/11408297.html)

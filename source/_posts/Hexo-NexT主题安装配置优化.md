@@ -91,6 +91,7 @@ $ vim _config.yml
 ├── scripts
 └── source
 ```
+
 - `_config.yml`:  主体的配置文件, 修改时会自动更新, 无需重启服务器
 - `languages`:  语言文件夹, 参见国际化
 - `layout`:  布局文件夹, 用于存放主题的模板文件, 决定网站内容的呈现方式,Hexo 内建 Swig 模板引擎, 可以另外安装插件来获得 EJS, Haml, Jade 支持, Hexo 根据模板文件的扩展名来决定所使用的模板引擎
@@ -194,13 +195,14 @@ footer:
 
 #### 设置侧栏
 默认情况下，侧栏仅在文章页面（拥有目录列表）时才显示，并放置于右侧位置。可以通过修改主题配置文件中的 sidebar 字段来控制侧栏的行为。侧栏的设置包括两个部分，其一是侧栏的位置， 其二是侧栏显示的时机。
-```yaml
+```yaml theme/next/_config.yml
 sidebar:
   position: right
   display: post
   onmobile: true # 移动端显示侧栏,只有设计模板为Muse或Mist才能使用
 ```
 设置侧栏的位置，修改 sidebar.position 的值，支持的选项有：
+
 - left - 靠左放置
 - right - 靠右放置
 设置侧栏显示的时机，修改 sidebar.display 的值，支持的选项有：
@@ -210,7 +212,7 @@ sidebar:
 - remove - 完全移除
 
 #### 头像信息设置
-```yaml
+```yaml theme/next/_config.yml
 avatar:
   url: /images/avatar.jpg  # 设置头像资源的位置
   rounded: true            # 开启圆形头像
@@ -219,7 +221,7 @@ avatar:
 
 #### 社交信息和友链配置
 这里和菜单设置格式一样，社交名字: 社交url || 社交图标，图标信息来自 fontawesome：
-```yaml
+```yaml theme/next/_config.yml
 social: 
   GitHub: https://github.com/yourname || github
   E-Mail: mailto:yourname@gmail.com || envelope
@@ -231,6 +233,7 @@ social_icons:
 ```
 
 #### 首页文章属性
+```yaml theme/next/_config.yml
 post_meta:
   item_text: true    #  可以一行显示，文章的所有属性
   created_at: true    # 显示创建时间
@@ -238,6 +241,7 @@ post_meta:
     enabled: true     # 显示修改的时间
     another_day: true  # 设true时，如果创建时间和修改时间一样则显示一个时间
   categories: true    # 显示分类信息
+```
 
 #### 开启文章目录
 编辑主题配置文件，配置如下：
@@ -383,8 +387,10 @@ motion:
 ####  Hexo 本地搜索功能
 ##### 本地搜索的原理
 NexT 主题已经实现这个功能，它用了 Hexo 的拓展包 `hexo-generator-searchdb`，预先生成了一个文本库 `search.xml`，然后传到了网站里面。在本地搜索的时候，NexT 直接用 javascript 调用了这个文件，从而实现了静态网站的本地搜索。
+
 ##### 插件地址
 - [hexo-generator-searchdb](https://github.com/theme-next/hexo-generator-searchdb)
+
 ##### 安装配置
 安装插件：
 ```bash
@@ -399,6 +405,7 @@ search:
   format: html
   limit: 10000
 ```
+
 - path：索引文件的路径，相对于站点根目录
 - field：搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面
 - limit：限制搜索的条目数
@@ -434,7 +441,7 @@ busuanzi_count:
 更多用法请参考官网说明[不蒜子官网](http://ibruce.info/2015/04/04/busuanzi/)。
 
 ##### 百度统计
-起初以为阅读统计是通过百度统计进行计数的，后来发现百度统计、Google Analytics等只是分析工具，并不会把统计信息显示在博客页面上，所以是否需要百度统计看个人需求。打开[百度统计](http://tongji.baidu.com/)，登录并进入网站列表，点击新增网站。填写新增网站表单，添加必要字段网站域名：www.chenjunxin.com, 网站首页：https://chenjunxin.com, 网站名称 、行业类别(空间周边)选填。点击“确定”后，定位到站点的代码获取页面,会出现包含如下信息的提示：
+起初以为阅读统计是通过百度统计进行计数的，后来发现百度统计、Google Analytics等只是分析工具，并不会把统计信息显示在博客页面上，所以是否需要百度统计看个人需求。打开[百度统计](http://tongji.baidu.com/)，登录并进入网站列表，点击新增网站。填写新增网站表单，添加必要字段网站域名：[www.chenjunxin.com](www.chenjunxin.com), 网站首页：[https://chenjunxin.com](https://chenjunxin.com), 网站名称 、行业类别(空间周边)选填。点击“确定”后，定位到站点的代码获取页面,会出现包含如下信息的提示：
 ```js
 <script>
 var _hmt = _hmt || [];
@@ -476,6 +483,7 @@ PS：谷歌统计用的比较少，因为有墙，在加载代码的时候，很
 
 #### Google Search Console
 该版本已经集成了 HTML 标记的验证方式。
+
 - 查看原标记，将其中 content 字段引号内的内容拷贝出来
 - 修改主题配置文件。搜索 `google_site_verification`，将上述拷贝的内容复制在该值后面：
 ```yaml themes/next/_config.yml
@@ -486,6 +494,7 @@ google_site_verification: ********
 
 #### Hexo博客提交百度和Google收录
 SEO（Search Engine Optimization）：中文译为搜索引擎优化，即利用搜索引擎的规则提高网站搜索引擎内自然排名。主要通过站内优化比如网站结构调整、网站内容建设、网站代码优化等以及站外优化等方式实现。
+
 主要是给各个搜索引擎提交你的 sitemap，让别人能搜到你博客的内容。
 先确认博客是否被搜索引擎收录，在百度或者谷歌输入下面格式来判断，如果能搜索到就说明被收录，否则就没有。
 ```
@@ -496,10 +505,12 @@ Next 提供了 seo 优化选项，在主题配置文件_config.yml中有个选�
 
 ##### 让Google和百度收录博客
 由于两者方法相似，相似的部分一起讲。
+
 ###### 验证站点
 打开[百度站长平台](https://ziyuan.baidu.com/)，注册登陆后在`用户中心 > 站点管理`下添加网站。根据提示输入站点地址等信息，建议输入的域名为`www`开头的。
 登陆[google search console](https://search.google.com/search-console/welcome)（选右边），添加你的网站地址。
 在选择完网站的类型之后需要验证网站的所有权，有3种验证方式：
+
 - HTML文件验证：将验证文件放置于您所配置域名的根目录下，即放在博客的本地根目录的source文件夹下（要设置skip_render）。
 - HTML标签验证：baidu_site_verification或者google_site_verification后添加HTML标签content后的内容（推荐)，如下：
  打开 Hexo 主题配置文件，按如下修改/添加：
@@ -555,8 +566,9 @@ Sitemap: https://www.chenjunxin.com/baidusitemap.xml
 
 #####  提交sitemap
 谷歌：在 google search console 站点地图，提交sitemap.xml
-百度：在百度站长平台--链接提交--自动提交--sitemap，添加https://www.chenjunxin.com/baidusitemap.xml
+百度：在百度站长平台--链接提交--自动提交--sitemap，添加[https://www.chenjunxin.com/baidusitemap.xml](https://www.chenjunxin.com/baidusitemap.xml)
 对于百度，除了 sitemap 还有主动推动和自动推送这两种方式，主动推送的原理是每次 deploy 的时候都把所有链接推送给百度，自动推送则是每次网站被访问时都把该链接推送给百度。从效率上来说：主动推送>自动推送>sitemap。
+
 ##### 主动推送
 1. 插件安装
 ```bash
@@ -611,8 +623,7 @@ baidu_push: true
 ```
 
 ##### 为网站添加关键字,SEO优化
-1.设置hexo博客的关键字:
-在博客根目录下找到 _config.yml 文件，在所示地方添加keywords: 关键字1,关键字2,关键字3…，采用英文逗号隔开，注意keywords与关键词之间的空格:
+1. 设置hexo博客的关键字。在博客根目录下找到 _config.yml 文件，在所示地方添加keywords: 关键字1,关键字2,关键字3…，采用英文逗号隔开，注意keywords与关键词之间的空格:
 ```diff hexo/_config.yml
 title: 
 subtitle: ''
@@ -622,8 +633,7 @@ language:
 timezone: ''
 + keywords: JAVA,Linux,Manjaro,Hexo,Travis
 ```
-2.设置文章的关键字:
-在文章里面加入keywords，如下所示：
+2. 设置文章的关键字。在文章里面加入keywords，如下所示：
 ```
 ---
 title: ###
@@ -638,36 +648,38 @@ description: ###
 ##### hexo-abbrlink 链接持久化
 hexo 默认的链接是 `http://xxx.yy.com/2019/02/14/hello-world` 这种类型的，这源于站点目录下的配置 `_config.yml` 里的配置 `:permalink: :year/:month/:day/:title/`，这种默认配置的缺点就是一般文件名是中文，导致 url 链接里有中文出现，这会造成很多问题，不利于 SEO，另外年月日都会有分隔符。
 `hexo-abbrlink`这个插件，猜测是根据时间点算出的最终链接，这样就确保了博文链接的唯一化，只要不修改 md 文件的`abbrlink`的值， url 就永久不会改变。如此 md 文件名和文件内容也可以随便改了。后面的层级更短，这样也有利于 SEO 优化。
+
 - 安装：
 ```bah
 $ npm install hexo-abbrlink --save
 ```
-- 配置：
-  站点配置文件里:
-  ```yaml hexo/_config.yml
-  permalink: post/:abbrlink.html
-  abbrlink:
-   alg: crc32  # 算法：crc16(default) and crc32
-   rep: hex    # 进制：dec(default) and hex
-  ```
+- 配置：站点配置文件里:
+```yaml hexo/_config.yml
+permalink: post/:abbrlink.html
+abbrlink:
+ alg: crc32  # 算法：crc16(default) and crc32
+ rep: hex    # 进制：dec(default) and hex
+```
+
 百度蜘蛛抓取网页的规则: 对于蜘蛛说网页权重越高、信用度越高抓取越频繁，例如网站的首页和内页。蜘蛛先抓取网站的首页，因为首页权重更高，并且大部分的链接都是指向首页。然后通过首页抓取网站的内页，并不是所有内页蜘蛛都会去抓取。
+
 搜索引擎认为对于一般的中小型站点，3层足够承受所有的内容了，所以蜘蛛经常抓取的内容是前三层，而超过三层的内容蜘蛛认为那些内容并不重要，所以不经常爬取。出于这个原因所以`permalink`后面跟着的最好不要超过2个斜杠。
 
 ##### hexo-autonofollow
 nofollow 标签是由谷歌领头创新的一个反垃圾链接的标签，并被百度、yahoo 等各大搜索引擎广泛支持，引用 nofollow 标签的目的是：用于指示搜索引擎不要追踪（即抓取）网页上的带有 nofollow 属性的任何出站链接，以减少垃圾链接的分散网站权重。这里推荐 `hexo-autonofollow` 插件来解决。
+
 - 安装：
  ```bash
  $ npm install hexo-autonofollow  --save
  ```
-- 配置：
-  在站点配置文件中添加以下代码：
-  ```yml hexo/_config.yml
-  nofollow:
-    enable: true
-    exclude: # 例外的链接，可将友情链接放置此处
-    - exclude1.com
-    - exclude2.com
-  ```
+- 配置 在站点配置文件中添加以下代码：
+```yml hexo/_config.yml
+nofollow:
+  enable: true
+  exclude: # 例外的链接，可将友情链接放置此处
+   - exclude1.com
+   - exclude2.com
+```
 
 #### 博文压缩
 
@@ -753,7 +765,7 @@ gulp.task('default',gulp.series(gulp.parallel('minify-html','minify-css','minify
 生成博文时执行 hexo g && gulp 就会根据 gulpfile.js 中的配置，对 public 目录中的静态资源文件进行压缩。
 
 #### 网页样式布局
-在对 NexT 主题的个性优化中，如果想要添加一些个性化的内容，就需要对内部代码进行修改。主题提供了许多注入点，可以通过注入点插入自己想要的东西，而不会对原有的主题内部文件进行大量的修改。这样便于以后主题的升级，避免一系列的错误发生。NexT 主题更新到 v7.2.0 后，[PR #868](https://github.com/theme-next/hexo-theme-next/pull/868) 简化了自定义内容的添加方法，删除了以前版本中所用的 css/_custom.styl 自定义 CSS 样式文件。如果想要修改样式或者在 HTML 中的 <head>、<body> 等部位插入代码。即直接在博客 sourse 资源文件夹下新建自定义文件 _data/xxx 实现该功能。
+在对 NexT 主题的个性优化中，如果想要添加一些个性化的内容，就需要对内部代码进行修改。主题提供了许多注入点，可以通过注入点插入自己想要的东西，而不会对原有的主题内部文件进行大量的修改。这样便于以后主题的升级，避免一系列的错误发生。NexT 主题更新到 v7.2.0 后，[PR #868](https://github.com/theme-next/hexo-theme-next/pull/868) 简化了自定义内容的添加方法，删除了以前版本中所用的 css/_custom.styl 自定义 CSS 样式文件。如果想要修改样式或者在 HTML 中的 `<head>`、`<body>` 等部位插入代码。即直接在博客 sourse 资源文件夹下新建自定义文件 _data/xxx 实现该功能。
 在主题配置文件 _config.yml 中，写道：
 ```yaml ~/themes/next/_config.yml
 # Define custom file paths.
@@ -771,6 +783,7 @@ custom_file_path:
   #style: source/_data/styles.styl
 ```
 如果需要自定义 CSS 样式，需要将上述代码中 `custom_file_path:` 下的 `#style: source/_data/styles.styl` 注释取消，然后根据该自定义文件存放路径创建相应文件 `styles.styl`，在该文件中添加自定义内容。同样，如果需要在 `` 中添加内容，比如修改字体时引入 Google Fonts 以及分析博客数据时引入 Google Analytics，则需要新建 `head.swig` 文件，在其中添加自定义内容即可。在 `post.swig` 中添加的文章结尾样式，可以直接添加在 `post-body-end.swig` 文件中。
+
 ##### 使用 Google Fonts
 [Google Fonts](https://fonts.google.com/)提供了数百种高质量英文字体的 API，你可以通过调用 Google Fonts 免费使用其提供的字体服务。目前 Google Fonts 提供了几种中文简体字体，其中就有思源宋体。
 面对电子显示屏上千篇一律的黑体字，当读者看到一个显示宋体字的网页自然会眼前一亮。再加上合理的排版，你的博客必然会脱颖而出。宋体的衬线更适合长时间阅读，这也是目前各类阅读器或者浏览器上的阅读模式都会使用衬线字的原因。使用 Google Fonts 字体的方法很简单，NexT 主题配置文件中已经提供了设置：
@@ -816,14 +829,15 @@ font:
     external: true
     family:
 ```
-首先将 enable: 的 false 改为 true，然后在 host: 后添加 Google Fonts API 地址：fonts.googleapis.com。考虑到国内的网络对 Google 的域名并不友好，建议将 googleapis.com 修改为烧饼博客提供的镜像 loli.net,变成fonts.loli.net
+首先将 enable: 的 false 改为 true，然后在 host: 后添加 Google Fonts API 地址：fonts.googleapis.com。考虑到国内的网络对 Google 的域名并不友好，建议将 googleapis.com 修改为烧饼博客提供的镜像 loli.net,变成fonts.loli.net。
+
 然后，设置中下面的一些选项，就是设定博客各区域的字体，比如网站标题 title，文章内容 posts这些都可以进行修改，你要做的只是到 Google Fonts 上找到适合的字体，然后将字体的名字填写到 family: 中。最关键的是 global 字体的设定，这里的字体将会是你网站的基本（全局）字体。建议不要在这里填思源宋体的名字 Noto Serif SC，而是选取一款英文字体进行填写。因为中文字体往往携带同样的英文字体，如果将中文字体优先级设置为第一位，那么英文字体必将也会是中文字体的样式。如果你在这里设置的是 Noto Serif SC，那么英文字体也会是 Noto Serif SC。那么，中文字体到哪里去设置呢？当然还是要到 base.styl 文件中，直接这样修改：
 ```diff ~/themes/next/source/css/_variables/base.styl
 // Font families.
 -$font-family-chinese      = "PingFang SC", "Microsoft YaHei"
 +$font-family-chinese      = "Noto Serif SC"
 ```
-然后进入 [Google Fonts](https://fonts.google.com/)，搜索 Noto Serif SC，点 + 号选择，选择好后底部会弹出一个提示框，里面有使用说明。还可以点击提示框中的 CUSTOMIZE 定制要加载的字重与语言。之后，点击 EMBED，复制生成的 <link> 代码，添加到博客的 <head> 标签内，NexT 主题可直接添加到 ~/source/_data/head.swig 文件中。如果你想使用上文中提到的烧饼博客镜像，就将代码中的将 googleapis.com 修改为 loli.net。
+然后进入 [Google Fonts](https://fonts.google.com/)，搜索 Noto Serif SC，点 + 号选择，选择好后底部会弹出一个提示框，里面有使用说明。还可以点击提示框中的 CUSTOMIZE 定制要加载的字重与语言。之后，点击 EMBED，复制生成的 `<link>` 代码，添加到博客的 `<head>` 标签内，NexT 主题可直接添加到 ~/source/_data/head.swig 文件中。如果你想使用上文中提到的烧饼博客镜像，就将代码中的将 googleapis.com 修改为 loli.net。
 ![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_hexo-theme-next-google-fonts-select.webp)
 如下代码：
 ```stylus ~/source/_data/head.swig
@@ -835,13 +849,13 @@ font:
     color: #333;
 }
 ```
-这种先在 <head> 中引入字体，再通过 CSS 设定字体显示部位的方式适用于各种网页的设计，不局限于 NexT 主题。另外，这里给出当前博客字体设定：
-中文字体：Noto Serif SC
-英文字体：EB Garamond
-标题字体：Cinzel Decorative
-代码字体：Source Code Pro
-配置文件修改如下:
+这种先在 `<head>` 中引入字体，再通过 CSS 设定字体显示部位的方式适用于各种网页的设计，不局限于 NexT 主题。另外，这里给出当前博客字体设定：
 
+- 中文字体：Noto Serif SC
+- 英文字体：EB Garamond
+- 标题字体：Cinzel Decorative
+- 代码字体：Source Code Pro
+配置文件修改如下:
 ```diff ~/themes/next/_config.yml
 font:
 -  enable: false
@@ -885,6 +899,7 @@ font:
     external: true
 +   family: Source Code Pro
 ```
+
 #### 归档页面添加十二生肖
 ![](https://oss.chenjunxin.com/picture/blogPicture/9ec4151c_add-chinese-zodiac-to-next-title.webp)
 在归档页面的年份后添加十二生肖的图案，具体样式可以参考[归档页面](https://www.chenjunxin.com/archives/)。
@@ -990,8 +1005,10 @@ date: {{ date }}
 ---
 点击阅读前文前, 首页能看到的文章的简短描述
 ```
+
 ### 广义布局
 更广义上来说，你可以在 scaffolds 中定制任意多个布局，draft 和 page 是最常用的两个：
+
 - post：在这里的会当做文章被发布。
 - draft：放在这里，避免写了一半的文章被发布。
 - page：在首页增加标签页。
@@ -1003,7 +1020,7 @@ $ hexo new test 'test'
 INFO  Created: hexo/source/_posts/2019-10-16-test.md
 ```
 就会创建一个具有 test 模板的文章：`~/Code/blog/hexo/source/_posts/2019-10-16-test.md`
-**如果不指定模板，会、默认使用 [_config.yml](https://hexo.io/zh-cn/docs/configuration) 中的 `default_layout` 参数代替，一般来说是 post。**
+**如果不指定模板，会默认使用 [_config.yml](https://hexo.io/zh-cn/docs/configuration) 中的 `default_layout` 参数代替，一般来说是 post。**
 
 ### 草稿（draft）
 draft 布局用于创建草稿，生成的文档存在于 source\_drafts\ 目录中，默认配置下将不会把该目录下的文档渲染到网站中。
@@ -1040,6 +1057,7 @@ title: xxxx
 ---
 ```
 属性：
+
 - title：定义了博文的标题
 - date：定义了创作此博文的时间
 - tags：定义了博文的标签
@@ -1059,10 +1077,15 @@ title: xxxx
 console.log("Hello world!");
 ```
 代码块进阶语法规则：
+
 \``` [language] [title] [url] [link text]
+
 code snippet
+
 \```
+
 其中，各参数意义如下：
+
 - langugae：语言名称，引导渲染引擎正确解析并高亮显示关键字
 - title：代码块标题，将会显示在左上角
 - url：链接地址，如果没有指定 link text 则会在右上角显示 link

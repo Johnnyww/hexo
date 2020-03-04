@@ -74,8 +74,8 @@ $ npm -v
 
 # npm安装慢或者被墙问题解决办法
 因为npm存储包文件的服务器在国外，有时候会被墙，或者下载速度较慢，所以我们需要解决这个问题。
-淘宝的开发团队把npm在国内做了一个npm镜像备份，每10分钟会把国外npm的第三方包同步到淘宝自己服务器：
-可以安装淘宝的cnpm：
+淘宝的开发团队把npm在国内做了一个npm镜像备份，每10分钟会把国外npm的第三方包同步到淘宝自己服务器。
+也可以选择安装淘宝的cnpm：
 ```bash
 # --global 表示安装到全局，而非当前目录
 $ npm install --global cnpm
@@ -93,6 +93,7 @@ $ npm config list
 ```
 ## 设置镜像
 常用的 npm 镜像地址有：
+
 - [npm](https://registry.npmjs.org)  (默认)
 - [cnpm](https://r.cnpmjs.org)
 - [taobao](https://registry.npm.taobao.org)
@@ -100,6 +101,7 @@ $ npm config list
 - [rednpm](https://registry.mirror.cqupt.edu.cn)
 - [npmMirror](https://skimdb.npmjs.com/registry)
 - [edunpm](http://registry.enpmjs.org)
+
 1. 临时使用
 ```bash
 $ npm --registry https://registry.npm.taobao.org install xxx

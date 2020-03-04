@@ -12,8 +12,8 @@ abbrlink: 3bcc58b5
 date: 2020-03-01 18:04:22
 description:
 ---
-系统软件全局升级，导致Jetbrain的idea也升级到了2019.3.3版本，之前的3.2版本的破解失效了，新的版本暂时找不到方法破解，在[AUR](https://aur.archlinux.org/)上也找不到旧的软件包安装。后面发现可以利用AUR上的脚本文件构建旧版本的软件包进行安装。
-<!--more-->
+系统软件全局升级，导致Jetbrain的idea也升级到了2019.3.3版本，之前的3.2版本的破解失效了，新的版本暂时找不到方法破解，在[AUR](https://aur.archlinux.org/)上也找不到旧的软件包安装。后面发现可以利用AUR上的脚本文件构建旧版本的软件包进行安装。<!--more-->
+
 # 降级安装包获取与安装
 1. 进入[AUR](https://aur.archlinux.org/),搜索相应的程序，然后点击`查看PKGBUILD`,如下图:
 ![](https://oss.chenjunxin.com/picture/blogPicture/3bcc58b5_AUR_00.webp)
@@ -38,14 +38,15 @@ $ pacman -U intellij-idea-ultimate-edition-jre-2019.3.2-1-x86_64.pkg.tar.xz
 
 # pacman包管理器的设置
 pacman 的配置文件位于/etc/pacman.conf。 man pacman.conf 可以查看配置文件的进一步信息。
-为了避免上述的事故，可以在pacman中配置不升级的软件包
+为了避免上述的事故，可以在pacman中配置不升级的软件包。
+
 ## 不升级软件包
 如果由于某种原因，用户不希望升级某个软件包，可以加入内容如下：
 ```
 IgnorePkg = 软件包名
 ```
-多软件包可以用空格隔开，也可是用 glob 模式。如果只打算忽略一次升级，可以使用` --ignore` 选项。
-忽略了的软件包可通过` pacman -S` 升级。
+多软件包可以用空格隔开，也可是用 glob 模式。如果只打算忽略一次升级，可以使用` --ignore` 选项。忽略了的软件包可通过` pacman -S` 升级。
+
 ## 不升级软件包组
 和软件包一样，也可以不升级某个软件包组：
 ```

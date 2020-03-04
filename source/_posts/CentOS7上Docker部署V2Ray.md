@@ -12,9 +12,10 @@ abbrlink: '17242235'
 date: 2020-03-01 14:29:18
 description:
 ---
-因为之前用的[Vultr](https://www.vultr.com/)的VPS网络经常不太稳定，昨天换了[HostWinds](https://www.hostwinds.com/)家的VPS,所以要从头配置起V2Ray,顺便记录一下，方便日后再换VPS用。
-<!--more-->
+因为之前用的[Vultr](https://www.vultr.com/)的VPS网络经常不太稳定，昨天换了[HostWinds](https://www.hostwinds.com/)家的VPS,所以要从头配置起V2Ray,顺便记录一下，方便日后再换VPS用。<!--more-->
+
 # 安装Dokcer
+
 1. 使用root账户登录，把yum包更新到最新
 ```bash
 $ yum update
@@ -83,12 +84,13 @@ $ chmod -R 777 /etc/v2ray/
 ```
 修改说明：
 端口数字 10023 改成你想要设定的，范围 1到65000 ；
-ID ：22ed157d-ad58-4789-adf3-c0d097c98635 也要更改，打开网站：https://1024tools.com/uuid 生成。
+ID ：22ed157d-ad58-4789-adf3-c0d097c98635 也要更改，打开[网站](https://1024tools.com/uuid)生成。
 4. 启动V2Ray容器
 ```bash
 $ docker run -d --name v2ray -v /etc/v2ray:/etc/v2ray -p 10023:10023 v2ray/official v2ray -config=/etc/v2ray/config.json
 ```
 （说明：修改两个10023为上面你改的端口）
+
 **注意:**如果有提示`“IPv4 forwarding is disabled. Networking will not work”`，解决方法如下：
 修改/etc/sysctl.conf文件，添加如下内容：
 ```
@@ -107,14 +109,17 @@ $ sysctl net.ipv4.ip_forward
 # 配置BBR加速
 ## 什么是BBR：
 TCP BBR是谷歌出品的TCP拥塞控制算法。BBR目的是要尽量跑满带宽，并且尽量不要有排队的情况。BBR可以起到单边加速TCP连接的效果。
+
 Google提交到Linux主线并发表在ACM queue期刊上的TCP-BBR拥塞控制算法。继承了Google“先在生产环境上部署，再开源和发论文”的研究传统。
+
 TCP-BBR已经在YouTube服务器和Google跨数据中心的内部广域网(B4)上部署。由此可见出该算法的前途。TCP-BBR的目标就是最大化利用网络上瓶颈链路的带宽。一条网络链路就像一条水管，要想最大化利用这条水管，最好的办法就是给这跟水管灌满水。
+
 BBR解决了两个问题：
+
 - 在有一定丢包率的网络链路上充分利用带宽。非常适合高延迟，高带宽的网络链路。
 - 降低网络链路上的buffer占用率，从而降低延迟。非常适合慢速接入网络的用户。
 
-Google 在 2016年9月份开源了他们的优化网络拥堵算法BBR，最新版本的 Linux内核(4.9-rc8)中已经集成了该算法。对于TCP单边加速，并非所有人都很熟悉，不过有另外一个大名鼎鼎的商业软件“锐速”，相信很多人都清楚。特别是对于使用国外服务器或者VPS的人来说，效果更佳。
-BBR项目地址：https://github.com/google/bbr
+Google 在 2016年9月份开源了他们的优化网络拥堵算法BBR，最新版本的 Linux内核(4.9-rc8)中已经集成了该算法。对于TCP单边加速，并非所有人都很熟悉，不过有另外一个大名鼎鼎的商业软件“锐速”，相信很多人都清楚。特别是对于使用国外服务器或者VPS的人来说，效果更佳。[BBR项目](https://github.com/google/bbr)
 
 ## 安装BBR
 1. yum更新系统版本：
@@ -125,7 +130,7 @@ $ yum update
 ```bash
 $ cat /etc/redhat-release 
 ```
-3.安装elrepo并升级内核：
+3. 安装elrepo并升级内核：
 ```bash
 $ rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 $ rpm -Uvh https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
