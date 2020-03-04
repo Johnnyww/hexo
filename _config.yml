@@ -131,6 +131,6 @@ baidu_url_submit:
   token: 1M9IqcMuZGMXmgtr # 秘钥，百度站长平台 > 推送接口 > 接口调用地址中token字段
   path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里
 
-markdown:
-  plugins:
-     - hexo-math
+  #markdown:
+  #plugins:
+  #- hexo-math
