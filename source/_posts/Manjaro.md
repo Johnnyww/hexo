@@ -640,6 +640,13 @@ ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue
 可以看到我当前NVME盘没有使用任何调度器，SATA固态使用的是deadline，而机械硬盘使用的是bfq。
 
 ### 6.开发软件
+#### 网络工具
+```bash
+$ sudo pacman -S wireshark-qt  # 抓包工具
+
+$ sudo pacman -S bind-tools #Dig（Domain Information Groper）是一个功能强大的命令行工具，用于查询DNS名称服务器
+```
+
 #### jdk
 手动安装oracle-jdk，可选择低版本,下载tar包
 解压
