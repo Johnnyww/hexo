@@ -152,6 +152,44 @@ sudo pacman -S adobe-source-han-sans-cn-fonts
 sudo pacman -S adobe-source-han-serif-cn-fonts
 ```
 
+#### linux字体推荐(可选)
+中文字体推荐使用：文泉驿、思源字体。安装如下：
+```bash
+$ sudo pacman -S wqy-microhei wqy-bitmapfont wqy-zenhei wqy-microhei-lite
+$ sudo pacman -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts
+```
+
+西文字体推荐使用dejavu、noto字体。
+```bash
+$ sudo pacman -S ttf-dejavu
+$ sudo pacman -S noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk
+```
+
+#### 优化-->字体-->缩放字体-->1.25
+字体我用的是思源黑体（adobe家开源的），文泉驿和google家的noto系列也不错。
+noto系列cjk指的是中国韩国和日本，中国大陆好像是S开头的字体，因为太大了就没有安装。
+chrome等其他浏览器可以在浏览器设置里改一下字体风格，然后在/etc/fonts/新建一个local.conf文件写入：
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+    <match target="font">
+        <edit name="autohint" mode="assign">
+            <bool>false</bool>
+            </edit>
+        <edit name="hinting" mode="assign">
+            <bool>false</bool>
+        </edit>
+        <edit name="hintstyle" mode="assign">
+            <const>none</const>
+        </edit>
+    </match>
+</fontconfig>
+```
+这样软件默认就不会用自己的文字处理方式了，和win下字体基本无太大差别，字体模糊问题解决。
+
+
+
 ### 中文输入法安装:
 fcitx和ibus都可以配置中文输入法
 fcitx 或 ibus 两个选其一 推荐fcitx(一开始装了ibus，后面转了fcitx)
