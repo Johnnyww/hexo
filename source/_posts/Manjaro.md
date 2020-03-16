@@ -294,6 +294,15 @@ mv 视频 to Videos
 **重启系统**
 
 ### 常用软件安装
+
+#### 支持复杂运算的计算器
+
+```bash
+$ sudo pacman -S speedcrunch
+```
+有些运算我们需注意单位问题，如角度单位（弧度、度数），默认它是弧度，所以你运算sin(30)不会等于0.5，在设置中或使用快捷键切换即可。
+建议勾选 设置 - 行为 - Enable Complex Numbers，不然你可能连pi（圆周率表示）都无法使用。
+
 #### 解压工具安装
 ```bash
 sudo pacman -S unrar unzip p7zip
@@ -323,14 +332,44 @@ sudo pacman -S foxitreader
 
 #### 媒体播放器
 ```bash
-sudo pacman -S vlc
-sudo pacman -S ffmpeg
+$ sudo pacman -S vlc #一个免费且开源的跨平台媒体播放器以及框架，可以播放大多数格式的多媒体文件以及 DVS，音频 CD，VCD，以及各种流媒体协议
+$ sudo pacman -S ffmpeg
+
+$ sudo pacman -S kodi # 一款获得殊荣的免费开源（GPL）软件，支持视频，音乐，图片，游戏以及更多内容的媒体中心。
+```
+
+#### TeamViwer安装
+直接运行命令安装的包打开并不能用，需要到[官网](https://www.teamviewer.com/en/download/linux/)下载包解压运行。
+选择 Other systems (not officially supported)的[↓ x86 64bit](https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz)
+下载到的是：`teamviewer_15.3.2682_amd64.tar.xz`
+
+##### 解压
+两种解压方式：
+- 右键鼠标选择解压
+- 命令行解压`tar xvf teamviewer_15.3.2682_amd64.tar.xz`
+
+##### 运行Teamviwer
+把解压出来的目录放到你想的任意目录，可以放在`/opt/`下，`cd teamviewer`进入目录里，运行`./teamviewer`
+
+##### 添加到Dash to Dock
+修改安装目录下的teamviewer.desktop,修改图标文件路径
+```
+Icon=/opt/teamviewer/tv_bin/desktop/teamviewer_256.png
+```
+然后执行
+```bash
+$ sudo cp /opt/teamviewer/teamviewer.desktop /usr/share/applications/
 ```
 
 #### ClamAV安装
 ```bash
 sudo pacman -S clamav #Clam 防病毒软件（命令行）
 sudo pacman -S clamtk #Clam 防病毒软件（客户端）
+```
+
+#### BleachBit安装
+```bash
+$ sudo pacman -S bleachbit #快速释放磁盘空间并不知疲倦地守卫你的隐私。释放缓存，删除 cookie，清除互联网浏览历史，清理临时文件，删除日志，以及更多功能...
 ```
 
 #### 截图软件
