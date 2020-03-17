@@ -687,6 +687,7 @@ $ yay -S hardinfo
 ```
 
 #### SSD优化配置
+
 ##### 开启Trim功能
 SSD TRIM是一个高级技术附件(ATA)命令，它使操作系统能够通知NAND闪存固态硬盘(SSD)哪些数据块可以删除，因为它们已经不再使用了。使用TRIM可以提高向SSD写入数据的性能，延长SSD的使用寿命。可以参考[ArchWiki](https://wiki.archlinux.org/index.php/Solid_state_drive#TRIM),
 在使用Trim功能之前需要查看固态硬盘是否支持，否则可能造成数据丢失:
@@ -716,7 +717,87 @@ ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_manajro_ssd_io.webp)
 可以看到我当前NVME盘没有使用任何调度器，SATA固态使用的是deadline，而机械硬盘使用的是bfq。
 
-### 6.开发软件
+#### 提取图片文字Tesseract
+##### Tesseract概述
+Tesseract 是一款被广泛使用的开源 OCR 工具,Tesseract(/'tesərækt/) 这个词的意思是"超立方体"，指的是几何学里的四维标准方体，又称"正八胞体"。。不过这里要讲的，是一款以其命名的开源 OCR(Optical Character Recognition, 光学字符识别) 软件。
+所谓 OCR 是图像识别领域中的一个子领域，该领域专注于对图片中的文字信息进行识别并转换成能被常规文本编辑器编辑的文本。
+Tesseract 已经有 30 年历史，开始它是惠普实验室的一款专利软件，然后在 2005 年开源，自 2006 年后由 Google 赞助进行后续的开发和维护。
+在 1995 年 Tesseract 曾是世界前三的 OCR 引擎，而且在现在的免费 OCR 引擎中，其识别精度也仍然是出类拔萃的。因为其免费与较好的效果，许多的个人开发者以及一些较小的团队在使用着 Tesseract ，诸如验证码识别、车牌号识别等应用中，不难见到 Tesseract 的身影。
+[Tesseract](https://github.com/tesseract-ocr/tesseract)目前已作为开源项目发布在GitHub上，其最新版本已经支持中文OCR，并提供了一个命令行工具。
+
+##### Tesseract安装
+```bash
+$ sudo pacman -S tesseract
+
+$ tesseract -v                     
+tesseract 4.1.1
+ leptonica-1.79.0
+  libgif 5.2.1 : libjpeg 8d (libjpeg-turbo 2.0.4) : libpng 1.6.37 : libtiff 4.1.0 : zlib 1.2.11 : libwebp 1.1.0
+ Found AVX2
+ Found AVX
+ Found FMA
+ Found SSE
+ Found libarchive 3.4.2 zlib/1.2.11 liblzma/5.2.4 bz2lib/1.0.8 liblz4/1.9.2 libzstd/1.4.4
+```
+
+##### 安装语言文件
+```bash
+$ sudo pacman -S tesseract-data-chi_sim #简体中文
+$ sudo pacman -S tesseract-data-chi_tra #繁体中文
+$ sudo pacman -S tesseract-data-eng #英文
+
+$ tesseract --list-langs #查看有哪些可用的语言   
+List of available languages (3):
+chi_sim
+chi_tra
+eng
+osd
+```
+这里的 "eng" 和 "chi_sim"，"chi_tra"是 Tesseract 提供的英文，简体中文和繁体中文的语言文件，而其他的则是训练得到的。
+另外要说明的是，这里的 "语言文件" 的本质是包含了某种 "自然语言" 的文字的特征等辅助识别的一些资源，但像 chi_sim 这个中文简体里也包含了英文字母与阿拉伯数字的资源。而我们也可以为了特定的用途而去训练产生对应的资源。
+
+##### 命令行测试
+假设我们有一张名为 paper.png 的图片，则通过以下命令对图片进行识别
+```bash
+$ tesseract paper.png result -l chi_sim
+```
+- 第一个参数是待识别的图像的文件名
+- 第二个参数用于指定输出，如果希望直接输出而不是保存到文件，那么就使用 stdout，否则这个参数将会作为保存结果的文件的前缀
+- -l chi_sim 这个应该很好理解，就是用来指定使用哪个 "语言文件"，如果是使用 英文(eng) ，这个参数可以不加，因为默认就是使用英文的 "语言文件" 来进行识别
+以上命令如不出错，结果将会保存到 result.txt 这个文本文件中。
+此外 Tesseract 还提供非常丰富的可选参数来对识别过程进行调整，可用的参数及其默认值可以通过以下命令进行查看:
+```bash
+$ tesseract --print-parameters
+```
+参数的使用有两种:
+- 使用 -c 选项来设定单项参数的值，比如:
+```bash
+$ tesseract paper.png result -l chi_sim -c language_model_ngram_on=1
+```
+允许使用多个 -c 选项来设置多个参数的值。
+
+- 将多项参数设置写入文件，然后在识别时使用该文件，比如:
+```bash
+$ tesseract paper.png result -l chi_sim tess.conf
+```
+需要注意的是，如果使用配置文件，用作参数的配置文件名要放在最后面——这里也支持多个配置文件，但它们必须要在最后面。假如我有两个配置文件 tess_1.conf 和 tess_2.conf，那么这样是正确的:
+```bash
+$ tesseract paper.png paper -l chi_sim tess_1.conf tess_2.conf
+```
+而这样则是错误的:
+```bash
+$ tesseract paper.png paper tess_1.conf -l chi_sim tess_2.conf
+```
+至于 Tesseract 其他那些参数各有什么含义，官方没有提供任何文档来进行解释，这里有一个[链接](http://www.sk-spell.sk.cx/tesseract-ocr-parameters-in-302-version)提供了部分参数的用处说明，应该是阅读了 Tesseract 源代码后得到的结论。
+
+##### Tesseract可视化界面
+根据不同的GUI安装相应支持的Tesseract软件
+```bash
+$ sudo pacman -S gimagereader-qt #QT
+$ sudo pacman -S gimagereader-gtk #GTK
+```
+
+### 开发软件
 #### 网络工具
 ```bash
 $ sudo pacman -S wireshark-qt  # 抓包工具
@@ -1021,7 +1102,8 @@ user xxx;
 完成了上面的，访问还出现错误，很有可能是你的目录里没有文件，然后又没有列出目录的权限。   
 检查你的/home/xxx/website/nginxweb文件夹里面是否有配置的默认文件，默认文件在nginx.conf里面的index，或者使用上面的方法生成文件索引。
 
-### 7.终端软件
+### 终端软件
+
 ```bash
 sudo pacman -S neofetch # 终端打印出你的系统信息
 sudo pacman -S htop #命令行显示进程信息
@@ -1154,7 +1236,8 @@ $ source ~/.zshrc
 ```
 这样把算定义配置放在.profile里，即可在bash和zsh中使用同样的自定义环境了。
     
-### 8.科学上网
+### 科学上网
+
 #### Shadowsocks客户端
 先用manjaro自带的octopi搜索shadowsocks-qt5，然后安装
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_shadowsocks_qt5_00.webp)
@@ -1346,7 +1429,8 @@ KDE 桌面动画：
 KDE 默认是单击打开文件，需要修改成跟Window一样的话：  
 系统设置 > 工作空间行为 > 常规行为 > 点击行为
 
-# 四.一些命令与技巧
+# 一些命令与技巧
+
 ## 常用pacman命令
 ### 更新系统
 在 Archlinux系 中，使用一条命令即可对整个系统进行更新:
@@ -1437,6 +1521,7 @@ sudo pacman -S imwheel #配置文件自己上网查
 ```
 
 # 参考链接
+
 - [Manjaro 安装体验小结](https://michael728.github.io/2019/08/03/linux-manjaro-install/)
 - [Manjaro的尝试](https://zzycreate.github.io/2018/11/03/Manjaro%E7%9A%84%E5%B0%9D%E8%AF%95/)
 - [Manjaro安装，配置，美化指南](https://www.cnblogs.com/zryabc/p/11408297.html)
@@ -1454,3 +1539,6 @@ sudo pacman -S imwheel #配置文件自己上网查
 - [记录一次linux系统迁移过程](https://rovo98.coding.me/posts/3babee60/)
 - [manjaro踩坑记](https://mrswolf.github.io/zh-cn/2019/05/24/manjaro%E8%B8%A9%E5%9D%91%E8%AE%B0/#SSD%E9%85%8D%E7%BD%AE)
 - [在Manjaro Linux下安装驱动程序的两种方法](https://ywnz.com/linuxjc/4850.html)
+- [Tesseract:安装与命令行使用](http://www.zmonster.me/2015/04/17/tesseract-install-usage.html)
+- [linux 环境下安装tesseract](https://www.wj0511.com/site/detail.html?id=257)
+- [提取图片文字——linux下tesseract-ocr安装编译](https://blog.csdn.net/pangyunsheng/article/details/79372845)
