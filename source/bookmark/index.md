@@ -31,6 +31,7 @@ comments: false
 - [Ping](https://www.ping.pe/)：在此网站上的工具里可以用ping查询服务器IP地址,选择离自己最近的厂商，检测回路，看跳转了多少个路由节点，越少越好
 - [站长工具](http://ping.chinaz.com/)：功能同上
 - [Port.Ping](https://port.ping.pe/)：在此网站上输入IP地址和端口，检测端口是否成功打开可用
+- [iPerf](https://iperf.fr/)：内网测速工具
 
 # 域名
 - [freenom](https://www.freenom.com/)：可在网站上看是否有免费的域名可用
