@@ -373,11 +373,39 @@ $ sudo pacman -S bleachbit #快速释放磁盘空间并不知疲倦地守卫你�
 ```
 
 #### 截图软件
+
+##### 深度截图
 ```bash
-sudo pacman -S deepin-screenshot
+$ sudo pacman -S deepin-screenshot 
 ```
 
+##### flameshot
+###### flameshot安装
+```bash
+$ sudo pacman -S flameshot-git
+```
+
+###### 配置flameshot截图快捷键
+用KDE的桌面环境，可以配置下快捷键：系统设置—->快捷键—->自定义快捷键：
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_keybord_00.webp)
+编辑—->新建—>全局快捷键—>命令/URL:
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_keybord_01.webp)
+
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_keybord_02.webp)
+动作填入为 flameshot gui
+
+###### 配置flameshot守护进程
+如果想要配置一些截图选项。执行以下命令：
+```bash
+$ flameshot config
+```
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_config_00.webp)
+
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_config_01.webp)
+要配置下开机启动，因为flameshot是有前后端的，守护进程要有运行才能正常截图！
+
 #### 系统状态监控
+
 ```bash
 sudo pacman -S deepin-system-monitor
 ```
