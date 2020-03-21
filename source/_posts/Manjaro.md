@@ -331,11 +331,17 @@ sudo pacman -S foxitreader
 ```
 
 #### 媒体播放器
+
 ```bash
 $ sudo pacman -S vlc #一个免费且开源的跨平台媒体播放器以及框架，可以播放大多数格式的多媒体文件以及 DVS，音频 CD，VCD，以及各种流媒体协议
 $ sudo pacman -S ffmpeg
 
 $ sudo pacman -S kodi # 一款获得殊荣的免费开源（GPL）软件，支持视频，音乐，图片，游戏以及更多内容的媒体中心。
+```
+
+#### 跨平台音乐播放器listen1
+```bash
+$ yay -S listen1-desktop
 ```
 
 #### TeamViwer安装
@@ -403,6 +409,11 @@ $ flameshot config
 
 ![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_flameshot_config_01.webp)
 要配置下开机启动，因为flameshot是有前后端的，守护进程要有运行才能正常截图！
+
+#### 壁纸自动定时切换软件—Variety
+```bash
+$ sudo pacman -S variety
+```
 
 #### 系统状态监控
 
