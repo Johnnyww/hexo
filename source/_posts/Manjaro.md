@@ -893,7 +893,54 @@ export JAVA_HOME CLASSPATH PATH
 source /etc/profile
 ```
 
+#### Tomcat安裝配置
+到[Tomcat官网](https://tomcat.apache.org/)选择相应版本的tar.gz包下载
+
+解压并移动到opt目录下
+```bash
+$ tar -zxvf apache-tomcat-8.5.53.tar.gz
+sudo cp -r apache-tomcat-8.5.53 /opt/
+```
+发现没有读写查权限，于是开放tomcat及其子目录的权限，-R表示启动递归处理
+```bash
+$ sudo chmod -R 755 /opt/apache-tomcat-8.5.53
+```
+启动Tomcat
+```bash
+sudo /opt/apache-tomcat-8.5.53/bin/startup.sh
+```
+会看到控制台有以下输出：
+```bash
+Using CATALINA_BASE:   /opt/apache-tomcat-8.5.53
+Using CATALINA_HOME:   /opt/apache-tomcat-8.5.53
+Using CATALINA_TMPDIR: /opt/apache-tomcat-8.5.53/temp
+Using JRE_HOME:        /home/johnnychan/Public/programs/java/jdk8/jdk1.8.0_241/jre
+Using CLASSPATH:       /opt/apache-tomcat-8.5.53/bin/bootstrap.jar:/opt/apache-tomcat-8.5.53/bin/tomcat-juli.jar
+Tomcat started.
+```
+在浏览器地址栏输入http://localhost:8080/ 出现了那幅经典的猫图,成功。
+
+Tomcat 默认运行在8080端口
+```bash
+$ sudo netstat -anpt |grep :8080
+tcp        0      0 :::8080                     :::*                        LISTEN      3318/java  
+```
+关闭Tomcat
+```bash
+$ sudo /opt/apache-tomcat-8.5.53/bin/shutdown.sh
+或者直接kill进程号,例如:
+$ sudo kill -9 3318
+```
+
+为了以后方便启动tomcat 可设置软链接
+```bash
+sudo ln  -s /opt/apache-tomcat-8.5.53/bin/startup.sh  /usr/bin/tomcatup
+sudo ln  -s /opt/apache-tomcat-8.5.53/bin/shutdown.sh  /usr/bin/tomcatdown
+```
+以后直接使用 sudo tomcatup 和sudo tomcatup即可。
+
 #### Maven安裝配置
+
 在/usr/local/lib 目录下新建一个文件夹maven：
 ```bash
 sudo mkdir /usr/local/lib/maven
