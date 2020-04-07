@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-- 12.14.1
-branchs:
-  only:
+  - 12.14.1
+branches:
   - master
 cache:
   npm: false
