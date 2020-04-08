@@ -99,10 +99,11 @@ cwebp [options] input_file -o output_file.webp
 报告编码进展百分比。
 例子:
 ```bash
-# 将picture.png以50的质量无损转换为webp
-$ cwebp -q 50 -lossless picture.png -o picture_lossless.webp
-cwebp -q 70 picture_with_alpha.png -o picture_with_alpha.webp
-cwebp -sns 70 -f 50 picture.png -o picture.webp
+$ cwebp images/flower.jpg -o images/flower.webp # 转换单个文件
+$ cwebp -q 50 -lossless picture.png -o picture_lossless.webp # 将picture.png以50的质量无损转换为webp
+$ cwebp -q 70 picture_with_alpha.png -o picture_with_alpha.webp
+$ cwebp -sns 70 -f 50 picture.png -o picture.webp
+$ for file in ~/temp/*; do cwebp -lossless "$file" -o "${file%.*}.webp";done # 无损转换整个目录下的文件
 
 # 使用vwebp工具查看转换后的webp图像
 $ vwebp picture_lossless.webp
@@ -147,3 +148,4 @@ $ dwebp image.webp -o image.png
 - [WebP官方转换工具手把手安装教程](https://blog.csdn.net/aa464971/article/details/77963949)
 - [WebP - Mac上使用cwebp,dwebp,webpmux工具](https://www.jianshu.com/p/61ab330a6de6)
 - [如何在Linux中将图像转换为WebP格式](https://www.howtoing.com/convert-images-to-webp-format-in-linux)
+- [用 WebP 作为你的首选图片文件格式](https://www.soasurs.com/2019/09/10/Switching-to-WebP/)
