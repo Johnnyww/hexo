@@ -88,6 +88,18 @@ $ tar xzf nginx-1.16.1.tar.gz
 ```
 **OpenSSL**
 ```bash
+# 可以先查看已安装OpenSSL版本
+$ openssl version -a
+OpenSSL 1.1.1d  10 Sep 2019
+built on: Sun Mar  8 08:45:14 2020 UTC
+platform: linux-x86_64
+options:  bn(64,64) rc4(16x,int) des(int) idea(int) blowfish(ptr) 
+compiler: gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -O3 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_CPUID_OBJ -DOPENSSL_IA32_SSE2 -DOPENSSL_BN_ASM_MONT -DOPENSSL_BN_ASM_MONT5 -DOPENSSL_BN_ASM_GF2m -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DKECCAK1600_ASM -DRC4_ASM -DMD5_ASM -DVPAES_ASM -DGHASH_ASM -DECP_NISTZ256_ASM -DX25519_ASM -DPOLY1305_ASM -DNDEBUG
+OPENSSLDIR: "/usr/local/openssl/ssl"
+ENGINESDIR: "/usr/local/openssl/lib/engines-1.1"
+Seeding source: os-specific
+
+# 开始下载新版本
 $ cd /opt
 $ wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz
 $ tar xzf openssl-1.1.1f.tar.gz
@@ -253,7 +265,8 @@ server {
 [MySSL.com](https://myssl.com/chenjunxin.com?status=success)检测A+，整体配置过关。
 ![](https://oss.chenjunxin.com/picture/blogPicture/9f670eb_Myssl_Result.webp)
 
-[ssllabs.com](https://www.ssllabs.com/ssltest/analyze.html?d=chenjunxin.com)检测A+，整体配置过关。
+
+![ssllabs.com](https://www.ssllabs.com/ssltest/analyze.html?d=chenjunxin.com)检测A+，整体配置过关。
 ![](https://oss.chenjunxin.com/picture/blogPicture/9f670eb_Ssllabs_Result.webp)
 
 ## OSCP
