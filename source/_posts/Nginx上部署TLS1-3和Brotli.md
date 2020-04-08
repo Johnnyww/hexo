@@ -266,7 +266,7 @@ server {
 ![](https://oss.chenjunxin.com/picture/blogPicture/9f670eb_Myssl_Result.webp)
 
 
-![ssllabs.com](https://www.ssllabs.com/ssltest/analyze.html?d=chenjunxin.com)检测A+，整体配置过关。
+[ssllabs.com](https://www.ssllabs.com/ssltest/analyze.html?d=chenjunxin.com)检测A+，整体配置过关。
 ![](https://oss.chenjunxin.com/picture/blogPicture/9f670eb_Ssllabs_Result.webp)
 
 ## OSCP
