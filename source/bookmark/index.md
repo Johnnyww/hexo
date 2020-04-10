@@ -40,3 +40,6 @@ comments: false
 
 - [ZBench](https://www.bwgblog.net/zbench.html)：Linux下服务器性能测试脚本
 - [Superspeed](https://www.bwgblog.net/superspeed-sh.html)：测试VPS到国内速度的脚本
+
+# 翻译工具
+- [DeepL](https://www.deepl.com/)
