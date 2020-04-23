@@ -105,6 +105,10 @@ $ cwebp -q 70 picture_with_alpha.png -o picture_with_alpha.webp
 $ cwebp -sns 70 -f 50 picture.png -o picture.webp
 $ for file in ~/temp/*; do cwebp -lossless "$file" -o "${file%.*}.webp";done # 无损转换整个目录下的文件
 
+# 推荐 将quality设置为85会生成质量与PNG相当但小得多的WebP图像。对于jpeg，将quality设置为75可以在视觉和文件大小之间取得很好的平衡。
+$ cwebp -q 75 picture_with_alpha.jpg -o picture_with_alpha.webp
+$ cwebp -q 85 picture_with_alpha.png -o picture_with_alpha.webp
+
 # 使用vwebp工具查看转换后的webp图像
 $ vwebp picture_lossless.webp
 ```
@@ -149,3 +153,4 @@ $ dwebp image.webp -o image.png
 - [WebP - Mac上使用cwebp,dwebp,webpmux工具](https://www.jianshu.com/p/61ab330a6de6)
 - [如何在Linux中将图像转换为WebP格式](https://www.howtoing.com/convert-images-to-webp-format-in-linux)
 - [用 WebP 作为你的首选图片文件格式](https://www.soasurs.com/2019/09/10/Switching-to-WebP/)
+- [Web 性能优化： 图片优化让网站大小减少 62%](https://zhuanlan.zhihu.com/p/58419577)
