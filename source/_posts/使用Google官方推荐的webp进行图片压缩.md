@@ -18,6 +18,10 @@ date: 2020-03-21 17:11:16
 # WebP介绍
 &emsp;WebP是一种相对较新的开源图像格式，可为Web上的图像提供出色的无损和有损压缩。 使用WebP，网站管理员和Web开发人员可以创建更小，更丰富的图像，从而使Web更快。  
 &emsp;与PNG相比，WebP无损图像的尺寸要小26％。 在同等的SSIM质量指数下，WebP有损图像比同类JPEG图像小25-34％。无损WebP支持透明性（也称为Alpha通道），而仅增加了22％的字节数。 对于可以接受有损RGB压缩的情况，有损WebP还支持透明性，与PNG相比，文件大小通常小3倍。  
+&emsp;既然我们已经认识到在可能的情况下使用WebP格式是有价值的，那么很重要的一点是—它不能完全替代 JPEG 和 PNG，因为浏览器对 WebP 支持并不完全普及。  
+&emsp;在撰写本文时，Safari 和 旧的IE 都是不支持WebP的浏览器。
+![](https://oss.chenjunxin.com/picture/blogPicture/93260b1f_webp_support_status.webp)
+&emsp;根据 [caniuse.com](https://caniuse.com/#search=WebP) 的数据，全球有77.63%的用户使用支持WebP的浏览器。这意味着，通过使用 WebP 图像，可以为77.63% 的用户提供更快的 web 页面及更好的体验。  
 &emsp;要使用它，需要下载适用于Linux，Windows和Mac OS X的预编译的实用程序。
 
 # Linux中安装使用WebP工具
