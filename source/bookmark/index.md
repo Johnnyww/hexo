@@ -14,6 +14,7 @@ comments: false
 # 编程
 - [Linux命令手册](https://man.linuxde.net/)：Linux命令查询
 - [Postwoman](https://postwoman.io/)：API 请求构建器，替代Postman
+- [浏览器的兼容性自查工具](https://caniuse.com/)：一个针对前端开发人员定制的一个查询CSS、JS在个中流行浏览器钟的特性和兼容性的网站，可以很好的保证网页的浏览器兼容性。
 
 # 工具
 
@@ -24,7 +25,9 @@ comments: false
 - [TinyPNG](https://tinypng.com/)：无损压缩图片
 - [WALLPAPER ABYSS](https://wall.alphacoders.com/)：高质量壁纸网站
 - [常用数学符号的 LaTeX 表示方法](http://mohu.org/info/symbols/symbols.htm)
-
+- [Markdown数学公式语法](https://www.jianshu.com/p/e74eb43960a1)
+- [Markdown中如何添加特殊符号](https://www.cnblogs.com/carious/p/10052160.html)
+- 
 # 网络工具
 
 - [IPIP](https://www.ipip.net/)：在此网站上输入IP地址，检测节点延迟
