@@ -514,6 +514,7 @@ $ docker cp /www/runoob 96f7f14e99ab:/www/
 ```
 
 # 参考链接
+- [Docker 常见问题汇总(转)](https://www.jianshu.com/p/082bf977ce0e)
 - [一篇文章学会Docker命令](https://www.cnblogs.com/Survivalist/p/11199292.html)
 - [Docker入门-数据挂载](https://juejin.im/post/5d58db96e51d453bc64801d5)
 - [Docker - 挂载目录（bind mounts）和Volume是不同的](https://blog.csdn.net/qingyafan/article/details/89577717)
