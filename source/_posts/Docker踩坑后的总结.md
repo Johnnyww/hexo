@@ -15,7 +15,7 @@ date: 2020-04-25 16:24:22
 ---
 # Docker数据挂载
 要想将容器的内容保存在主机上，Docker有两种做法：volumn和bind mount,在Linux系统上的Docker还可以使用tmpfs mount。三种方式的差异如下图所示:
-![](https://oss.chenjunxin.com/picture/blogPicture/cec51938_bind_mount_principle.webp)
+![](https://oss.chenjunxin.com/picture/blogPicture/cec51938_types_of_mounts.webp)
 
 1. volume 存放在主机中由 Docker 管理的地方，在 Linux 系统上是在 `/var/lib/docker/volumes/` 路径下。非 Docker 的程序不应该修改此路径下的文件。要保存Docker中的文件资料  ，volumes 是最好的方法。
 2. `bind mount` 可存放在主机的任意位置的文件夹上，无论是否是 Docker 容器都可以随时修改其中的内容。
