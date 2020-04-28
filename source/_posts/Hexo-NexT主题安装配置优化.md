@@ -19,7 +19,7 @@ date: 2020-02-25 19:19:52
 npm install -g hexo-cli
 ```
 3. 初始化Hexo，在命令行依次运行以下命令即可：
-<folder>即存放Hexo初始化文件的路径， 即站点目录。
+\<folder>即存放Hexo初始化文件的路径， 即站点目录。
 ```bash
 hexo init <folder>
 cd <folder>
@@ -514,10 +514,10 @@ Next 提供了 seo 优化选项，在主题配置文件_config.yml中有个选�
 - HTML文件验证：将验证文件放置于您所配置域名的根目录下，即放在博客的本地根目录的source文件夹下（要设置skip_render）。
 - HTML标签验证：baidu_site_verification或者google_site_verification后添加HTML标签content后的内容（推荐)，如下：
  打开 Hexo 主题配置文件，按如下修改/添加：
- ```yaml themes/next/_config.yml
- google_site_verification: #索引擎提供给你的HTML标签的content后的内容
- baidu_site_verification: #索引擎提供给你的HTML标签content后的内容
- ```
+```yaml themes/next/_config.yml
+google_site_verification: #索引擎提供给你的HTML标签的content后的内容
+baidu_site_verification: #索引擎提供给你的HTML标签content后的内容
+```
 - CNAME验证：按要求添加一条CNAME解析
 
 ##### 生成站点地图
@@ -993,6 +993,7 @@ font:
 ```
 
 #### 添加数学公式支持
+
 这里看了各种对比之后，试验过后选择支持mathjax的pandoc,其他的老是会有各种奇怪的问题。
 
 ##### 安装pandoc
@@ -1040,6 +1041,35 @@ math:
 有一些比较明显的需要注意的事项：正常的文字后面如果跟的是`list`, `table`或者`quotation`，文字后面需要空一行，如果不空行，这些环境将不能被 Pandoc renderer 正常渲染。
 
 另外，文中的 URL 使用 Pandoc 渲染以后是普通的文本格式，不能点击，可以通过用`<>`包围 URL 的方式把 URL 变成可点击的 URL。
+
+# RSS
+安装feed插件
+```bash
+$ npm install hexo-generator-feed --save
+```
+站点配置文件，新增内容
+```
+# RSS订阅支持
+plugin:
+  - hexo-generator-feed
+# rss配置 Feed Atom
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+```
+配置Next主题配置文件
+```diff
+social:
++  RSS: /atom.xml || rss
+```
+
 
 # 扩展
 ## 草稿 && 布局
