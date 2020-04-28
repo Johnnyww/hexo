@@ -259,7 +259,10 @@ $ cat decoded.txt
 ```
 
 ## Java使用
-参考这篇文章[关于base64编码Encode和Decode编码的几种方式](https://blog.csdn.net/Alex_81D/article/details/80997146),推荐是用Java8自带的Base64工具类。
+参考文章[关于base64编码Encode和Decode编码的几种方式](https://blog.csdn.net/Alex_81D/article/details/80997146)与[Java Base64 加密与解密](https://blog.csdn.net/neweastsun/article/details/80542350),推荐是用Java8自带的Base64工具类。
+
+# 扩展
+Base64还能进行数据隐写,可以看这两篇文章：[神奇的 Base64 隐写](https://www.tr0y.wang/2017/06/14/Base64steg/)和[base64数据隐写实现原理分析](https://daidr.me/archives/code-585.html)
 
 # 参考链接
 - [魔鬼在细节中：Base64 你可能不知道的几个细节](https://liudanking.com/sitelog/%E9%AD%94%E9%AC%BC%E5%9C%A8%E7%BB%86%E8%8A%82%E4%B8%AD%EF%BC%9Abase64-%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E4%B8%AA%E7%BB%86%E8%8A%82/)
