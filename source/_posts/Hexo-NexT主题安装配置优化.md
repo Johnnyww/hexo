@@ -1,5 +1,5 @@
 ---
-title: Hexo-NexT (v7.0+) 主题安装配置优化
+title: Hexo-NexT (v7.7.0) 主题安装配置优化
 tags:
   - Hexo安装配置
   - Hexo优化
