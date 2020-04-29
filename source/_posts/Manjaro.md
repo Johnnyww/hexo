@@ -1193,10 +1193,13 @@ user xxx;
 ```bash
 sudo pacman -S neofetch # 终端打印出你的系统信息
 sudo pacman -S htop #命令行显示进程信息
+sudo pacman -S bashtop #终端Linux资源监控器
 sudo pacman -S yakuake # 堪称 KDE 下的终端神器，KDE 已经自带，F12 可以唤醒
 sudo pacman -S net-tools # 这样可以使用 ifconfig 和 netstat
 yay -S tree
+yay -S qrcp #电脑手机通过wifi互传文件工具
 ```
+上述工具中[bashtop](https://github.com/aristocratos/bashtop)和[qrcp](https://github.com/claudiodangelis/qrcp)是[GitHub](https://github.com/)上的开源项目。
 
 #### ZSH和Oh-my-zsh
 ```bash
