@@ -1227,7 +1227,43 @@ vim ~/.zshrc
 ZSH_THEME  = "random"
 ```
 
+##### 设置为powerlevel10k主题
+推荐使用[powerlevel10k](https://github.com/romkatv/powerlevel10k)主题,兼容powerlevel9k，10-100倍的性能提升。  
+由于使用的是Oh My Zsh，所以只需要将 github 上的 repo 下载到 Oh My Zsh 的目录下然后配置即可。  
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# 然后设置 .zshrc 中的变量 ZSH_THEME
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+#### 安装字体
+安装完 powerlevel10k 后你可能会发现有乱码，这是因为你终端字体不支持那么多的字符，这就需要使用扩展字体了。  
+字体的安装，我们可以参考 [powerlevel9k 的官方介绍](https://github.com/bhilburn/powerlevel9k/wiki/Install-Instructions#step-2-install-a-powerline-font)：  
+安装 powerline 字体有四种方式：
+
+- Option 1: Install Powerline Fonts 请看官方文档
+- Option 2: Use a Programmer Font 请看官方文档
+- Option 3: Install Awesome-Powerline Fonts 请看官方文档
+- Option 4: Install Nerd-Fonts:Nerd 字体应该是支持字形最多的，所以不用多想，安装它就好了。
+
+GitHub 上有[Nerd-Fonts详细的安装介绍文档](https://github.com/ryanoasis/nerd-fonts#font-installation)
+可以直接 [nerdfonts官网](https://www.nerdfonts.com/)，找到Downloads，直接下载 Hack 字体，，直接双击安装下载的字体即可，然后修改 oh my zsh 的变量文件 ~/.zshrc，在设置主题的配置前添加一行设置：
+```diff
++ POWERLEVEL9K_MODE='nerdfont-complete'
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+ArchLinux下可以运行命令安装:
+```bash
+$ sudo pacman -S nerd-fonts-hack 
+```
+**注意：**zsh安装powerlevel10k主题后启动终端会让用户选择各种配置，之后生成相应的配置文件，并在~/.zshrc文件中加入运行该主题自定义配置文件的命令`[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh`，会在其中看到已经配置了主题的字体`typeset -g POWERLEVEL9K_MODE=nerdfont-complete`，因此在~/.zshrc中不用再额外设置`POWERLEVEL9K_MODE`字段。  
+最后，如果字体没有生效，那就需要手动在`系统设置`->`字体`->`等宽字体`中设置Hack字体了。如下图：
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_zsh_font_demo.webp)
+
+
 #### zsh必备插件安装
+
 ##### 参数补全插件 zsh-completions
 ```bash
 git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
