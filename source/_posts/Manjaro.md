@@ -194,24 +194,38 @@ chrome等其他浏览器可以在浏览器设置里改一下字体风格，然�
 fcitx和ibus都可以配置中文输入法
 fcitx 或 ibus 两个选其一 推荐fcitx(一开始装了ibus，后面转了fcitx)
 
-#### fcitx安装
-1. 安装安装输入法模块:
-```bash
-sudo pacman -S fcitx-im #安装全部输入法模块
+#### fcitx5对比fcitx4
 
-#终端出现以下提示:
-$ yay -S fcitx-im
-:: There are 4 members in group fcitx-im:
-:: Repository community
-   1) fcitx  2) fcitx-gtk2  3) fcitx-gtk3  4) fcitx-qt5
+- fcitx5的输入体验的确比上个版本好一些，输入相对来说比较流畅，**输入中文分号不需要空格，而是按两下分号键**。
+- 自动DPI功能还需要优化。
 
-Enter a selection (default=all):
-#直接按回车，默认4个都安装，不然后面在有些应用或者终端调不出输入法
-```
-2. 安装输入法配置工具
+#### fcitx4安装
+~~1. 安装安装输入法模块:~~
+~~```bash~~
+~~sudo pacman -S fcitx-im #安装全部输入法模块~~
+
+~~#终端出现以下提示:~~
+~~$ yay -S fcitx-im~~
+~~:: There are 4 members in group fcitx-im:~~
+~~:: Repository community~~
+   ~~1) fcitx  2) fcitx-gtk2  3) fcitx-gtk3  4) fcitx-qt5~~
+
+~~Enter a selection (default=all):~~
+~~#直接按回车，默认4个都安装，不然后面在有些应用或者终端调不出输入法~~
+~~```~~
+
+2020-05-06更新：  
+1. 现在网络上大部分老教程还是安装fcitx,fcitx-gtk2,fcitx-gtk3,fcitx-qt4,fcitx-qt5,fcitx-configtool的传统方法，目前在Archlinux的源中，fcitx-im包组已经取消了fcitx-qt4包，但是搜狗输入法Linux版是基于QT4的，少了这个包，搜狗输入法就无法正常启动。这里安装也是担心后面有些应用或者终端不支持QT5调不出输入法。  
+首先，如果以前安装了fcitx，全部删除：
 ```bash
-sudo pacman -S fcitx-configtool
+$ sudo pacman -Rsn fcitx-im fcitx-configtool
 ```
+
+2. 然后安装fcitx-lilydjwg-git这个包，fcitx-lilydjwg-git这个包用来替换fcitx-im包组中除fcitx-qt5之外的所有包，其中包含了fcitx-qt4包。
+```bash
+sudo pacman -S fcitx-lilydjwg-git
+```
+
 3. 安装中文输入法选其一（我选的sunpinyin，rime和goolepinyin据说不支持模糊音）
 ```bash
 sudo pacman -S fcitx-sunpinyin
@@ -221,16 +235,145 @@ sudo pacman -S fcitx-googlepinyin
 ```
 4. 安装云拼音（可选）
 ```bash
-sudo pacman -S fcitx-cloudyinpin
+$ sudo pacman -S fcitx-cloudyinpin
 ```
 安装fcitx-cloudpinyin后，googlepinyin，fcitx自带的pinyin，sunpinyin的候选次列表都会具有云辅助，更加智能。（rime不支持）
-5. 修改配置文件`$HOME/.xprofile`，右键粘贴如下代码并保存:
+
+> 安装后重启 Fcitx 即可，所选的云拼音输入结果会自动添加到当前输入法的词库中。提醒：建议在fcitx设置里面将“云拼音来源”由Google改为“百度”，Google国内访问不是很顺畅。  
+启用云拼音后，从云拼音获得的候选词会默认添加到候选词列表中的第二个，显示位置可以通过云拼音的设置配置。如果云拼音的结果和本地输入法给出的结果一致，云拼音后选项会和本地产生的候选项自动合并，不会产生重复的候选项。  
+若安装fcitx-cloudpinyin后，在配置程序里却没有看见云拼音，记得勾上“高级”复选框。这时云拼音会显示出来，再勾上云拼音。  
+注意: 不推荐将云拼音候选词设为第一个候选词，因为当网络情况不好，没有及时返回云拼音结果，那么云拼音结果将默认降到第二候选词的位置，于是这个过程可能会涉及到默认候选词的改变。
+
+5. 到这里，Manjaro下的中文输入法基本就安装好了，但是还没有安装fcitx图形设置界面，另外少了个fcitx-qt5包，不能在qt5程序下输入，需要继续安装：  
+GNOME（GTK）用户：
+```bash
+$ sudo pacman -S fcitx-configtool fcitx-qt5
+```
+注意：fcitx-qt5可选依赖于fcitx-configtool，可以直接安装fcitx-configtool，然后选择fcitx-qt5。  
+KDE（QT）用户：
+```bash
+$ sudo pacman -S kcm-fcitx
+```
+
+6. 在/etc/profile或者~/.xprofile文件中，右键粘贴如下代码并保存:
 ```bash
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 ```
-6. **注销重新登录或者重启系统。**
+
+7. **注销重新登录或者重启系统。**
+
+8. 扩展点-检查设置
+如果出现问题，可使用下面打命令，看下哪里配置异常，处理一下就可以了。
+```bash
+$ fcitx-diagnose
+```
+
+#### fcitx5安装
+在一些大佬的博客上看到Fcitx5，试了下发现自带的pinyin准确度确实很高，而且输入设置也整合到了设置中心，对KDE用户相当友好。fcitx的官方Repo在[GitHub](https://github.com/fcitx/fcitx5)  
+1. 安装
+```bash
+#卸载fcitx4
+pacman -Rs $(pacman -Qsq fcitx) 
+
+# 可以直接全部安装不用考虑安装顺序(archlinuxcn源)
+$ sudo pacman -S fcitx5-git # 安装fcitx5框架
+$ sudo pacman -S fcitx5-gtk-git # 增加对gtk程序的支持
+$ sudo pacman -S fcitx5-qt5-git # 增加对QT5程序的支持
+$ sudo pacman -S fcitx5-qt4-git  # 有QT4程序需要增加对QT4程序的支持
+$ sudo pacman -S fcitx5-chinese-addons-git # 增加对中文输入的组件
+$ sudo pacman -S kcm-fcitx5-git # 增加内嵌的输入设置，只限KDE
+
+# 也可以直接安装community源下的包，这里我配的是清华的镜像源，貌似没有同步好，找不到文件，所以用了上面的archlinuxcn源安装的。
+$ sudo pacman -S fcitx5 fcitx5-gtk fcitx5-qt fcitx5-chinese-addons kcm-fcitx5
+```
+
+2. 配置开机自启
+系统设置->开机和关机->自动启动->添加程序->搜索Fcitx 选中后确定使Fcitx5自启动（推荐）。
+
+3. 修改配置文件
+直接启动fcitx5是只有西文键盘的，如果是KDE，可以到系统的输入法配置启用拼音；如果是其他发行版，就需要使用配置文件。
+首先要确认当前fcitx5是完全退出的状态，如果fcitx5在运行，修改后软件会自动覆写profile配置文件。用户配置在`~/.config/fcitx5/profile`
+```
+[Groups/0]
+# Group Name
+Name=默认
+# Layout
+Default Layout=us
+# Default Input Method
+DefaultIM=pinyin
+
+[Groups/0/Items/0]
+# Name
+Name=keyboard-us
+# Layout
+Layout=
+
+[Groups/0/Items/1]
+# Name
+Name=pinyin
+# Layout
+Layout=
+
+[GroupOrder]
+0=默认
+```
+使用默认的pinyin就可以了。
+
+4. 设置环境变量
+使用`echo ${XDG_SESSION_TYPE}`命令查看，如果是`x11`即`xorg`用户，则还应当在`~/.xprofile`添加如下内容：
+```
+export GTK_IM_MODULE=fcitx5
+export QT_IM_MODULE=fcitx5
+export XMODIFIERS="@im=fcitx5"
+```
+如果是`wayland`用户的话，则修改`~/.pam_environment`文件
+```
+GTK_IM_MODULE=fcitx5
+QT_IM_MODULE=fcitx5
+XMODIFIERS=@im=fcitx5
+```
+
+5. 注销重新登录或者重启系统就可以看到fcitx5的启动了。
+
+6. 个性化设置  
+**注意修改配置文件要先彻底关闭fcitx5**  
+1. 关闭云拼音
+如果注重个人隐私的话，建议关闭该选项。修改`~/.config/fcitx5/conf/pinyin.conf`：
+```diff
+# Enable Cloud Pinyin
+-CloudPinyinEnabled=True
++CloudPinyinEnabled=False
+```
+
+2. 关闭自动API  
+fcitx5会自动根据多显示器不同的DPI来调整界面大小，但发现经常达不到想要的效果，只好将这一功能关闭，并调整字体大小为14。修改`~/.config/fcitx5/conf/classicui.conf`
+```
+# 按屏幕 DPI 使用
+PerScreenDPI=False
+
+# Font (设置成你喜欢的字体)
+Font="Noto Sans Mono Regular 14"
+```
+
+3. 使用皮肤
+使用了[hosxy的Material-color皮肤](https://github.com/hosxy/Fcitx5-Material-Color)，安装非常方便，依照Readme操作即可。效果惊艳，堪比Windows10自带输入法。  
+直接运行命令安装：
+```bash
+$ pacman -S fcitx5-material-color
+```
+
+4. 使用单行模式(inline_preedit)
+对于fcitx5自带pinyin 请修改 `~/.config/fcitx5/conf/pinyin.conf`
+```diff
+# 可用时在应用程序中显示预编辑文本
+-PreeditInApplicaation=False
++PreeditInApplicaation=True
+```
+
+
+
 
 #### ibus安装
 ```bash
@@ -1667,3 +1810,6 @@ sudo pacman -S imwheel #配置文件自己上网查
 - [Tesseract:安装与命令行使用](http://www.zmonster.me/2015/04/17/tesseract-install-usage.html)
 - [linux 环境下安装tesseract](https://www.wj0511.com/site/detail.html?id=257)
 - [提取图片文字——linux下tesseract-ocr安装编译](https://blog.csdn.net/pangyunsheng/article/details/79372845)
+- [Fcitx (简体中文)](https://wiki.archlinux.org/index.php/Fcitx_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+- [在Manjaro上优雅地使用Fcitx5](https://www.wannaexpresso.com/2020/03/26/fcitx5/)
+- [尝试Fcitx5](https://zjukuny.github.io/posts/fcitx5/)
