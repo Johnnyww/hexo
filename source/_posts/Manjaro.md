@@ -290,7 +290,8 @@ $ sudo pacman -S fcitx5 fcitx5-gtk fcitx5-qt fcitx5-chinese-addons kcm-fcitx5
 ```
 
 2. 配置开机自启
-系统设置->开机和关机->自动启动->添加程序->搜索Fcitx 选中后确定使Fcitx5自启动（推荐）。
+系统设置->开机和关机->自动启动->添加程序->搜索Fcitx 选中后确定使Fcitx5自启动（推荐）。  
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_fcitx_autostart.webp)
 
 3. 修改配置文件
 直接启动fcitx5是只有西文键盘的，如果是KDE，可以到系统的输入法配置启用拼音；如果是其他发行版，就需要使用配置文件。
@@ -359,6 +360,8 @@ Font="Noto Sans Mono Regular 14"
 
 3. 使用皮肤
 使用了[hosxy的Material-color皮肤](https://github.com/hosxy/Fcitx5-Material-Color)，安装非常方便，依照Readme操作即可。效果惊艳，堪比Windows10自带输入法。  
+![](https://oss.chenjunxin.com/picture/blogPicture/a55f0545_material_color_teal.webp)
+
 直接运行命令安装：
 ```bash
 $ pacman -S fcitx5-material-color
