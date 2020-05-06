@@ -83,8 +83,8 @@ Brotli 要求 HTTPS，并在 Nginx 中添加扩展支持
 **Nginx**
 ```bash
 $ cd /opt
-$ wget -c https://nginx.org/download/nginx-1.16.1.tar.gz
-$ tar xzf nginx-1.16.1.tar.gz
+$ wget -c https://nginx.org/download/nginx-1.18.0.tar.gz
+$ tar xzf nginx-1.18.0.tar.gz
 ```
 **OpenSSL**
 ```bash
@@ -101,8 +101,8 @@ Seeding source: os-specific
 
 # 开始下载新版本
 $ cd /opt
-$ wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz
-$ tar xzf openssl-1.1.1f.tar.gz
+$ wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz
+$ tar xzf openssl-1.1.1g.tar.gz
 ```
 **Brotli**
 ```bash
@@ -128,7 +128,7 @@ $ nginx -V
 ```
 综合两者，最后编译Nginx
 ```bash
-$ cd /opt/nginx-1.16.1
+$ cd /opt/nginx-1.18.0
 
 $ ./configure \
 --prefix=/etc/nginx \
@@ -172,9 +172,9 @@ $ ./configure \
 --with-stream_ssl_preread_module \
 --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fPIC' \
 --with-ld-opt='-Wl,-z,relro -Wl,-z,now -pie' \
---with-openssl=/opt/src/openssl-1.1.1f \
+--with-openssl=/opt/openssl-1.1.1g \
 --with-openssl-opt=enable-tls1_3 \
---add-module=/opt/src/ngx_brotli
+--add-module=/opt/ngx_brotli
 
 # 编译并安装
 $ make && make install
