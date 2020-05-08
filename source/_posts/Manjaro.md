@@ -46,7 +46,9 @@ date: 2020-01-31 21:19:52
 安装完后点击重启计算机，在完全关闭后拔出u盘。开机后进入bios选择Manjaro引导到第一位，保存进入系统。
 
 # 系统设置和软件安装
+
 ## 系统设置
+### 主要设置
 **进行软件源设置以及系统更新首先，我们先把它打开文件的方式改为双击**
 首先，我们先把它打开文件的方式改为双击
 `系统设置->桌面行为->工作空间->双击打开文件和文件夹`
@@ -112,12 +114,33 @@ sudo pacman -Syu #可以更新系统的一切软件包
 sudo pacman -S wqy-microhei
 ```
 
+### 其他设置
+#### 解决双系统时间不同步问题
+```bash
+$ timedatectl set-local-rtc true
+```
+
+#### 解决无ll命令的问题
+`ll`实际上并不是一个命令，而是`ls -l`的别名，因为用的比较多，所以有些linux系统会默认进行配置，manjaro默认是没有的。`vim ~/.bashrc`，添加以下内容
+```
+alias ll='ls -alF'
+#这里可以配置其它的命令
+alias vi='vim'
+```
+之后，`source ~/.bashrc`
+
 ## 软件安装
 
-### 安装AUR管理工具:
+### Pacman包管理工具GUI
+```bash
+# 安装pamac(manjaro自带的pacman的GUI)，可以打开AUR支持与Snap支持，当然也可以使用其它的,如Octopi。
+$ sudo pacman -S pamac
+```
+
+### 安装AUR软件管理工具
 想要使用AUR中的软件，一种方式是在图形的软件安装界面的设置中把AUR打开，然后搜索进行安装，另外是使用命令行工具进行安装。由于Yaourt已经不再维护，这里选择了Yay来管理AUR仓库中的软件。
 ```bash
-sudo pacman -S yay
+$ sudo pacman -S yay
 ```
 Yay默认使用法国的aur.archlinux.org作为AUR源，可以更改为国内清华大学提供的镜像。  
 yay 用户执行以下命令修改aururl:  
@@ -140,6 +163,44 @@ $ yay -Syu # 升级所有已安装的包
 $ yay -Ps # 打印系统统计信息
 $ yay -Qi package # 检查安装的版本
 ```
+
+### 安装Snap软件管理工具
+```bash
+$ sudo pacman -S snapd
+$ sudo systemctl enable --now snapd.socket
+
+#要启用snap支持，请在/var/lib/snapd/snap和/snap之间创建符号链接：
+$ sudo ln -s /var/lib/snapd/snap /snap
+#可选，用Snap安装Snap软件管理界面
+$ sudo snap install snap-store
+#可选，KDE桌面环境下安装Snap软件管理界面，相对来说更全面，还能查看各个桌面附加组件的更新
+$ sudo pacman install discover-snap
+ 
+#然后需要注销或重启
+ 
+#测试是否安装成功
+$ sudo snap install hello-world
+#安装完成后你就可以启动hello-world了
+$ snap run hello-world
+
+#如果你需要这个软件，可以禁用它，然后再次启用它。这样可以避免在系统中删除并重新安装它们
+$ snap disable hello-world
+hello-world disabled                                                     
+
+$ snap run hello-world    
+error: cannot find current revision for snap hello-world: readlink /var/lib/snapd/snap/hello-world/current: no such file or directory                                                                                 $ snap enable hello-world
+hello-world enabled
+
+$ snap run hello-world   
+Hello World!
+
+#列出已安装的snaps
+$ snap list
+
+#删除snap：
+$ sudo snap remove hello-world
+```
+其他 操作可以参考[wiki上的文档](https://wiki.manjaro.org/index.php?title=Snap)
 
 ### 安装中文字体:
 ```bash
@@ -911,6 +972,7 @@ Tesseract 已经有 30 年历史，开始它是惠普实验室的一款专利软
 [Tesseract](https://github.com/tesseract-ocr/tesseract)目前已作为开源项目发布在GitHub上，其最新版本已经支持中文OCR，并提供了一个命令行工具。
 
 ##### Tesseract安装
+
 ```bash
 $ sudo pacman -S tesseract
 
@@ -980,6 +1042,11 @@ $ tesseract paper.png paper tess_1.conf -l chi_sim tess_2.conf
 ```bash
 $ sudo pacman -S gimagereader-qt #QT
 $ sudo pacman -S gimagereader-gtk #GTK
+```
+
+#### 系统备份还原软件
+```bash
+$ sudo pacman -S timeshift
 ```
 
 ### 开发软件
@@ -1704,14 +1771,23 @@ KDE 默认是单击打开文件，需要修改成跟Window一样的话：
 
 ## 常用pacman命令
 ### 更新系统
-在 Archlinux系 中，使用一条命令即可对整个系统进行更新:
+在 Archlinux系 中，使用一条命令即可对整个系统软件包进行更新:
 ```bash
-$ pacman -Syu
+$ sudo pacman -Syu
 ```
-如果你已经使用pacman -Sy将本地的包数据库与远程的仓库进行了同步，也可以只执行:
+它将本地包数据库与发行版软件存储库进行比较。如果有新的包版本可用，系统将提示您输入yes以更新未完成的包。
+
+如果你已经使用`pacman -Sy`将本地的包数据库与远程的仓库进行了同步，也可以只执行:
 ```bash
-$ pacman -Su
+$ sudo pacman -Su
 ```
+
+强制更新所有系统软件包：
+```bash
+$ sudo pacman -Syyu
+```
+您可以在这个命令中注意到额外的y。额外的y强制包管理器下载包数据库，而不管版本是否有任何更改。当您有一个损坏的包数据库并且希望强制执行同步时，这是很有帮助的。
+不推荐一直使用`sudo pacman -Syyu`，因为它会花费很长时间来同步数据库，还将消耗更多的网络带宽。
 
 ### 安装包
 `pacman -S` 包名：例如，执行 `pacman -S firefox` 将安装 Firefox
@@ -1790,6 +1866,18 @@ Ctrl+F8：切出多桌面窗口
 ```bash
 sudo pacman -S imwheel #配置文件自己上网查
 ```
+
+## 恢复/更换桌面环境
+官网教程:I[nstall Desktop Environments](https://wiki.manjaro.org/index.php?title=Install_Desktop_Environments#Install_a_basic_XFCE_environment)
+
+## Manjaro备份系统
+1. dd备份分区：dd if=/dev/sda of=/dev/sdb
+2. rsync备份系统
+3. tar打包备份
+备份相关可参考：
+
+- [如何整体备份 manjaro 系统呢](https://www.v2ex.com/t/508314)
+- [Manjaro Linux优化设置分享](https://zhuanlan.zhihu.com/p/48963253)
 
 # 参考链接
 
