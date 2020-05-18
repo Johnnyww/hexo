@@ -623,27 +623,31 @@ $ sudo pacman -S variety
 ```
 
 #### 系统状态监控
-
 ```bash
-sudo pacman -S deepin-system-monitor
+$ sudo pacman -S deepin-system-monitor
 ```
 
 #### 硬件温度监测
-
 ```bash
-sudo pacman -S psensor
+$ sudo pacman -S psensor
 ```
 
 #### 录屏软件
+
 ```bash
-sudo pacman -S deepin-screen-recorder #录屏软件，可以录制 Gif 或者 MP4 格式
-sudo pacman -Ss SimpleScreenRecorder #另外一个更强大的录屏软件
+$ sudo pacman -S deepin-screen-recorder #录屏软件，可以录制 Gif 或者 MP4 格式
+$ sudo pacman -Ss SimpleScreenRecorder #另外一个更强大的录屏软件
+```
+
+#### 全局搜索软件—相当于Windows下的Everything
+```bash
+$ sudo pacman -S fsearch
 ```
 
 #### deepin系列软件必备条件
 首先对于非 GNOME 桌面(KDE, XFCE等)需要安装
 ```bash
-sudo pacman -S gnome-settings-daemon
+$ sudo pacman -S gnome-settings-daemon
 ```
 运行/usr/lib/gsd-xsettings
 系统设置->开机或关机->自动启动->添加脚本->输入/usr/lib/gsd-xsettings
