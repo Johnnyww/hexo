@@ -162,6 +162,8 @@ $ yay -Rns package # 删除包
 $ yay -Syu # 升级所有已安装的包
 $ yay -Ps # 打印系统统计信息
 $ yay -Qi package # 检查安装的版本
+$ yay --repo #Assume targets are from the repositories
+$ yay -aS #Assume targets are from the AUR
 ```
 
 ### 安装Snap软件管理工具
