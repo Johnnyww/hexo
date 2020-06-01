@@ -1238,39 +1238,52 @@ endif
 :wq保存退出即可。
 
 #### Markdown编辑器
+
 ```bash
-sudo pacman -S typora
+$ sudo pacman -S typora
 ```
 
 #### VSCode
+
 ```bash
-sudo pacman -S visual-studio-code-bin
+$ sudo pacman -S visual-studio-code-bin
 ```
 
 #### REST工具
+
 ```bash
-sudo pacman -S postman-bin
+$ sudo pacman -S postman-bin
 ```
 
 #### GIT管理工具
+
 ```bash
-sudo pacman -S gitkraken
+$ sudo pacman -S gitkraken
 ```
 
 #### idea(JAVA IDE)
+
 ```bash
-sudo pacman -S intellij-idea-ultimate-edition
+$ sudo pacman -S intellij-idea-ultimate-edition
+# 2020版本安装需要加以下步骤
+$ sudo pacman -S intellij-idea-ultimate-edition-jre
+# 然后进入~/.profile设置环境变量
+$ export IDEA_JDK_64=/opt/intellij-idea-ultimate-edition/jbr
+# 保存退出后，在终端执行
+$ source ~/.profile
 ```
 
 #### 数据库管理工具
+
 ```bash
-sudo pacman -S datagrip
-sudo pacman -S dbeaver
+$ sudo pacman -S datagrip
+$ sudo pacman -S dbeaver
 ```
 
 #### 离线API文档管理
+
 ```bash
-sudo pacman -S zeal
+$ sudo pacman -S zeal
 ```
 
 #### NodeJS与NPM
