@@ -38,6 +38,6 @@
     "hexo-server": "^1.0.0",
     "hexo-symbols-count-time": "^0.7.0",
     "lodash.template": "^4.5.0",
-    "minimist": "^1.2.3"
+    "minimist": "^1.2.6"
   }
 }
